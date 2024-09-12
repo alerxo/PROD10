@@ -77,12 +77,15 @@ public class PlayerController : MonoBehaviour
                 transform.rotation *= Quaternion.Euler(0,90,0);
                 break;
             case "r":
+                audioSource.Stop();
+                audioManager.GetComponent<AudioManager>().isPlaying = false;
                 audioManager.GetComponent<AudioManager>().RecordSound();
                 break;
             case "p":
                 audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
                 print(audioSource.clip);
                 audioSource.Play();
+                audioManager.GetComponent<AudioManager>().isPlaying = true;
                 break;
             case "c": //Debug purpose, should not be available in shipping (Rufus)
                 if(mainCam.activeInHierarchy){
