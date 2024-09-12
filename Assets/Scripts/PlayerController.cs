@@ -10,10 +10,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float MoveDelay;
-    GameObject mainCam;   
-    GameObject blindCam;     
-    GameObject audioManager;
-    AudioSource audioSource;
+    GameObject mainCam;
+    GameObject blindCam;
     private float horizontalInput;
     private float verticalInput;
     private Vector3 moveDirection;
@@ -24,8 +22,6 @@ public class PlayerController : MonoBehaviour
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         blindCam = GameObject.FindGameObjectWithTag("BlindCamera");
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager");
-        audioSource = GetComponent<AudioSource>();
 
         blindCam.SetActive(false);
 
@@ -39,66 +35,66 @@ public class PlayerController : MonoBehaviour
 
         timer -= Time.deltaTime;
 
-        if(timer <= 0){
-
+        if (timer <= 0)
+        {
             float rawHorizontalInput = Input.GetAxis("Horizontal");
             float rawVerticalInput = Input.GetAxis("Vertical");
 
             horizontalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Horizontal"), 1)) * speed;
             verticalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Vertical"), 1)) * speed;
 
-            if(rawHorizontalInput < 0.0f){
+            if (rawHorizontalInput < 0.0f)
+            {
                 horizontalInput = speed * -1;
             }
-            if(rawVerticalInput < 0.0f){
-               verticalInput = speed * -1;
+            if (rawVerticalInput < 0.0f)
+            {
+                verticalInput = speed * -1;
             }
 
             moveDirection = new Vector3(horizontalInput, 0, verticalInput);
-            
+
             transform.Translate(moveDirection * speed);
 
-            if(horizontalInput != 0.0f || verticalInput != 0.0f){
+            if (horizontalInput != 0.0f || verticalInput != 0.0f)
+            {
                 timer = MoveDelay + Time.deltaTime;
+                ClueSystem.TriggerClue(new Clue(0.5f, transform.position));
             }
-            
         }
 
         Controls(Input.inputString);
 
     }
 
-    void Controls(string input){
-        switch(input){
-            case "q": 
-                transform.rotation *= Quaternion.Euler(0,-90,0);
+    void Controls(string input)
+    {
+        switch (input)
+        {
+            case "q":
+                transform.rotation *= Quaternion.Euler(0, -90, 0);
                 break;
-            case "e": 
-                transform.rotation *= Quaternion.Euler(0,90,0);
-                break;
-            case "r":
-                audioManager.GetComponent<AudioManager>().RecordSound();
-                break;
-            case "p":
-                audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
-                print(audioSource.clip);
-                audioSource.Play();
+            case "e":
+                transform.rotation *= Quaternion.Euler(0, 90, 0);
                 break;
             case "c": //Debug purpose, should not be available in shipping (Rufus)
-                if(mainCam.activeInHierarchy){
+                if (mainCam.activeInHierarchy)
+                {
                     mainCam.SetActive(false);
                     blindCam.SetActive(true);
                 }
-                else if(!mainCam.activeInHierarchy){
+                else if (!mainCam.activeInHierarchy)
+                {
                     mainCam.SetActive(true);
                     blindCam.SetActive(false);
                 }
                 break;
-            default: 
+            default:
                 break;
         }
     }
-    public bool Death(){
+    public bool Death()
+    {
         return true;
     }
 }
