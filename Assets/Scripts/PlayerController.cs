@@ -104,4 +104,8 @@ public class PlayerController : MonoBehaviour
     public bool Death(){
         return true;
     }
+
+    void PlaySound() {
+        audioSource.Play();
+    }
 }

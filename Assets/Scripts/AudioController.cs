@@ -37,7 +37,8 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    void PlaySound() {
-        
+    void PlaySound(AudioClip clip) {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }
