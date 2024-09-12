@@ -7,6 +7,7 @@ public class Alien : MonoBehaviour
 {
     public NavMeshAgent NavMeshAgent { get; private set; }
     public Transform Player { get; private set; }
+    public AudioSource AudioSource { get; private set; }
 
     private IAlienState state;
     public readonly Alien_Idle idleState = new();
@@ -19,6 +20,7 @@ public class Alien : MonoBehaviour
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();
         Player = FindObjectOfType<PlayerController>().transform;
+        AudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -38,6 +40,9 @@ public class Alien : MonoBehaviour
 
         state = state.Execute(this);
         stateName = state.ToString();
+
+        AudioSource.volume = 1 - (Mathf.Min(Vector3.Distance(transform.position, Player.position), 20) / 20);
+        AudioSource.pitch = state == investigatingState ? 1.5f : 0.5f;
     }
 
     private void ClueTriggered(Clue clue)
