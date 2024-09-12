@@ -15,8 +15,6 @@ public class Alien : MonoBehaviour
     public readonly Alien_Attacking attackingState = new();
     [SerializeField] private string stateName;
 
-    float timer = 0;
-
     private void Awake()
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();
@@ -45,10 +43,5 @@ public class Alien : MonoBehaviour
     private void ClueTriggered(Clue clue)
     {
         investigatingState.SetClue(this, clue);
-    }
-
-    public void HellYeah()
-    {
-        Destroy(Player.gameObject);
     }
 }

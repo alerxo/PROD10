@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,7 @@ public class Alien_Idle : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
-        if (alien.investigatingState.HasTrail(alien))
+        if (alien.investigatingState.HasClue())
         {
             return alien.investigatingState;
         }
@@ -38,19 +39,19 @@ public class Alien_Patrolling : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
-        if (destination == null)
-        {
-            GetDestination(alien);
-        }
-
-        else if (alien.investigatingState.HasTrail(alien))
+        if (alien.investigatingState.HasClue())
         {
             destination = null;
 
             return alien.investigatingState;
         }
 
-        else if (Vector3.Distance(alien.transform.position, alien.NavMeshAgent.destination) > 0.5)
+        if (destination == null)
+        {
+            GetDestination(alien);
+        }
+
+        else if (Vector3.Distance(alien.transform.position, alien.NavMeshAgent.destination) < 0.5)
         {
             destination = null;
 
@@ -80,31 +81,60 @@ public class Alien_Patrolling : IAlienState
 public class Alien_Investigating : IAlienState
 {
     private Clue currentClue;
+    private Vector3? destination;
+    private const float destinationMargin = 5;
 
     public IAlienState Execute(Alien alien)
     {
-        if (!HasTrail(alien))
+        if (!HasClue())
         {
             return alien.idleState;
         }
 
         if (alien.attackingState.CanAttack(alien))
         {
+            destination = null;
+            currentClue = null;
+
             return alien.attackingState;
         }
 
-        alien.NavMeshAgent.SetDestination(currentClue.Position);
+        if (destination == null)
+        {
+            GetDestination(alien);
+        }
+
+        else if (Vector3.Distance(alien.transform.position, destination.Value) < 1.5f)
+        {
+            destination = null;
+            currentClue = null;
+
+            return alien.idleState;
+        }
 
         return alien.investigatingState;
     }
 
-    public bool HasTrail(Alien alien)
+    private void GetDestination(Alien alien)
     {
-        if (Vector3.Distance(alien.transform.position, currentClue.Position) < 0.5)
+        float margin = destinationMargin * GetClueStrength(alien, currentClue);
+        destination = currentClue.Position + new Vector3(Random.Range(-margin, margin), 0, Random.Range(-margin, margin));
+
+        NavMeshPath path = new();
+
+        if (alien.NavMeshAgent.CalculatePath(destination.Value, path))
         {
-            currentClue = null;
+            alien.NavMeshAgent.SetPath(path);
         }
 
+        else
+        {
+            destination = null;
+        }
+    }
+
+    public bool HasClue()
+    {
         return currentClue != null;
     }
 
@@ -113,6 +143,7 @@ public class Alien_Investigating : IAlienState
         if (currentClue == null || GetClueStrength(alien, newClue) > GetClueStrength(alien, currentClue))
         {
             currentClue = newClue;
+            destination = null;
         }
     }
 
@@ -132,7 +163,7 @@ public class Alien_Attacking : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
-        alien.HellYeah();
+        alien.Player.GetComponent<PlayerController>().Death();
 
         return this;
     }
