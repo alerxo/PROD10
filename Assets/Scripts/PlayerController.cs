@@ -41,14 +41,14 @@ public class PlayerController : MonoBehaviour
             float rawHorizontalInput = Input.GetAxis("Horizontal");
             float rawVerticalInput = Input.GetAxis("Vertical");
 
-            horizontalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Horizontal"), 1));
-            verticalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Vertical"), 1));
+            horizontalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Horizontal"), 1)) * speed;
+            verticalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Vertical"), 1)) * speed;
 
             if(rawHorizontalInput < 0.0f){
-                horizontalInput = -1;
+                horizontalInput = speed * -1;
             }
             if(rawVerticalInput < 0.0f){
-               verticalInput = -1;
+               verticalInput = speed * -1;
             }
 
             moveDirection = new Vector3(horizontalInput, 0, verticalInput);
@@ -60,8 +60,6 @@ public class PlayerController : MonoBehaviour
             }
             
         }
-
-        
 
         var input = Input.inputString;
         switch(input){
