@@ -60,8 +60,12 @@ public class PlayerController : MonoBehaviour
             }
             
         }
+        
+        Controls(Input.inputString);
 
-        var input = Input.inputString;
+    }
+
+    void Controls(string input){
         switch(input){
             case "q": 
                 transform.rotation *= Quaternion.Euler(0,-90,0);
@@ -83,7 +87,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-
     public bool Death(){
         return true;
     }
