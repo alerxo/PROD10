@@ -15,7 +15,7 @@ public class Alien_Idle : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
-        if (alien.investigatingState.HasTrail())
+        if (alien.investigatingState.HasTrail(alien))
         {
             return alien.investigatingState;
         }
@@ -43,7 +43,7 @@ public class Alien_Patrolling : IAlienState
             GetDestination(alien);
         }
 
-        else if (alien.investigatingState.HasTrail())
+        else if (alien.investigatingState.HasTrail(alien))
         {
             destination = null;
 
@@ -79,11 +79,11 @@ public class Alien_Patrolling : IAlienState
 
 public class Alien_Investigating : IAlienState
 {
-    private Vector3? trail;
+    private Clue currentClue;
 
     public IAlienState Execute(Alien alien)
     {
-        if (!HasTrail())
+        if (!HasTrail(alien))
         {
             return alien.idleState;
         }
@@ -93,19 +93,36 @@ public class Alien_Investigating : IAlienState
             return alien.attackingState;
         }
 
-        alien.NavMeshAgent.SetDestination(trail.Value);
+        alien.NavMeshAgent.SetDestination(currentClue.Position);
 
         return alien.investigatingState;
     }
 
-    public bool HasTrail()
+    public bool HasTrail(Alien alien)
     {
-        return trail != null;
+        if (Vector3.Distance(alien.transform.position, currentClue.Position) < 0.5)
+        {
+            currentClue = null;
+        }
+
+        return currentClue != null;
     }
 
-    public void SetTrail(Vector3 source)
+    public void SetClue(Alien alien, Clue newClue)
     {
-        trail = source;
+        if (currentClue == null || GetClueStrength(alien, newClue) > GetClueStrength(alien, currentClue))
+        {
+            currentClue = newClue;
+        }
+    }
+
+    public float GetClueStrength(Alien alien, Clue clue)
+    {
+        float loudness = clue.Loudness;
+        float time = 1 - (Mathf.Min(Time.time - clue.time, ClueSystem.ClueAliveTimeInSeconds) / ClueSystem.ClueAliveTimeInSeconds);
+        float distance = 1 - (Mathf.Min(Vector3.Distance(alien.transform.position, clue.Position), ClueSystem.ClueRange) / ClueSystem.ClueRange);
+
+        return loudness * time * distance; ;
     }
 }
 
