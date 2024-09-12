@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float MoveDelay;
     GameObject mainCam;   
     GameObject blindCam;     
+    GameObject audioManager;
+    AudioSource audioSource;
     private float horizontalInput;
     private float verticalInput;
     private Vector3 moveDirection;
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         blindCam = GameObject.FindGameObjectWithTag("BlindCamera");
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager");
+        audioSource = GetComponent<AudioSource>();
 
         blindCam.SetActive(false);
 
@@ -36,7 +40,6 @@ public class PlayerController : MonoBehaviour
         timer -= Time.deltaTime;
 
         if(timer <= 0){
-            print(horizontalInput + " " + verticalInput);
 
             float rawHorizontalInput = Input.GetAxis("Horizontal");
             float rawVerticalInput = Input.GetAxis("Vertical");
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour
             }
             
         }
-        
+
         Controls(Input.inputString);
 
     }
@@ -72,6 +75,14 @@ public class PlayerController : MonoBehaviour
                 break;
             case "e": 
                 transform.rotation *= Quaternion.Euler(0,90,0);
+                break;
+            case "r":
+                audioManager.GetComponent<AudioManager>().RecordSound();
+                break;
+            case "p":
+                audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
+                print(audioSource.clip);
+                audioSource.Play();
                 break;
             case "c": //Debug purpose, should not be available in shipping (Rufus)
                 if(mainCam.activeInHierarchy){
