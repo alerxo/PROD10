@@ -33,6 +33,9 @@ public class AudioManager : MonoBehaviour
     void CollisionDetection(){
         // Potential for several detections (Rufus)
         hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
+                for (int i = 0; i < hitColliders.Length; i++){
+                    print(hitColliders[i].name + " " + audioClip.name);
+                }
     }
 
     public void RecordSound(){
@@ -44,7 +47,7 @@ public class AudioManager : MonoBehaviour
 
     void AdversarySounds(){
         for (int i = 0; i < hitColliders.Length; i++){
-            if(audioClip.name == "SFX_Water" && hitColliders[i].name == "Fire0"){
+            if(audioClip.name == "SFX_Water" && hitColliders[i].name == "Fire"){
                 audioClip = otherClip;
             }
         }
