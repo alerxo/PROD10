@@ -13,11 +13,12 @@ public class PlayerController : MonoBehaviour
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
-    AudioSource audioSource;
+    public AudioSource audioSource;
     private float horizontalInput;
     private float verticalInput;
     private Vector3 moveDirection;
     private float timer;
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         blindCam = GameObject.FindGameObjectWithTag("BlindCamera");
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
         audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
 
         blindCam.SetActive(false);
 
@@ -54,10 +56,13 @@ public class PlayerController : MonoBehaviour
                verticalInput = speed * -1;
             }
 
-            moveDirection = new Vector3(horizontalInput, 0, verticalInput);
+            Vector3 localMoveDirection = new Vector3(horizontalInput, 0f, verticalInput);
             
-            transform.Translate(moveDirection * speed);
-
+            moveDirection = transform.TransformDirection(localMoveDirection);
+            
+            //transform.Translate(moveDirection * speed);
+            rb.velocity = moveDirection * speed;
+            
             if(horizontalInput != 0.0f || verticalInput != 0.0f){
                 timer = MoveDelay + Time.deltaTime;
             }
@@ -71,10 +76,10 @@ public class PlayerController : MonoBehaviour
     void Controls(string input){
         switch(input){
             case "q": 
-                transform.rotation *= Quaternion.Euler(0,-90,0);
+                rb.rotation *= Quaternion.Euler(0,-90,0);
                 break;
             case "e": 
-                transform.rotation *= Quaternion.Euler(0,90,0);
+                rb.rotation *= Quaternion.Euler(0,90,0);
                 break;
             case "r":
                 audioSource.Stop();
@@ -105,7 +110,8 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    void PlaySound() {
-        audioSource.Play();
+    void Respawn(){
+        timer = 0;
+        rb.position = new Vector3(0,0,0);
     }
 }

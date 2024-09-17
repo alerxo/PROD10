@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BlindCamera
   - AudioManager
+  - PuzzleElement
   layers:
   - Default
   - TransparentFX
