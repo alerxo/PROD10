@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
             if(hitColliders[i].GetComponent<PuzzleElement>()){
                 PuzzleElement puzzleElement = hitColliders[i].GetComponent<PuzzleElement>();
                 AudioSource puzzleSource = puzzleElement.GetComponent<AudioSource>();
-               if(puzzleElement.solutionClip == audioClip){
+               if(puzzleElement.solutionClip == audioClip && audioClip != null){
                     puzzleSource.Stop();
                     puzzleSource.clip = puzzleElement.responseClip;
                     GetComponentsInParent<PlayerController>()[0].audioSource.Stop();
