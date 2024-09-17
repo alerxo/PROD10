@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   isPlaying: 0
   audioClip: {fileID: 0}
 --- !u!1 &7726994337976478351
@@ -387,6 +387,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   MoveDelay: 0.5
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   audioSource: {fileID: 0}
 --- !u!82 &1975789591329547273
 AudioSource:
