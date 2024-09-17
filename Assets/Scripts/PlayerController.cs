@@ -92,6 +92,9 @@ public class PlayerController : MonoBehaviour
                 audioSource.Play();
                 audioManager.GetComponent<AudioManager>().isPlaying = true;
                 break;
+            case "l":
+                Respawn();
+                break;
             case "c": //Debug purpose, should not be available in shipping (Rufus)
                 if(mainCam.activeInHierarchy){
                     mainCam.SetActive(false);
@@ -112,6 +115,20 @@ public class PlayerController : MonoBehaviour
 
     void Respawn(){
         timer = 0;
+
         rb.position = new Vector3(0,0,0);
+        rb.rotation = Quaternion.Euler(0,0,0);
+
+        audioManager.GetComponent<AudioManager>().audioClip = null;
+        audioManager.GetComponent<AudioManager>().isPlaying = false;
+        
+        audioSource.Stop();
+        audioSource.clip = null;
+
+        GameObject[] puzzleElement = GameObject.FindGameObjectsWithTag("PuzzleElement");
+
+        for(int i = 0; i < puzzleElement.Length; i++){
+            puzzleElement[i].GetComponent<PuzzleElement>().Reset();
+        }
     }
 }
