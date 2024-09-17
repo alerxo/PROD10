@@ -56,10 +56,8 @@ public class PlayerController : MonoBehaviour
                verticalInput = speed * -1;
             }
 
-                    // Create the movement vector in local space
             Vector3 localMoveDirection = new Vector3(horizontalInput, 0f, verticalInput);
             
-            // Transform the local move direction to world space based on the player's rotation
             moveDirection = transform.TransformDirection(localMoveDirection);
             
             //transform.Translate(moveDirection * speed);
@@ -110,5 +108,10 @@ public class PlayerController : MonoBehaviour
     }
     public bool Death(){
         return true;
+    }
+
+    void Respawn(){
+        timer = 0;
+        rb.position = new Vector3(0,0,0);
     }
 }
