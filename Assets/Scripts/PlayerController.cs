@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float MoveDelay;
+    [SerializeField] LayerMask m_LayerMask;
+    [SerializeField] AudioClip playerStep;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
@@ -19,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
     private float timer;
     Rigidbody rb;
+    private Collider[] ventCollider;
+    private bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +44,7 @@ public class PlayerController : MonoBehaviour
         //transform.Translate(moveDirection * speed * Time.deltaTime);
 
         timer -= Time.deltaTime;
+        isMoving = false;
 
         if(timer <= 0){
 
@@ -61,12 +66,16 @@ public class PlayerController : MonoBehaviour
             moveDirection = transform.TransformDirection(localMoveDirection);
             
             //transform.Translate(moveDirection * speed);
-            rb.velocity = moveDirection * speed;
-            
+            rb.velocity = moveDirection * speed; //Can also move diagonally but scuffed (Rufus)
+
             if(horizontalInput != 0.0f || verticalInput != 0.0f){
                 timer = MoveDelay + Time.deltaTime;
-            }
-            
+                isMoving = true;
+                if(isMoving){
+                    audioSource.PlayOneShot(playerStep);
+                }
+
+            } 
         }
 
         Controls(Input.inputString);
@@ -94,6 +103,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case "l":
                 Respawn();
+                break;
+            case "h":
+                DaugtherCall();
                 break;
             case "c": //Debug purpose, should not be available in shipping (Rufus)
                 if(mainCam.activeInHierarchy){
@@ -129,6 +141,13 @@ public class PlayerController : MonoBehaviour
 
         for(int i = 0; i < puzzleElement.Length; i++){
             puzzleElement[i].GetComponent<PuzzleElement>().Reset();
+        }
+    }
+
+    void DaugtherCall(){
+        ventCollider = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
+        for (int i = 0; i < ventCollider.Length; i++){
+            ventCollider[i].GetComponent<AudioSource>().Play();
         }
     }
 }
