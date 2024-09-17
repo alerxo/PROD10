@@ -390,6 +390,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 128
+  playerStep: {fileID: 8300000, guid: 11bb18985a753be449a45c87c5f57578, type: 3}
   audioSource: {fileID: 0}
 --- !u!82 &1975789591329547273
 AudioSource:
@@ -401,11 +402,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d76dfda940c8023408ec65b52e3e6aa0, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

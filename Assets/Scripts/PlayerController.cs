@@ -72,7 +72,8 @@ public class PlayerController : MonoBehaviour
                 timer = MoveDelay + Time.deltaTime;
                 isMoving = true;
                 if(isMoving){
-                    audioSource.PlayOneShot(playerStep);
+                    audioSource.clip = playerStep;
+                    audioSource.Play();
                 }
 
             } 
