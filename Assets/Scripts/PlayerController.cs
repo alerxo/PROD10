@@ -76,7 +76,12 @@ public class PlayerController : MonoBehaviour
                     audioSource.Play();
                 }
 
-            } 
+            }
+            
+            if(localMoveDirection.magnitude > 0) // Calls clue event for alien investigate behaviour
+            {
+                ClueSystem.TriggerClue(new Clue(1, transform.position));
+            }
         }
 
         Controls(Input.inputString);
