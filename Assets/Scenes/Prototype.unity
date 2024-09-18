@@ -3862,6 +3862,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: playerStep
+      value: 
+      objectReference: {fileID: 8300000, guid: 11bb18985a753be449a45c87c5f57578, type: 3}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6117,20 +6121,20 @@ AudioReverbZone:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475451111}
   m_Enabled: 1
-  m_MinDistance: 5
-  m_MaxDistance: 15
-  m_ReverbPreset: 4
+  m_MinDistance: 2.9607449
+  m_MaxDistance: 19.087475
+  m_ReverbPreset: 1
   m_Room: -1000
-  m_RoomHF: -1200
+  m_RoomHF: -100
   m_DecayTime: 1.49
-  m_DecayHFRatio: 0.54
-  m_Reflections: -370
+  m_DecayHFRatio: 0.83
+  m_Reflections: -2602
   m_ReflectionsDelay: 0.007
-  m_Reverb: 1030
+  m_Reverb: 200
   m_ReverbDelay: 0.011
   m_HFReference: 5000
   m_Diffusion: 100
-  m_Density: 60
+  m_Density: 100
   m_LFReference: 250
   m_RoomLF: 0
 --- !u!4 &1475451113
@@ -6142,7 +6146,7 @@ Transform:
   m_GameObject: {fileID: 1475451111}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.71, y: 0, z: 16.3}
+  m_LocalPosition: {x: 0.31, y: 0, z: 7.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
