@@ -12,7 +12,6 @@ public class AudioManager : MonoBehaviour
     public bool isPlaying = false;
     // Potential to include a default recording (Rufus)
     public AudioClip audioClip;
-    public AudioClip otherClip;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +24,7 @@ public class AudioManager : MonoBehaviour
     {
         CollisionDetection();
 
-        if(isPlaying && hitColliders.Length < 0){
+        if(isPlaying && hitColliders.Length > 0){
             AdversarySounds();
         } 
     }
@@ -33,6 +32,9 @@ public class AudioManager : MonoBehaviour
     void CollisionDetection(){
         // Potential for several detections (Rufus)
         hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
+                for (int i = 0; i < hitColliders.Length; i++){
+                    //print(hitColliders[i].name + " " + audioClip.name);
+                }
     }
 
     public void RecordSound(){
@@ -44,8 +46,19 @@ public class AudioManager : MonoBehaviour
 
     void AdversarySounds(){
         for (int i = 0; i < hitColliders.Length; i++){
-            if(audioClip.name == "SFX_Water" && hitColliders[i].name == "Fire0"){
-                audioClip = otherClip;
+            if(hitColliders[i].GetComponent<PuzzleElement>()){
+                PuzzleElement puzzleElement = hitColliders[i].GetComponent<PuzzleElement>();
+                AudioSource puzzleSource = puzzleElement.GetComponent<AudioSource>();
+               if(puzzleElement.solutionClip == audioClip && audioClip != null){
+                    puzzleSource.Stop();
+                    puzzleSource.clip = puzzleElement.responseClip;
+                    GetComponentsInParent<PlayerController>()[0].audioSource.Stop();
+                    puzzleSource.Play();
+                    puzzleSource.loop = false;
+                    audioClip = null;
+                    isPlaying = false;
+                    hitColliders[i].enabled = false;
+               }  
             }
         }
     }

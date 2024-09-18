@@ -7,13 +7,14 @@ public class AudioController : MonoBehaviour
 {
     // Start is called before the first frame update
     private AudioSource audioSource;
-    public GameObject pc;
+    private GameObject pc;
     Vector3 playerPos = new Vector3(0, 0, 0);
     public float maxDist = 15f;
     public float minDist = 5f;
     private float distance = 0f;
     void Start()
     {
+        pc = GameObject.FindGameObjectWithTag("Player");
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -34,5 +35,10 @@ public class AudioController : MonoBehaviour
         } else {
             audioSource.volume = distance;
         }
+    }
+
+    void PlaySound(AudioClip clip) {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

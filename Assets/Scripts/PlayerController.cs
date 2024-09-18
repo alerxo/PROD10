@@ -10,14 +10,19 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float MoveDelay;
+    [SerializeField] LayerMask m_LayerMask;
+    [SerializeField] AudioClip playerStep;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
-    AudioSource audioSource;
+    public AudioSource audioSource;
     private float horizontalInput;
     private float verticalInput;
     private Vector3 moveDirection;
     private float timer;
+    Rigidbody rb;
+    private Collider[] ventCollider;
+    private bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +31,7 @@ public class PlayerController : MonoBehaviour
         blindCam = GameObject.FindGameObjectWithTag("BlindCamera");
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
         audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
 
         blindCam.SetActive(false);
 
@@ -38,6 +44,7 @@ public class PlayerController : MonoBehaviour
         //transform.Translate(moveDirection * speed * Time.deltaTime);
 
         timer -= Time.deltaTime;
+        isMoving = false;
 
         if(timer <= 0){
 
@@ -54,14 +61,22 @@ public class PlayerController : MonoBehaviour
                verticalInput = speed * -1;
             }
 
-            moveDirection = new Vector3(horizontalInput, 0, verticalInput);
+            Vector3 localMoveDirection = new Vector3(horizontalInput, 0f, verticalInput);
             
-            transform.Translate(moveDirection * speed);
+            moveDirection = transform.TransformDirection(localMoveDirection);
+            
+            //transform.Translate(moveDirection * speed);
+            rb.velocity = moveDirection * speed; //Can also move diagonally but scuffed (Rufus)
 
             if(horizontalInput != 0.0f || verticalInput != 0.0f){
                 timer = MoveDelay + Time.deltaTime;
-            }
-            
+                isMoving = true;
+                if(isMoving){
+                    audioSource.clip = playerStep;
+                    audioSource.Play();
+                }
+
+            } 
         }
 
         Controls(Input.inputString);
@@ -71,10 +86,10 @@ public class PlayerController : MonoBehaviour
     void Controls(string input){
         switch(input){
             case "q": 
-                transform.rotation *= Quaternion.Euler(0,-90,0);
+                rb.rotation *= Quaternion.Euler(0,-90,0);
                 break;
             case "e": 
-                transform.rotation *= Quaternion.Euler(0,90,0);
+                rb.rotation *= Quaternion.Euler(0,90,0);
                 break;
             case "r":
                 audioSource.Stop();
@@ -86,6 +101,12 @@ public class PlayerController : MonoBehaviour
                 print(audioSource.clip);
                 audioSource.Play();
                 audioManager.GetComponent<AudioManager>().isPlaying = true;
+                break;
+            case "l":
+                Respawn();
+                break;
+            case "h":
+                DaugtherCall();
                 break;
             case "c": //Debug purpose, should not be available in shipping (Rufus)
                 if(mainCam.activeInHierarchy){
@@ -103,5 +124,31 @@ public class PlayerController : MonoBehaviour
     }
     public bool Death(){
         return true;
+    }
+
+    void Respawn(){
+        timer = 0;
+
+        rb.position = new Vector3(0,0,0);
+        rb.rotation = Quaternion.Euler(0,0,0);
+
+        audioManager.GetComponent<AudioManager>().audioClip = null;
+        audioManager.GetComponent<AudioManager>().isPlaying = false;
+        
+        audioSource.Stop();
+        audioSource.clip = null;
+
+        GameObject[] puzzleElement = GameObject.FindGameObjectsWithTag("PuzzleElement");
+
+        for(int i = 0; i < puzzleElement.Length; i++){
+            puzzleElement[i].GetComponent<PuzzleElement>().Reset();
+        }
+    }
+
+    void DaugtherCall(){
+        ventCollider = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
+        for (int i = 0; i < ventCollider.Length; i++){
+            ventCollider[i].GetComponent<AudioSource>().Play();
+        }
     }
 }
