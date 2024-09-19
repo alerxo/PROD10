@@ -11,7 +11,7 @@ public interface IAlienState
 public class Alien_Idle : IAlienState
 {
     private float idleTime;
-    private const float maxIdleTime = 5;
+    private const float maxIdleTime = 5f;
 
     public IAlienState Execute(Alien alien)
     {
@@ -61,18 +61,12 @@ public class Alien_Patrolling : IAlienState
         return this;
     }
 
-    private void Clear(Alien alien)
-    {
-        destination = null;
-        alien.NavMeshAgent.SetDestination(alien.transform.position);
-    }
-
     private void GetDestination(Alien alien)
     {
         destination = alien.transform.position + new Vector3(GetRandomCoordinate(), 0, GetRandomCoordinate());
-        NavMeshPath path = new();
+        NavMeshPath path = alien.TryGetPath(destination.Value);
 
-        if (alien.NavMeshAgent.CalculatePath(destination.Value, path))
+        if (path != null)
         {
             alien.NavMeshAgent.SetPath(path);
         }
@@ -93,6 +87,12 @@ public class Alien_Patrolling : IAlienState
         }
 
         return value;
+    }
+
+    private void Clear(Alien alien)
+    {
+        destination = null;
+        alien.NavMeshAgent.SetDestination(alien.transform.position);
     }
 }
 
@@ -133,16 +133,9 @@ public class Alien_Investigating : IAlienState
         return alien.investigatingState;
     }
 
-    private void Clear(Alien alien)
-    {
-        destination = null;
-        currentClue = null;
-        alien.NavMeshAgent.SetDestination(alien.transform.position);
-    }
-
     private void GetDestination(Alien alien)
     {
-        float margin = destinationMargin * GetClueStrength(alien, currentClue);
+        float margin = destinationMargin * ClueSystem.GetClueStrength(alien, currentClue);
         destination = currentClue.Position + new Vector3(Random.Range(-margin, margin), 0, Random.Range(-margin, margin));
 
         NavMeshPath path = new();
@@ -160,52 +153,35 @@ public class Alien_Investigating : IAlienState
 
     public bool CanInvestigate(Alien alien)
     {
-        if (!HasClue())
-        {
-            return false;
-        }
-
-        NavMeshPath path = new();
-
-        if (!alien.NavMeshAgent.CalculatePath(currentClue.Position, path))
-        {
-            return false;
-        }
-
-        return path.status == NavMeshPathStatus.PathComplete;
-    }
-
-    public bool HasClue()
-    {
-        UpdateClue();
-
-        return currentClue != null;
-    }
-
-    private void UpdateClue()
-    {
-        if (currentClue != null && Time.time - currentClue.time > ClueSystem.ClueAliveTimeInSeconds)
+        if (!ClueSystem.IsClueValid(currentClue))
         {
             currentClue = null;
+
+            return false;
         }
+
+        return alien.TryGetPath(currentClue.Position) != null;
     }
 
     public void SetClue(Alien alien, Clue newClue)
     {
-        if (currentClue == null || GetClueStrength(alien, newClue) > GetClueStrength(alien, currentClue))
+        if (currentClue == null)
         {
             currentClue = newClue;
             destination = null;
         }
+
+        else
+        {
+            currentClue = ClueSystem.GetLargerClue(currentClue, newClue, alien);
+        }
     }
 
-    public float GetClueStrength(Alien alien, Clue clue)
+    private void Clear(Alien alien)
     {
-        float loudness = clue.Loudness;
-        float time = 1 - (Mathf.Min(Time.time - clue.time, ClueSystem.ClueAliveTimeInSeconds) / ClueSystem.ClueAliveTimeInSeconds);
-        float distance = 1 - (Mathf.Min(Vector3.Distance(alien.transform.position, clue.Position), ClueSystem.ClueRange) / ClueSystem.ClueRange);
-
-        return loudness * time * distance;
+        destination = null;
+        currentClue = null;
+        alien.NavMeshAgent.SetDestination(alien.transform.position);
     }
 }
 

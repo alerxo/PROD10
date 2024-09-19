@@ -49,4 +49,12 @@ public class Alien : MonoBehaviour
     {
         investigatingState.SetClue(this, clue);
     }
+
+    public NavMeshPath TryGetPath(Vector3 position)
+    {
+        NavMeshPath path = new();
+        NavMeshAgent.CalculatePath(position, path);
+
+        return path.status == NavMeshPathStatus.PathComplete ? path : null;
+    }
 }
