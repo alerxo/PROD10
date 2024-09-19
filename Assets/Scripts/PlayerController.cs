@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float MoveDelay;
     [SerializeField] LayerMask m_LayerMask;
     [SerializeField] AudioClip playerStep;
+    [SerializeField] AudioClip recordSound;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
@@ -65,14 +66,14 @@ public class PlayerController : MonoBehaviour
             
             moveDirection = transform.TransformDirection(localMoveDirection);
             
-            //transform.Translate(moveDirection * speed);
+            //transform.Translate(moveDirection * speed); 
             rb.velocity = moveDirection * speed; //Can also move diagonally but scuffed (Rufus)
 
             if(horizontalInput != 0.0f || verticalInput != 0.0f){
                 timer = MoveDelay + Time.deltaTime;
                 isMoving = true;
                 if(isMoving){
-                    audioSource.clip = playerStep;
+                    audioSource.clip = playerStep; 
                     audioSource.Play();
                 }
 
@@ -99,7 +100,10 @@ public class PlayerController : MonoBehaviour
             case "r":
                 audioSource.Stop();
                 audioManager.GetComponent<AudioManager>().isPlaying = false;
-                audioManager.GetComponent<AudioManager>().RecordSound();
+                if (audioManager.GetComponent<AudioManager>().RecordSound())
+                {
+                    audioSource.PlayOneShot(recordSound);
+                }
                 break;
             case "p":
                 audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
@@ -128,6 +132,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     public bool Death(){
+        Respawn();
         return true;
     }
 
