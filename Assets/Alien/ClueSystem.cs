@@ -10,9 +10,9 @@ public class ClueSystem
     public const float ClueAliveTimeInSeconds = 3;
     public const float ClueRange = 30;
 
-    public static void TriggerClue(Clue clue)
+    public static void TriggerClue(float loudness, Vector3 position)
     {
-        OnClueTriggered?.Invoke(clue);
+        OnClueTriggered?.Invoke(new Clue(loudness, position));
     }
 }
 
