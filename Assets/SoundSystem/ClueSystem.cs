@@ -7,8 +7,8 @@ public class ClueSystem
 {
     public static UnityAction<Clue> OnClueTriggered;
 
-    public const float ClueAliveTimeInSeconds = 10;
-    public const float ClueRange = 20;
+    public const float ClueAliveTimeInSeconds = 3;
+    public const float ClueRange = 30;
 
     public static void TriggerClue(Clue clue)
     {
