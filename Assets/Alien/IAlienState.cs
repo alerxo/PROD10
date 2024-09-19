@@ -194,14 +194,13 @@ public class Alien_Investigating : IAlienState
 
 public class Alien_Attacking : IAlienState
 {
-    private const float attackRange = 1f;
+    private const float attackRange = 1.5f;
 
     public IAlienState Execute(Alien alien)
     {
-        Debug.Log("Dead");
         alien.Player.GetComponent<PlayerController>().Death();
 
-        return this;
+        return alien.idleState;
     }
 
     public bool CanAttack(Alien alien)

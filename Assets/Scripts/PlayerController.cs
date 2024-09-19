@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask m_LayerMask;
     [SerializeField] AudioClip playerStep;
     [SerializeField] AudioClip recordSound;
+    [SerializeField] AudioClip deathSound;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
@@ -153,6 +154,8 @@ public class PlayerController : MonoBehaviour
         for(int i = 0; i < puzzleElement.Length; i++){
             puzzleElement[i].GetComponent<PuzzleElement>().Reset();
         }
+
+        audioSource.PlayOneShot(deathSound);
     }
 
     void DaugtherCall(){
