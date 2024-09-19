@@ -15,7 +15,7 @@ public class Alien_Idle : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
-        if (alien.investigatingState.HasClue())
+        if (alien.investigatingState.CanInvestigate(alien))
         {
             return alien.investigatingState;
         }
@@ -39,7 +39,7 @@ public class Alien_Patrolling : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
-        if (alien.investigatingState.HasClue())
+        if (alien.investigatingState.CanInvestigate(alien))
         {
             Clear(alien);
 
@@ -104,7 +104,7 @@ public class Alien_Investigating : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
-        if (!HasClue())
+        if (!CanInvestigate(alien))
         {
             Clear(alien);
 
@@ -156,6 +156,23 @@ public class Alien_Investigating : IAlienState
         {
             destination = null;
         }
+    }
+
+    public bool CanInvestigate(Alien alien)
+    {
+        if (!HasClue())
+        {
+            return false;
+        }
+
+        NavMeshPath path = new();
+
+        if (!alien.NavMeshAgent.CalculatePath(currentClue.Position, path))
+        {
+            return false;
+        }
+
+        return path.status == NavMeshPathStatus.PathComplete;
     }
 
     public bool HasClue()
