@@ -33,14 +33,15 @@ public class Alien_Idle : IAlienState
 
 public class Alien_Patrolling : IAlienState
 {
-    private const float patrolDistance = 5;
+    private const float patrolDistanceMin = 5;
+    private const float patrolDistanceMax = 15;
     private Vector3? destination;
 
     public IAlienState Execute(Alien alien)
     {
         if (alien.investigatingState.HasClue())
         {
-            destination = null;
+            Clear(alien);
 
             return alien.investigatingState;
         }
@@ -52,7 +53,7 @@ public class Alien_Patrolling : IAlienState
 
         else if (Vector3.Distance(alien.transform.position, alien.NavMeshAgent.destination) < 0.5)
         {
-            destination = null;
+            Clear(alien);
 
             return alien.idleState;
         }
@@ -60,9 +61,15 @@ public class Alien_Patrolling : IAlienState
         return this;
     }
 
+    private void Clear(Alien alien)
+    {
+        destination = null;
+        alien.NavMeshAgent.SetDestination(alien.transform.position);
+    }
+
     private void GetDestination(Alien alien)
     {
-        destination = alien.transform.position + new Vector3(Random.Range(-patrolDistance, patrolDistance), 0, Random.Range(-patrolDistance, patrolDistance));
+        destination = alien.transform.position + new Vector3(GetRandomCoordinate(), 0, GetRandomCoordinate());
         NavMeshPath path = new();
 
         if (alien.NavMeshAgent.CalculatePath(destination.Value, path))
@@ -74,6 +81,18 @@ public class Alien_Patrolling : IAlienState
         {
             destination = null;
         }
+    }
+
+    private float GetRandomCoordinate()
+    {
+        float value = Random.Range(patrolDistanceMin, patrolDistanceMax);
+
+        if (Random.Range(0, 2) == 0)
+        {
+            value = -value;
+        }
+
+        return value;
     }
 }
 
@@ -87,13 +106,14 @@ public class Alien_Investigating : IAlienState
     {
         if (!HasClue())
         {
+            Clear(alien);
+
             return alien.idleState;
         }
 
         if (alien.attackingState.CanAttack(alien))
         {
-            destination = null;
-            currentClue = null;
+            Clear(alien);
 
             return alien.attackingState;
         }
@@ -105,13 +125,19 @@ public class Alien_Investigating : IAlienState
 
         else if (Vector3.Distance(alien.transform.position, destination.Value) < 1.5f)
         {
-            destination = null;
-            currentClue = null;
+            Clear(alien);
 
             return alien.idleState;
         }
 
         return alien.investigatingState;
+    }
+
+    private void Clear(Alien alien)
+    {
+        destination = null;
+        currentClue = null;
+        alien.NavMeshAgent.SetDestination(alien.transform.position);
     }
 
     private void GetDestination(Alien alien)
@@ -134,7 +160,17 @@ public class Alien_Investigating : IAlienState
 
     public bool HasClue()
     {
+        UpdateClue();
+
         return currentClue != null;
+    }
+
+    private void UpdateClue()
+    {
+        if (currentClue != null && Time.time - currentClue.time > ClueSystem.ClueAliveTimeInSeconds)
+        {
+            currentClue = null;
+        }
     }
 
     public void SetClue(Alien alien, Clue newClue)
@@ -152,7 +188,7 @@ public class Alien_Investigating : IAlienState
         float time = 1 - (Mathf.Min(Time.time - clue.time, ClueSystem.ClueAliveTimeInSeconds) / ClueSystem.ClueAliveTimeInSeconds);
         float distance = 1 - (Mathf.Min(Vector3.Distance(alien.transform.position, clue.Position), ClueSystem.ClueRange) / ClueSystem.ClueRange);
 
-        return loudness * time * distance; ;
+        return loudness * time * distance;
     }
 }
 
@@ -162,6 +198,7 @@ public class Alien_Attacking : IAlienState
 
     public IAlienState Execute(Alien alien)
     {
+        Debug.Log("Dead");
         alien.Player.GetComponent<PlayerController>().Death();
 
         return this;
