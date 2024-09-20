@@ -37,11 +37,13 @@ public class AudioManager : MonoBehaviour
                 }
     }
 
-    public void RecordSound(){
+    public bool RecordSound(){
         for (int i = 0; i < hitColliders.Length; i++){
             audioClip = hitColliders[i].gameObject.GetComponent<AudioSource>().clip;
             print(audioClip);
+            return true;
         }
+        return false;
     }
 
     void AdversarySounds(){
