@@ -6,8 +6,9 @@ using UnityEngine.AI;
 public class Monster : MonoBehaviour
 {
     public GameObject Player { get; private set; }
-    public AudioSource AudioSource { get; private set; }
     public NavMeshAgent NavMeshAgent { get; private set; }
+    public const float WalkSpeed = 3;
+    public const float RunSpeed = 6f;
 
     private IMonsterState state;
     public readonly Monster_Idle idleState = new();
@@ -15,6 +16,11 @@ public class Monster : MonoBehaviour
     public readonly Monster_Investigating investigatingState = new();
     public readonly Monster_Chasing chasingState = new();
     public readonly Monster_Attacking attackingState = new();
+
+    public AudioSource IdleAudio;
+    public AudioSource WalkingAudio;
+    public AudioSource ChasingAudio;
+    public AudioSource AttackingAudio;
 
     public Clue CurrentClue { get; private set; }
     [field: SerializeField] public float PlayerNoiseValue { get; private set; }
@@ -28,7 +34,6 @@ public class Monster : MonoBehaviour
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();
         Player = FindObjectOfType<PlayerController>().gameObject;
-        AudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -84,7 +89,7 @@ public class Monster : MonoBehaviour
         CurrentClue = ClueSystem.GetLargerClue(CurrentClue, second, this);
     }
 
-    public bool TrySetPath(Vector3 position)
+    public bool TrySetPath(Vector3 position, float speed)
     {
         NavMeshPath path = new();
         NavMeshAgent.CalculatePath(position, path);
@@ -93,6 +98,7 @@ public class Monster : MonoBehaviour
         {
             NavMeshAgent.SetPath(path);
             NavMeshAgent.isStopped = false;
+            NavMeshAgent.speed = speed;
 
             return true;
         }
@@ -122,6 +128,8 @@ public class Monster : MonoBehaviour
     public IEnumerator Attack()
     {
         float timer = 0;
+
+        AttackingAudio.Play();
 
         while ((timer += Time.deltaTime) < 1f)
         {

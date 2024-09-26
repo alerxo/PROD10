@@ -38,9 +38,15 @@ public class Monster_Patrolling : IMonsterState
 
     public IMonsterState Execute(Monster monster)
     {
+        if (!monster.WalkingAudio.isPlaying)
+        {
+            monster.WalkingAudio.Play();
+        }
+
         if (monster.investigatingState.CanInvestigate(monster))
         {
             monster.StopPath();
+            monster.WalkingAudio.Stop();
 
             return monster.investigatingState;
         }
@@ -53,6 +59,7 @@ public class Monster_Patrolling : IMonsterState
         else if (Vector3.Distance(monster.transform.position, monster.NavMeshAgent.destination) < stopDistance)
         {
             monster.StopPath();
+            monster.WalkingAudio.Stop();
 
             return monster.idleState;
         }
@@ -63,7 +70,7 @@ public class Monster_Patrolling : IMonsterState
     private void GetDestination(Monster monster)
     {
         Vector3 position = monster.transform.position + new Vector3(GetRandomCoordinate(), 0, GetRandomCoordinate());
-        monster.TrySetPath(position);
+        monster.TrySetPath(position, Monster.WalkSpeed);
     }
 
     private float GetRandomCoordinate()
@@ -87,15 +94,23 @@ public class Monster_Investigating : IMonsterState
 
     public IMonsterState Execute(Monster monster)
     {
+        if (!monster.WalkingAudio.isPlaying)
+        {
+            monster.WalkingAudio.Play();
+        }
+
         if (!CanInvestigate(monster))
         {
             monster.StopPath();
+            monster.WalkingAudio.Stop();
 
             return monster.idleState;
         }
 
         if (monster.chasingState.CanChase(monster))
         {
+            monster.WalkingAudio.Stop();
+
             return monster.chasingState;
         }
 
@@ -119,7 +134,7 @@ public class Monster_Investigating : IMonsterState
             float margin = destinationMargin * (1 - ClueSystem.GetClueStrength(monster, monster.CurrentClue));
             Vector3 position = monster.CurrentClue.Position + new Vector3(Random.Range(-margin, margin), 0, Random.Range(-margin, margin));
 
-            if (monster.TrySetPath(position))
+            if (monster.TrySetPath(position, Monster.WalkSpeed))
             {
                 break;
             }
@@ -134,14 +149,20 @@ public class Monster_Investigating : IMonsterState
 
 public class Monster_Chasing : IMonsterState
 {
-    private const float PlayerNoiseValueEnterValue = 4f;
+    private const float PlayerNoiseValueEnterValue = 3.5f;
     private const float PlayerNoiseValueExitValue = 1f;
 
     public IMonsterState Execute(Monster monster)
     {
+        if (!monster.ChasingAudio.isPlaying)
+        {
+            monster.ChasingAudio.Play();
+        }
+
         if (monster.PlayerNoiseValue <= PlayerNoiseValueExitValue)
         {
             monster.StopPath();
+            monster.ChasingAudio.Stop();
 
             return monster.idleState;
         }
@@ -149,11 +170,12 @@ public class Monster_Chasing : IMonsterState
         if (monster.attackingState.CanAttack(monster))
         {
             monster.StopPath();
+            monster.ChasingAudio.Stop();
 
             return monster.attackingState;
         }
 
-        monster.TrySetPath(monster.Player.transform.position);
+        monster.TrySetPath(monster.Player.transform.position, Monster.RunSpeed);
 
         return this;
     }
@@ -167,6 +189,7 @@ public class Monster_Chasing : IMonsterState
 public class Monster_Attacking : IMonsterState
 {
     private const float attackRange = 1f;
+    private const float clueAttackWindow = 0.4f;
 
     public IMonsterState Execute(Monster monster)
     {
@@ -177,6 +200,7 @@ public class Monster_Attacking : IMonsterState
 
     public bool CanAttack(Monster monster)
     {
-        return Vector3.Distance(monster.transform.position, monster.Player.transform.position) < attackRange;
+        return monster.CurrentClue != null && (Time.time - monster.CurrentClue.TriggerTime) < clueAttackWindow &&
+            Vector3.Distance(monster.transform.position, monster.Player.transform.position) < attackRange;
     }
 }
