@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] audioClips;  // Placeholder for menu option sounds
+    [SerializeField] private AudioClip menuIntroClip; // Audio clip for blind player menu introduction
     [SerializeField] private Button[] menuButtons;    // Assign your buttons in the inspector
 
     private int selectedIndex = 0;   // To track which menu item is currently selected
@@ -18,8 +19,8 @@ public class MenuController : MonoBehaviour
         // Set the initial button selection (e.g., Start button)
         SelectButton(menuButtons[selectedIndex]);
 
-        // Optionally, play a voice intro when the menu first loads
-        PlayVoiceIntro();
+        // Play the menu introduction for the blind player when the menu is first opened
+        PlayMenuIntro();
     }
 
     void Update()
@@ -77,11 +78,11 @@ public class MenuController : MonoBehaviour
         audioSource.Play();
     }
 
-    // Optional: Play an initial voice intro
-    void PlayVoiceIntro()
+    // Play the menu introduction for blind players
+    void PlayMenuIntro()
     {
-        // Play an introductory sound for the menu (e.g., "Welcome to the game!")
-        audioSource.clip = audioClips[0];  // Assign a suitable audio clip
+        // This plays an audio clip introducing the player to the menu (e.g., "You are in the main menu.")
+        audioSource.clip = menuIntroClip;  // Assign your introduction audio clip here
         audioSource.Play();
     }
 
