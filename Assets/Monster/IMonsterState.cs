@@ -33,7 +33,7 @@ public class Monster_Idle : IMonsterState
 public class Monster_Patrolling : IMonsterState
 {
     private const float patrolDistanceMin = 5;
-    private const float patrolDistanceMax = 15;
+    private const float patrolDistanceMax = 10;
     private const float stopDistance = 0.5f;
 
     public IMonsterState Execute(Monster monster)
@@ -136,8 +136,8 @@ public class Monster_Investigating : IMonsterState
 
 public class Monster_Chasing : IMonsterState
 {
-    private const float PlayerNoiseValueEnterValue = 3.5f;
-    private const float PlayerNoiseValueExitValue = 1f;
+    public const float PlayerNoiseValueEnterValue = 4.5f;
+    public const float PlayerNoiseValueExitValue = 1f;
 
     public IMonsterState Execute(Monster monster)
     {
@@ -178,7 +178,7 @@ public class Monster_Attacking : IMonsterState
         if (timer == 0)
         {
             isBlocked = false;
-            monster.PlayerActionSound(monster.AttackWindupClip);
+            monster.SetActionAudio(monster.AttackWindupClip);
         }
 
         if (isBlocked)
@@ -212,7 +212,7 @@ public class Monster_Killing : IMonsterState
 {
     public IMonsterState Execute(Monster monster)
     {
-        monster.PlayerActionSound(monster.KillClip);
+        monster.SetActionAudio(monster.KillClip);
         monster.Player.GetComponent<PlayerController>().Death();
         monster.SetDefaultValues();
 
@@ -223,22 +223,64 @@ public class Monster_Killing : IMonsterState
 public class Monster_Stunned : IMonsterState
 {
     private float timer = 0;
-    private const float stunTume = 4f;
+    private const float stunTume = 1f;
 
     public IMonsterState Execute(Monster monster)
     {
         if (timer == 0)
         {
-            monster.PlayerActionSound(monster.BlockClip);
+            monster.SetActionAudio(monster.BlockClip);
         }
 
         if ((timer += Time.deltaTime) > stunTume)
         {
             timer = 0;
 
+            return monster.scaredState;
+        }
+
+        return this;
+    }
+}
+
+public class Monster_Scared : IMonsterState
+{
+    private const float fleeDistanceMin = 3;
+    private const float fleeDistanceMax = 7;
+    private const float stopDistance = 0.5f;
+
+    public IMonsterState Execute(Monster monster)
+    {
+        if (!monster.HasDestination())
+        {
+            GetDestination(monster);
+        }
+
+        else if (Vector3.Distance(monster.transform.position, monster.NavMeshAgent.destination) < stopDistance)
+        {
+            monster.StopPath();
+
             return monster.idleState;
         }
 
         return this;
+    }
+
+    private void GetDestination(Monster monster)
+    {
+        Vector3 position = monster.Player.transform.position + new Vector3(GetRandomCoordinate(), 0, GetRandomCoordinate());
+        monster.TrySetPath(position, Monster.RunSpeed);
+    }
+
+    private float GetRandomCoordinate()
+    {
+        float value = Random.Range(fleeDistanceMin, fleeDistanceMax);
+
+        if (Random.Range(0, 2) == 0)
+        {
+            value = -value;
+        }
+
+        return value;
     }
 }
