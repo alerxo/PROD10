@@ -19,7 +19,7 @@ public class Monster_Idle : IMonsterState
             return monster.investigatingState;
         }
 
-        if ((idleTime += Monster.stateUpdateCooldownInSeconds + Time.deltaTime) >= maxIdleTime)
+        if ((idleTime += Time.deltaTime) >= maxIdleTime)
         {
             idleTime = 0;
 
@@ -168,8 +168,8 @@ public class Monster_Chasing : IMonsterState
 
 public class Monster_Attacking : IMonsterState
 {
-    private const float range = 1f;
-    private const float windupTimeInSeconds = 1f;
+    private const float range = 1.5f;
+    private const float windupTimeInSeconds = 0.346f;
     private float timer = 0f;
     private bool isBlocked = false;
 
@@ -187,7 +187,7 @@ public class Monster_Attacking : IMonsterState
             return monster.stunnedState;
         }
 
-        if ((timer += Monster.stateUpdateCooldownInSeconds + Time.deltaTime) > windupTimeInSeconds)
+        if ((timer += Time.deltaTime) > windupTimeInSeconds)
         {
             timer = 0f;
 
@@ -214,6 +214,7 @@ public class Monster_Killing : IMonsterState
     {
         monster.PlayerActionSound(monster.KillClip);
         monster.Player.GetComponent<PlayerController>().Death();
+        monster.SetDefaultValues();
 
         return monster.idleState;
     }
@@ -231,7 +232,7 @@ public class Monster_Stunned : IMonsterState
             monster.PlayerActionSound(monster.BlockClip);
         }
 
-        if ((timer += Monster.stateUpdateCooldownInSeconds + Time.deltaTime) > stunTume)
+        if ((timer += Time.deltaTime) > stunTume)
         {
             timer = 0;
 

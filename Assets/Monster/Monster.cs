@@ -36,8 +36,6 @@ public class Monster : MonoBehaviour
     public const float PlayerNoiseValueFalloff = 0.7f;
 
     [SerializeField] private string stateName;
-    [SerializeField] private float stateUpdateTimer = 0;
-    public const float stateUpdateCooldownInSeconds = 0.1f;
 
     private void Awake()
     {
@@ -137,12 +135,8 @@ public class Monster : MonoBehaviour
 
     private void UpdateState()
     {
-        if (state != null && (stateUpdateTimer += Time.deltaTime) >= stateUpdateCooldownInSeconds)
-        {
-            state = state.Execute(this);
-            stateName = state != null ? state.ToString() : "State Update Paused";
-            stateUpdateTimer = 0;
-        }
+        state = state.Execute(this);
+        stateName = state.ToString();
     }
 
     private void ClueTriggered(Clue second)
@@ -189,5 +183,12 @@ public class Monster : MonoBehaviour
     public bool HasDestination()
     {
         return NavMeshAgent.isStopped == false;
+    }
+
+    public void SetDefaultValues()
+    {
+        state = idleState;
+        PlayerNoiseValue = 0;
+        CurrentClue = null;
     }
 }
