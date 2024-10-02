@@ -231,6 +231,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 64
+  recorderEmptySound: {fileID: 8300000, guid: 46f68199acf18b545a7c66b50e5901d4, type: 3}
   isPlaying: 0
   audioClip: {fileID: 0}
 --- !u!1 &7726994337976478351
@@ -390,8 +391,10 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 128
-  playerStep: {fileID: 8300000, guid: 11bb18985a753be449a45c87c5f57578, type: 3}
-  recordSound: {fileID: 0}
+  playerStep: {fileID: 8300000, guid: d76dfda940c8023408ec65b52e3e6aa0, type: 3}
+  recordSound: {fileID: 8300000, guid: 10bd2b5abfecbdd4fb43a70d065c80a1, type: 3}
+  recordingFailedSound: {fileID: 8300000, guid: c8e5793d64f99604e8f7adbc39b6038e, type: 3}
+  recordPlayingSound: {fileID: 8300000, guid: 2dfa7c2e15b3c8b4c8663e9cc763ef53, type: 3}
   deathSound: {fileID: 0}
   audioSource: {fileID: 0}
 --- !u!82 &1975789591329547273
