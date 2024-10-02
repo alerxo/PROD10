@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
             
             if(localMoveDirection.magnitude > 0) // Calls clue event for alien investigate behaviour
             {
-                ClueSystem.TriggerClue(1, transform.position);
+                ClueSystem.TriggerClue(1, transform.position, gameObject);
             }
         }
 
