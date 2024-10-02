@@ -1254,6 +1254,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7555283848977325296, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
   m_PrefabInstance: {fileID: 402318596}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &538941722
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1715681276}
+    m_Modifications:
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500917009248449524, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_Size.x
+      value: 0.49302784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500917009248449524, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_Center.x
+      value: 0.2534862
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613374064178572453, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_Name
+      value: FoleyZone_wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613374064178572453, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_TagString
+      value: ZoneWood
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+--- !u!4 &538941723 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+  m_PrefabInstance: {fileID: 538941722}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &588515879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1262,30 +1336,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 573709262621509042, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1975789591329547273, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: MaxDistance
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1975789591329547273, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2504142212217242213, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: recorderEmptySound
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: foleyZones.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 46f68199acf18b545a7c66b50e5901d4, type: 3}
-    - target: {fileID: 6563106301736313658, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: playerStep
+      propertyPath: foleyZones.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: 8ffdcaf1503b67f4e83218830eefa616, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.73
@@ -3165,6 +3223,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7555283848977325296, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
   m_PrefabInstance: {fileID: 1579840462}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1615775868
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1715681276}
+    m_Modifications:
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500917009248449524, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_Size.x
+      value: 0.49424943
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500917009248449524, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_Center.x
+      value: -0.2528754
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613374064178572453, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_Name
+      value: FoleyZone_stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613374064178572453, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+      propertyPath: m_TagString
+      value: ZoneStone
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+--- !u!4 &1615775869 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1292907876936156669, guid: 2ee46353bbd6e0b488afd3f35ca69fca, type: 3}
+  m_PrefabInstance: {fileID: 1615775868}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1633831144
 GameObject:
   m_ObjectHideFlags: 0
@@ -3484,6 +3616,39 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646539729}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1715681275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715681276}
+  m_Layer: 0
+  m_Name: Foley Zones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1715681276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715681275}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 538941723}
+  - {fileID: 1615775869}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805175861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3632,3 +3797,4 @@ SceneRoots:
   - {fileID: 304345218}
   - {fileID: 588515879}
   - {fileID: 816680538}
+  - {fileID: 1715681276}
