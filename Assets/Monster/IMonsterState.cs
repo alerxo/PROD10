@@ -19,7 +19,7 @@ public class Monster_Idle : IMonsterState
             return monster.investigatingState;
         }
 
-        if ((idleTime += Monster.stateUpdateCooldownInSeconds + Time.deltaTime) >= maxIdleTime)
+        if ((idleTime += Time.deltaTime) >= maxIdleTime)
         {
             idleTime = 0;
 
@@ -33,20 +33,14 @@ public class Monster_Idle : IMonsterState
 public class Monster_Patrolling : IMonsterState
 {
     private const float patrolDistanceMin = 5;
-    private const float patrolDistanceMax = 15;
+    private const float patrolDistanceMax = 10;
     private const float stopDistance = 0.5f;
 
     public IMonsterState Execute(Monster monster)
     {
-        if (!monster.WalkingAudio.isPlaying)
-        {
-            monster.WalkingAudio.Play();
-        }
-
         if (monster.investigatingState.CanInvestigate(monster))
         {
             monster.StopPath();
-            monster.WalkingAudio.Stop();
 
             return monster.investigatingState;
         }
@@ -59,7 +53,6 @@ public class Monster_Patrolling : IMonsterState
         else if (Vector3.Distance(monster.transform.position, monster.NavMeshAgent.destination) < stopDistance)
         {
             monster.StopPath();
-            monster.WalkingAudio.Stop();
 
             return monster.idleState;
         }
@@ -94,22 +87,16 @@ public class Monster_Investigating : IMonsterState
 
     public IMonsterState Execute(Monster monster)
     {
-        if (!monster.WalkingAudio.isPlaying)
-        {
-            monster.WalkingAudio.Play();
-        }
-
         if (!CanInvestigate(monster))
         {
             monster.StopPath();
-            monster.WalkingAudio.Stop();
 
             return monster.idleState;
         }
 
         if (monster.chasingState.CanChase(monster))
         {
-            monster.WalkingAudio.Stop();
+            monster.ActionAudio.PlayOneShot(monster.ChaseTriggeredClip);
 
             return monster.chasingState;
         }
@@ -149,20 +136,14 @@ public class Monster_Investigating : IMonsterState
 
 public class Monster_Chasing : IMonsterState
 {
-    private const float PlayerNoiseValueEnterValue = 3.5f;
-    private const float PlayerNoiseValueExitValue = 1f;
+    public const float PlayerNoiseValueEnterValue = 4.5f;
+    public const float PlayerNoiseValueExitValue = 1f;
 
     public IMonsterState Execute(Monster monster)
     {
-        if (!monster.ChasingAudio.isPlaying)
-        {
-            monster.ChasingAudio.Play();
-        }
-
         if (monster.PlayerNoiseValue <= PlayerNoiseValueExitValue)
         {
             monster.StopPath();
-            monster.ChasingAudio.Stop();
 
             return monster.idleState;
         }
@@ -170,7 +151,6 @@ public class Monster_Chasing : IMonsterState
         if (monster.attackingState.CanAttack(monster))
         {
             monster.StopPath();
-            monster.ChasingAudio.Stop();
 
             return monster.attackingState;
         }
@@ -188,19 +168,119 @@ public class Monster_Chasing : IMonsterState
 
 public class Monster_Attacking : IMonsterState
 {
-    private const float attackRange = 1f;
-    private const float clueAttackWindow = 0.4f;
+    private const float range = 1.5f;
+    private const float windupTimeInSeconds = 0.346f;
+    private float timer = 0f;
+    private bool isBlocked = false;
 
     public IMonsterState Execute(Monster monster)
     {
-        monster.StartCoroutine(monster.Attack());
+        if (timer == 0)
+        {
+            isBlocked = false;
+            monster.SetActionAudio(monster.AttackWindupClip);
+        }
 
-        return null;
+        if (isBlocked)
+        {
+            timer = 0f;
+            return monster.stunnedState;
+        }
+
+        if ((timer += Time.deltaTime) > windupTimeInSeconds)
+        {
+            timer = 0f;
+
+            return monster.killingState;
+        }
+
+        return this;
+    }
+
+    public void Block()
+    {
+        isBlocked = true;
     }
 
     public bool CanAttack(Monster monster)
     {
-        return monster.CurrentClue != null && (Time.time - monster.CurrentClue.TriggerTime) < clueAttackWindow &&
-            Vector3.Distance(monster.transform.position, monster.Player.transform.position) < attackRange;
+        return Vector3.Distance(monster.transform.position, monster.Player.transform.position) < range;
+    }
+}
+
+public class Monster_Killing : IMonsterState
+{
+    public IMonsterState Execute(Monster monster)
+    {
+        monster.SetActionAudio(monster.KillClip);
+        monster.Player.GetComponent<PlayerController>().Death();
+        monster.SetDefaultValues();
+
+        return monster.idleState;
+    }
+}
+
+public class Monster_Stunned : IMonsterState
+{
+    private float timer = 0;
+    private const float stunTume = 1f;
+
+    public IMonsterState Execute(Monster monster)
+    {
+        if (timer == 0)
+        {
+            monster.SetActionAudio(monster.BlockClip);
+        }
+
+        if ((timer += Time.deltaTime) > stunTume)
+        {
+            timer = 0;
+
+            return monster.scaredState;
+        }
+
+        return this;
+    }
+}
+
+public class Monster_Scared : IMonsterState
+{
+    private const float fleeDistanceMin = 3;
+    private const float fleeDistanceMax = 7;
+    private const float stopDistance = 0.5f;
+
+    public IMonsterState Execute(Monster monster)
+    {
+        if (!monster.HasDestination())
+        {
+            GetDestination(monster);
+        }
+
+        else if (Vector3.Distance(monster.transform.position, monster.NavMeshAgent.destination) < stopDistance)
+        {
+            monster.StopPath();
+
+            return monster.idleState;
+        }
+
+        return this;
+    }
+
+    private void GetDestination(Monster monster)
+    {
+        Vector3 position = monster.Player.transform.position + new Vector3(GetRandomCoordinate(), 0, GetRandomCoordinate());
+        monster.TrySetPath(position, Monster.RunSpeed);
+    }
+
+    private float GetRandomCoordinate()
+    {
+        float value = Random.Range(fleeDistanceMin, fleeDistanceMax);
+
+        if (Random.Range(0, 2) == 0)
+        {
+            value = -value;
+        }
+
+        return value;
     }
 }
