@@ -38,15 +38,9 @@ public class Monster_Patrolling : IMonsterState
 
     public IMonsterState Execute(Monster monster)
     {
-        if (!monster.WalkingAudio.isPlaying)
-        {
-            monster.WalkingAudio.Play();
-        }
-
         if (monster.investigatingState.CanInvestigate(monster))
         {
             monster.StopPath();
-            monster.WalkingAudio.Stop();
 
             return monster.investigatingState;
         }
@@ -59,7 +53,6 @@ public class Monster_Patrolling : IMonsterState
         else if (Vector3.Distance(monster.transform.position, monster.NavMeshAgent.destination) < stopDistance)
         {
             monster.StopPath();
-            monster.WalkingAudio.Stop();
 
             return monster.idleState;
         }
@@ -94,22 +87,16 @@ public class Monster_Investigating : IMonsterState
 
     public IMonsterState Execute(Monster monster)
     {
-        if (!monster.WalkingAudio.isPlaying)
-        {
-            monster.WalkingAudio.Play();
-        }
-
         if (!CanInvestigate(monster))
         {
             monster.StopPath();
-            monster.WalkingAudio.Stop();
 
             return monster.idleState;
         }
 
         if (monster.chasingState.CanChase(monster))
         {
-            monster.WalkingAudio.Stop();
+            monster.ActionAudio.PlayOneShot(monster.ChaseTriggeredClip);
 
             return monster.chasingState;
         }
@@ -154,15 +141,9 @@ public class Monster_Chasing : IMonsterState
 
     public IMonsterState Execute(Monster monster)
     {
-        if (!monster.ChasingAudio.isPlaying)
-        {
-            monster.ChasingAudio.Play();
-        }
-
         if (monster.PlayerNoiseValue <= PlayerNoiseValueExitValue)
         {
             monster.StopPath();
-            monster.ChasingAudio.Stop();
 
             return monster.idleState;
         }
@@ -170,7 +151,6 @@ public class Monster_Chasing : IMonsterState
         if (monster.attackingState.CanAttack(monster))
         {
             monster.StopPath();
-            monster.ChasingAudio.Stop();
 
             return monster.attackingState;
         }
@@ -188,19 +168,76 @@ public class Monster_Chasing : IMonsterState
 
 public class Monster_Attacking : IMonsterState
 {
-    private const float attackRange = 1f;
-    private const float clueAttackWindow = 0.4f;
+    private const float range = 1f;
+    private const float windupTimeInSeconds = 1f;
+    private float timer = 0f;
+    private bool isBlocked = false;
 
     public IMonsterState Execute(Monster monster)
     {
-        monster.StartCoroutine(monster.Attack());
+        if (timer == 0)
+        {
+            isBlocked = false;
+            monster.PlayerActionSound(monster.AttackWindupClip);
+        }
 
-        return null;
+        if (isBlocked)
+        {
+            timer = 0f;
+            return monster.stunnedState;
+        }
+
+        if ((timer += Monster.stateUpdateCooldownInSeconds + Time.deltaTime) > windupTimeInSeconds)
+        {
+            timer = 0f;
+
+            return monster.killingState;
+        }
+
+        return this;
+    }
+
+    public void Block()
+    {
+        isBlocked = true;
     }
 
     public bool CanAttack(Monster monster)
     {
-        return monster.CurrentClue != null && (Time.time - monster.CurrentClue.TriggerTime) < clueAttackWindow &&
-            Vector3.Distance(monster.transform.position, monster.Player.transform.position) < attackRange;
+        return Vector3.Distance(monster.transform.position, monster.Player.transform.position) < range;
+    }
+}
+
+public class Monster_Killing : IMonsterState
+{
+    public IMonsterState Execute(Monster monster)
+    {
+        monster.PlayerActionSound(monster.KillClip);
+        monster.Player.GetComponent<PlayerController>().Death();
+
+        return monster.idleState;
+    }
+}
+
+public class Monster_Stunned : IMonsterState
+{
+    private float timer = 0;
+    private const float stunTume = 4f;
+
+    public IMonsterState Execute(Monster monster)
+    {
+        if (timer == 0)
+        {
+            monster.PlayerActionSound(monster.BlockClip);
+        }
+
+        if ((timer += Monster.stateUpdateCooldownInSeconds + Time.deltaTime) > stunTume)
+        {
+            timer = 0;
+
+            return monster.idleState;
+        }
+
+        return this;
     }
 }
