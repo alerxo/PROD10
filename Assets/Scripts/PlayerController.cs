@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask m_LayerMask;
     [SerializeField] AudioClip playerStep;
     [SerializeField] AudioClip recordSound;
+    [SerializeField] AudioClip recordingFailedSound;
+    [SerializeField] AudioClip recordPlayingSound;
     [SerializeField] AudioClip deathSound;
     GameObject mainCam;   
     GameObject blindCam;     
@@ -101,14 +103,22 @@ public class PlayerController : MonoBehaviour
             case "r":
                 audioSource.Stop();
                 audioManager.GetComponent<AudioManager>().isPlaying = false;
+                //Indikatorer för när man lyckas eller failar att spela in ljud
                 if (audioManager.GetComponent<AudioManager>().RecordSound())
                 {
                     audioSource.PlayOneShot(recordSound);
+                } else {
+                    audioSource.PlayOneShot(recordingFailedSound);
                 }
                 break;
             case "p":
+                //Feedback för när man spelar upp
+                audioSource.PlayOneShot(recordPlayingSound);
+                
                 audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
                 print(audioSource.clip);
+
+                //Inspelat ljud spelas upp
                 audioSource.Play();
                 audioManager.GetComponent<AudioManager>().isPlaying = true;
                 break;
