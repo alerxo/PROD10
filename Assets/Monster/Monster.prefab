@@ -440,11 +440,10 @@ MonoBehaviour:
   RunningClip: {fileID: 8300000, guid: 27754d15b3aa9774f9c4060b8c4ae642, type: 3}
   ChaseTriggeredClip: {fileID: 8300000, guid: 3ffa81214a6cd97459380fd4df70b8b5, type: 3}
   AttackWindupClip: {fileID: 8300000, guid: 69dd7634381a6d34a83e0be073777acf, type: 3}
-  BlockClip: {fileID: 0}
+  BlockClip: {fileID: 8300000, guid: cda67f2d8379d3d4096fa5bf35ba8a40, type: 3}
   KillClip: {fileID: 8300000, guid: be5639cb805c37841ab2928e19195aa2, type: 3}
   <PlayerNoiseValue>k__BackingField: 0
   stateName: 
-  stateUpdateTimer: 0
 --- !u!195 &4214328056344792854
 NavMeshAgent:
   m_ObjectHideFlags: 0
