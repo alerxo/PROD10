@@ -698,6 +698,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: playerStep
+      value: 
+      objectReference: {fileID: 8300000, guid: 8ffdcaf1503b67f4e83218830eefa616, type: 3}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1617,6 +1621,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1285702845758005267, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: edb153fb6d091c546b5e09362f94c76d, type: 3}
     - target: {fileID: 4163273569504874883, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1661,6 +1669,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster
       objectReference: {fileID: 0}
+    - target: {fileID: 7108218597933274056, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 076e2451190474245a4361ee55569163, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
