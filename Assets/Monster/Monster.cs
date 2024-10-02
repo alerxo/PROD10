@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,7 @@ public class Monster : MonoBehaviour
     public AudioSource StateAudio;
     public AudioSource ActionAudio;
 
+    public AudioClip[] ambienceClips;
     public AudioClip WalkingClip;
     public AudioClip RunningClip;
     public AudioClip ChaseTriggeredClip;
@@ -79,20 +81,53 @@ public class Monster : MonoBehaviour
         {
             case Monster_Patrolling:
                 SetAudioClip(WalkingClip, true);
+                ManageAmbience(true);
                 break;
 
             case Monster_Investigating:
                 SetAudioClip(WalkingClip, true);
+                ManageAmbience(true);
                 break;
 
             case Monster_Chasing:
-                SetAudioClip(RunningClip, true);
+                ManageAmbience(false);
+                break;
+
+            case Monster_Attacking:
+                ManageAmbience(false);
+                break;
+
+            case Monster_Stunned:
+                ManageAmbience(false);
+                break;
+
+            case Monster_Killing:
+                ManageAmbience(false);
                 break;
 
             default:
                 SetAudioClip(null);
+                ManageAmbience(true);
                 break;
         }
+    }
+
+    private void ManageAmbience(bool shouldPlay)
+    {
+        if (!shouldPlay)
+        {
+            AmbienceAudio.Stop();
+            return;
+        }
+
+        if (AmbienceAudio.isPlaying) return;
+
+        List<AudioClip> temp = ambienceClips.ToList();
+        temp.Remove(AmbienceAudio.clip);
+        AmbienceAudio.clip = temp[Random.Range(0, temp.Count)];
+        AmbienceAudio.Play();
+
+        Debug.Log("");
     }
 
     private void SetAudioClip(AudioClip clip, bool shouldLoop = false)
