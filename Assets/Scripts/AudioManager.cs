@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     bool m_Started;
     [SerializeField] LayerMask m_LayerMask;
+    [SerializeField] AudioClip recorderEmptySound;
     private Collider[] hitColliders;
 
     public bool isPlaying = false;
@@ -60,6 +61,10 @@ public class AudioManager : MonoBehaviour
                     audioClip = null;
                     isPlaying = false;
                     hitColliders[i].enabled = false;
+
+                    //Indikator för ljudfilen som förstörs
+                    RecorderEmptyIndicator();
+                    audioClip = null;
                }  
             }
         }
@@ -71,5 +76,12 @@ public class AudioManager : MonoBehaviour
         if (m_Started){
             Gizmos.DrawWireCube(transform.position, transform.localScale);
         }    
+    }
+
+    void RecorderEmptyIndicator() {
+        AudioSource audioSource = GetComponentsInParent<PlayerController>()[0].audioSource;
+        audioClip = recorderEmptySound;
+        audioSource.PlayOneShot(audioClip);
+
     }
 }
