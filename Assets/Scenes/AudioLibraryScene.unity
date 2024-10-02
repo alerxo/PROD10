@@ -1482,13 +1482,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1369205665}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1877976777}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadStartMeny
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1668,8 +1668,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 739688113}
   introClip: {fileID: 8300000, guid: c99f2ec79b907d241ab4702375a89c1b, type: 3}
-  audioClips: []
+  audioClips:
+  - {fileID: 0}
+  - {fileID: 8300000, guid: bc6b4c7853b3a54469db3896d281e935, type: 3}
+  - {fileID: 8300000, guid: 947748592da8622438d6bad76c5ffa6a, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   voiceClips:
+  - {fileID: 0}
   - {fileID: 8300000, guid: a62a7342469f65f439f6bc8ee7f386ed, type: 3}
   - {fileID: 8300000, guid: 3a911efdafecafa4e9288719b334433e, type: 3}
   - {fileID: 8300000, guid: 7a53f2371cae8b94d8662aec139d63ef, type: 3}
@@ -1677,6 +1683,7 @@ MonoBehaviour:
   clickSound: {fileID: 8300000, guid: 1868bb960a9679b439d14ce161def99d, type: 3}
   endSound: {fileID: 8300000, guid: 290b6cc570f51eb478ed4c9ec75c4210, type: 3}
   audioClipButtons:
+  - {fileID: 0}
   - {fileID: 723304189}
   - {fileID: 2126391297}
   - {fileID: 954290220}
@@ -1936,6 +1943,50 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1877976776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1877976778}
+  - component: {fileID: 1877976777}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1877976777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877976776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4fc9a8eab5bef43bfad601589ab4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1877976778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877976776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 718.13025, y: 589.8684, z: -1117.3295}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1887011337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2274,3 +2325,4 @@ SceneRoots:
   - {fileID: 874919244}
   - {fileID: 1488554826}
   - {fileID: 739688114}
+  - {fileID: 1877976778}

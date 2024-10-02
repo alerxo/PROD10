@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class AudioLibraryController : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class AudioLibraryController : MonoBehaviour
     public AudioClip endSound;        // Sound to play when trying to scroll beyond the list
     public Button[] audioClipButtons; // Buttons representing each audio clip
     public Button mainMenuButton;     // Button to return to the main menu
-
     private int selectedIndex = 0;    // Tracks which button is selected
 
     void Start()
@@ -29,6 +29,9 @@ public class AudioLibraryController : MonoBehaviour
 
         // Assign the Main Menu button to take the player back to the main page
         mainMenuButton.onClick.AddListener(GoToMainMenu);
+
+        // Set the Main Menu button as the default selected button
+        EventSystem.current.SetSelectedGameObject(audioClipButtons[0].gameObject);  // Start with the first audio clip button selected
     }
 
     void Update()
@@ -36,11 +39,12 @@ public class AudioLibraryController : MonoBehaviour
         // Handle scrolling up
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            if (selectedIndex > 0)
+            if (selectedIndex >= 0)
             {
                 selectedIndex--;
                 PlayClickSound();
                 PlayVoiceClip(selectedIndex);
+                EventSystem.current.SetSelectedGameObject(audioClipButtons[selectedIndex].gameObject);
             }
             else
             {
@@ -56,6 +60,7 @@ public class AudioLibraryController : MonoBehaviour
                 selectedIndex++;
                 PlayClickSound();
                 PlayVoiceClip(selectedIndex);
+                EventSystem.current.SetSelectedGameObject(audioClipButtons[selectedIndex].gameObject);
             }
             else
             {
@@ -63,10 +68,18 @@ public class AudioLibraryController : MonoBehaviour
             }
         }
 
-        // Play the selected audio clip with Enter
+        // Handle pressing Enter/Return
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            PlayAudioClip(selectedIndex);
+            // Check if the Back Button (Main Menu Button) is selected
+            if (EventSystem.current.currentSelectedGameObject == mainMenuButton.gameObject)
+            {
+                GoToMainMenu();  // Trigger the scene switch if Back Button is selected
+            }
+            else
+            {
+                PlayAudioClip(selectedIndex);  // Otherwise, play the selected audio clip
+            }
         }
     }
 
