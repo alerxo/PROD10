@@ -25,11 +25,11 @@ public class PlayerController : MonoBehaviour
     GameObject blindCam;     
     GameObject audioManager;
     public AudioSource audioSource;
-    private float horizontalInput;
-    private float verticalInput;
-    private Vector3 moveDirection;
+    public float horizontalInput;
+    public float verticalInput;
+    public Vector3 moveDirection;
     private float timer;
-    Rigidbody rb;
+    private Rigidbody rb;
     private Collider[] ventCollider;
     private bool isMoving = false;
     private int foleyType = 0;
