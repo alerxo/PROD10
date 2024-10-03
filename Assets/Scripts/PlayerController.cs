@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip recordPlayingSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip[] swooshSounds;
-    [SerializeField] GameObject[] foleyZones;
     [SerializeField] AudioClip[] stepSoundsWood;
     GameObject mainCam;   
     GameObject blindCam;     
@@ -33,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private Collider[] ventCollider;
     private bool isMoving = false;
     private int foleyType = 0;
+    private int lastStep = -1; //Keep track of last step sound used
 
     // Start is called before the first frame update
     void Start()
@@ -82,14 +82,13 @@ public class PlayerController : MonoBehaviour
                 timer = MoveDelay + Time.deltaTime;
                 isMoving = true;
                 if(isMoving){
-                    
-                    PlayFoleySound(foleyType);
                     //int index = UnityEngine.Random.Range(0, stepSoundsWood.Length);
                     //audioSource.PlayOneShot(stepSoundsWood[index]);
                     
 
                     //audioSource.clip = playerStep; 
                     //audioSource.Play();
+                    PlayFoleySound();
                 }
 
             }
@@ -193,7 +192,6 @@ public class PlayerController : MonoBehaviour
     //Play foley sounds based on current zone
     private void OnTriggerEnter(Collider other) {
         ChangeFoleyType(other.gameObject);
-       
     }
 
     //Change foley type based on tag
@@ -214,12 +212,40 @@ public class PlayerController : MonoBehaviour
             foleyType = 0;
             break;
         }
-
-        PlayFoleySound(foleyType);
         print(foleyType); 
     }
 
-    private void PlayFoleySound(int index) {
+    private void PlayFoleySound() {
+        if(stepSoundsWood.Length <= 0) {
+            return;
+        }
+
+        int min = 0;
+        int max = stepSoundsWood.Length;
+
+        switch (foleyType)
+        {
+            case 1: 
+            min = 0; 
+            max = 2;
+            break;
+
+            case 2:
+            min = 3;
+            max = 5;
+            break;
+
+            default:
+            break;
+        }
+
+        int index = UnityEngine.Random.Range(min, max + 1);
+
+        while (lastStep == index) {
+            index = UnityEngine.Random.Range(min, max + 1);
+        }
+        lastStep = index;
         audioSource.PlayOneShot(stepSoundsWood[index]);
+        UnityEngine.Debug.Log(index);
     }
 }

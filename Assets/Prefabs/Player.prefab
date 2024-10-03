@@ -231,6 +231,9 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 64
+  m_ObsLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   recorderEmptySound: {fileID: 8300000, guid: 46f68199acf18b545a7c66b50e5901d4, type: 3}
   isPlaying: 0
   audioClip: {fileID: 0}
@@ -399,15 +402,17 @@ MonoBehaviour:
   swooshSounds:
   - {fileID: 8300000, guid: 227d4302e428c1c478a50b80e8295d57, type: 3}
   - {fileID: 8300000, guid: d384d874d3cd0b546aaa8e5025f971d5, type: 3}
-  foleyZones:
-  - {fileID: 0}
-  - {fileID: 0}
   stepSoundsWood:
   - {fileID: 8300000, guid: 37b0810871d062649bc17eff15b6e4ee, type: 3}
   - {fileID: 8300000, guid: 611d50233f6dedf45a7206a562f3a150, type: 3}
   - {fileID: 8300000, guid: 6f8aceefae51137409463b204f086d88, type: 3}
-  - {fileID: 8300000, guid: 6724c78f4cab5954f9b67aaa19de590c, type: 3}
+  - {fileID: 8300000, guid: aa14e1da73d262d4da61c99f36286f35, type: 3}
+  - {fileID: 8300000, guid: c3b19e7cb5d129942a65b2b2dba05b50, type: 3}
+  - {fileID: 8300000, guid: f291e6944666697498c737a69693af25, type: 3}
   audioSource: {fileID: 0}
+  horizontalInput: 0
+  verticalInput: 0
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!82 &1975789591329547273
 AudioSource:
   m_ObjectHideFlags: 0
