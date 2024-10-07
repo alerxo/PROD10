@@ -14,4 +14,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("StartMenu");
     }
+
+    public void LoadControlsMeny()
+    {
+        SceneManager.LoadScene("ControlsMenu");
+    }
 }
