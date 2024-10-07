@@ -259,7 +259,7 @@ MonoBehaviour:
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 0
     m_MaxSize: 144
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -267,7 +267,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Fire
+  m_Text: Movement
 --- !u!222 &189668855
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 723304190}
   - component: {fileID: 723304189}
   m_Layer: 5
-  m_Name: Button - Fire
+  m_Name: Button - Movement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -991,7 +991,7 @@ GameObject:
   - component: {fileID: 954290221}
   - component: {fileID: 954290220}
   m_Layer: 5
-  m_Name: Button - Nature
+  m_Name: Button - Play Recording
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1336,7 +1336,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Audio Library
+  m_Text: Controls
 --- !u!222 &1206226114
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1628,7 +1628,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Nature
+  m_Text: Play Audio
 --- !u!222 &1445734619
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1667,18 +1667,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 739688113}
-  introClip: {fileID: 8300000, guid: c99f2ec79b907d241ab4702375a89c1b, type: 3}
+  introClip: {fileID: 8300000, guid: b1a6acdf28ff09c40bf2833d65f9f5fd, type: 3}
   audioClips:
   - {fileID: 0}
-  - {fileID: 8300000, guid: bc6b4c7853b3a54469db3896d281e935, type: 3}
-  - {fileID: 8300000, guid: 947748592da8622438d6bad76c5ffa6a, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 7a470df312ed46743826b8c09c6c691e, type: 3}
+  - {fileID: 8300000, guid: 297b20bf1c34b2a4bb804275740fe3d0, type: 3}
+  - {fileID: 8300000, guid: 30e44dbd972e6b142ab02c5839e02d4c, type: 3}
   - {fileID: 0}
   voiceClips:
   - {fileID: 0}
-  - {fileID: 8300000, guid: a62a7342469f65f439f6bc8ee7f386ed, type: 3}
-  - {fileID: 8300000, guid: 3a911efdafecafa4e9288719b334433e, type: 3}
-  - {fileID: 8300000, guid: 7a53f2371cae8b94d8662aec139d63ef, type: 3}
+  - {fileID: 8300000, guid: 5003d10bb943d0441a2fa3d421bf108a, type: 3}
+  - {fileID: 8300000, guid: aa188445e3deb354ca77e544669177e6, type: 3}
+  - {fileID: 8300000, guid: a3f49b7b124ba4b43876b3a42ffba145, type: 3}
   - {fileID: 8300000, guid: a66ecfabfcfecf544ad6d7d407ab4f44, type: 3}
   clickSound: {fileID: 8300000, guid: 1868bb960a9679b439d14ce161def99d, type: 3}
   endSound: {fileID: 8300000, guid: 290b6cc570f51eb478ed4c9ec75c4210, type: 3}
@@ -1774,7 +1774,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Water
+  m_Text: Record Audio
 --- !u!222 &1719565813
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1900,7 +1900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 656.2972}
+  m_AnchoredPosition: {x: 0, y: 656.2971}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1758651310
@@ -2111,7 +2111,7 @@ GameObject:
   - component: {fileID: 2126391298}
   - component: {fileID: 2126391297}
   m_Layer: 5
-  m_Name: Button - Water
+  m_Name: Button - Record Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
