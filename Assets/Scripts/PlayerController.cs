@@ -226,8 +226,8 @@ public class PlayerController : MonoBehaviour
         switch (foleyType)
         {
             case 1: 
-            min = 0; 
-            max = 2;
+            min = 6; 
+            max = 8;
             break;
 
             case 2:
@@ -236,6 +236,8 @@ public class PlayerController : MonoBehaviour
             break;
 
             default:
+            min = 0; 
+            max = 2;
             break;
         }
 
