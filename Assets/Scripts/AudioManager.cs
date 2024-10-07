@@ -8,10 +8,13 @@ public class AudioManager : MonoBehaviour
 {
     bool m_Started;
     [SerializeField] LayerMask m_LayerMask;
+    [SerializeField] LayerMask m_LayerSourceMask;
     [SerializeField] LayerMask m_ObsLayerMask;
     [SerializeField] AudioClip recorderEmptySound;
-    private Collider[] hitColliders;
-    private Collider[] obstacleColliders;
+    [SerializeField] int wallAmount;
+    public Collider[] hitColliders;
+    public Collider[] obstacleColliders;
+    private List<Collider> foundObstacleColliders;
     private List<GameObject> wallSounds;
 
     public bool isPlaying = false;
@@ -23,6 +26,25 @@ public class AudioManager : MonoBehaviour
     {
         m_Started = true;
         wallSounds = new List<GameObject>();
+        foundObstacleColliders = new List<Collider>();
+
+        for(int i = 0; i < wallAmount; i++){
+                GameObject objToSpawn = new GameObject("WallSound"+i);
+
+                objToSpawn.SetActive(false);
+
+                objToSpawn.AddComponent<AudioSource>();
+                objToSpawn.GetComponent<AudioSource>().playOnAwake = true;
+                objToSpawn.GetComponent<AudioSource>().loop = true;
+                objToSpawn.GetComponent<AudioSource>().spatialBlend = 1;
+                objToSpawn.GetComponent<AudioSource>().enabled = false;
+
+                objToSpawn.AddComponent<Rigidbody>();
+
+                objToSpawn.AddComponent<WallScript>();
+                
+                wallSounds.Add(objToSpawn);
+        }
     }
 
     // Update is called once per frame
@@ -39,18 +61,40 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void CollisionDetection(){
-        // Potential for several detections (Rufus)
-        hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
-            for (int i = 0; i < hitColliders.Length; i++){
-                    //print(hitColliders[i].name + " " + audioClip.name);
-                }
+void CollisionDetection()
+{
+    RaycastHit hit;
 
-        obstacleColliders = Physics.OverlapBox(transform.parent.transform.position, transform.parent.transform.localScale*4, Quaternion.identity,m_ObsLayerMask | m_LayerMask);
-            for (int i = 0; i < obstacleColliders.Length; i++){
-                    //print(hitColliders[i].name + " " + audioClip.name);
-                }
+    if (Physics.Raycast(transform.parent.transform.position, transform.parent.transform.forward, out hit, 2f, m_LayerSourceMask | m_LayerMask))
+    {
+        hitColliders = new Collider[1];
+        hitColliders[0] = hit.collider;
     }
+    else
+    {
+        hitColliders = new Collider[0];
+    }
+
+    float detectionDistance = 10f;
+    List<Collider> foundObstacles = new List<Collider>();
+
+    Vector3[] directions = {
+        transform.parent.transform.forward,    
+        -transform.parent.transform.forward,   
+        transform.parent.transform.right,      
+        -transform.parent.transform.right      
+    };
+
+    foreach (Vector3 dir in directions)
+    {
+        if (Physics.Raycast(transform.parent.transform.position, dir, out hit, detectionDistance, m_ObsLayerMask | m_LayerMask))
+        {
+            foundObstacles.Add(hit.collider);
+        }
+    }
+
+    obstacleColliders = foundObstacles.ToArray();
+}
 
     public bool RecordSound(){
         for (int i = 0; i < hitColliders.Length; i++){
@@ -84,31 +128,62 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void WallSound(){
-        for (int i = 0; i < obstacleColliders.Length; i++){
-            //GameObject obstacle = obstacleColliders[i].GetComponent<GameObject>();
-
-            if(wallSounds.Count < obstacleColliders.Length){
-                GameObject objToSpawn = new GameObject("WallSound");
-                objToSpawn.transform.SetParent(transform.parent.transform);
-                objToSpawn.AddComponent<AudioSource>();
-                objToSpawn.AddComponent<WallScript>();
-                objToSpawn.GetComponent<WallScript>().vInput = GetComponentInParent<PlayerController>().verticalInput;
-                objToSpawn.GetComponent<WallScript>().hInput = GetComponentInParent<PlayerController>().horizontalInput;
-                wallSounds.Add(objToSpawn);
-               
+void WallSound()
+{
+    for (int i = 0; i < obstacleColliders.Length; i++)
+    {
+        bool alreadyExists = false;
+        
+        for (int j = 0; j < foundObstacleColliders.Count; j++)
+        {
+            if (obstacleColliders[i] == foundObstacleColliders[j])
+            {
+                alreadyExists = true;
+                break;
             }
         }
-    }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        if (m_Started){
-            Gizmos.DrawWireCube(transform.position, transform.localScale);
-            Gizmos.DrawWireCube(transform.parent.transform.position, transform.parent.transform.localScale*4);
-        }    
+        if (!alreadyExists)
+        {
+            foundObstacleColliders.Add(obstacleColliders[i]);
+
+            wallSounds[i].transform.SetParent(transform.parent.transform);
+            wallSounds[i].transform.position = transform.parent.transform.position;
+
+            wallSounds[i].GetComponent<AudioSource>().clip = obstacleColliders[i].GetComponent<AudioSource>().clip;
+            wallSounds[i].SetActive(true);
+            wallSounds[i].GetComponent<WallScript>().vInput = GetComponentInParent<PlayerController>().verticalInput;
+            wallSounds[i].GetComponent<WallScript>().hInput = GetComponentInParent<PlayerController>().horizontalInput;
+
+            wallSounds.RemoveAt(i); 
+        }
     }
+}
+
+void OnDrawGizmos()
+{
+    Gizmos.color = Color.red;
+    
+    if (m_Started)
+    {
+        Gizmos.DrawWireSphere(transform.parent.transform.position + transform.parent.transform.forward, 0.5f);
+
+        float detectionDistance = 10f; 
+        Vector3[] directions = {
+            transform.parent.transform.forward,   
+            -transform.parent.transform.forward,  
+            transform.parent.transform.right,      
+            -transform.parent.transform.right      
+        };
+
+        Gizmos.color = Color.green; 
+        foreach (Vector3 dir in directions)
+        {
+            Gizmos.DrawRay(transform.parent.transform.position, dir * detectionDistance);
+            Gizmos.DrawSphere(transform.parent.transform.position + dir * detectionDistance, 0.2f); 
+        }
+    }
+}
 
     void RecorderEmptyIndicator() {
         AudioSource audioSource = GetComponentsInParent<PlayerController>()[0].audioSource;

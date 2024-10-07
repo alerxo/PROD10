@@ -231,6 +231,19 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 64
+  m_LayerSourceMask:
+    serializedVersion: 2
+    m_Bits: 512
+  m_ObsLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_BlockLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  recorderEmptySound: {fileID: 0}
+  wallAmount: 0
+  hitColliders: []
+  obstacleColliders: []
   isPlaying: 0
   audioClip: {fileID: 0}
 --- !u!1 &7726994337976478351
@@ -392,8 +405,14 @@ MonoBehaviour:
     m_Bits: 128
   playerStep: {fileID: 8300000, guid: 11bb18985a753be449a45c87c5f57578, type: 3}
   recordSound: {fileID: 0}
+  recordingFailedSound: {fileID: 0}
+  recordPlayingSound: {fileID: 0}
   deathSound: {fileID: 0}
   audioSource: {fileID: 0}
+  horizontalInput: 0
+  verticalInput: 0
+  moveDirection: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
 --- !u!82 &1975789591329547273
 AudioSource:
   m_ObjectHideFlags: 0
