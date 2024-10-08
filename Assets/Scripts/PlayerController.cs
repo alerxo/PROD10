@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public float verticalInput;
     public Vector3 moveDirection;
     private float timer;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private Collider[] ventCollider;
     private bool isMoving = false;
     private int foleyType = 0;
@@ -106,12 +106,10 @@ public class PlayerController : MonoBehaviour
     void Controls(string input){
         switch(input){
             case "q": 
-                rb.rotation *= Quaternion.Euler(0,-90,0);
-                audioSource.PlayOneShot(swooshSounds[0]);
+                if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,-90,0);
                 break;
             case "e": 
-                rb.rotation *= Quaternion.Euler(0,90,0);
-                audioSource.PlayOneShot(swooshSounds[1]);
+                if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,90,0);
                 break;
             case "r":
                 audioSource.Stop();

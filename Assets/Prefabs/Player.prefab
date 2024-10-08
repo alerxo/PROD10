@@ -231,10 +231,19 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 64
+  m_LayerSourceMask:
+    serializedVersion: 2
+    m_Bits: 512
   m_ObsLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  recorderEmptySound: {fileID: 8300000, guid: 46f68199acf18b545a7c66b50e5901d4, type: 3}
+    m_Bits: 256
+  m_BlockLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  recorderEmptySound: {fileID: 0}
+  wallAmount: 0
+  hitColliders: []
+  obstacleColliders: []
   isPlaying: 0
   audioClip: {fileID: 0}
 --- !u!1 &7726994337976478351
@@ -394,25 +403,16 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 128
-  playerStep: {fileID: 8300000, guid: 8ffdcaf1503b67f4e83218830eefa616, type: 3}
-  recordSound: {fileID: 8300000, guid: 10bd2b5abfecbdd4fb43a70d065c80a1, type: 3}
-  recordingFailedSound: {fileID: 8300000, guid: c8e5793d64f99604e8f7adbc39b6038e, type: 3}
-  recordPlayingSound: {fileID: 8300000, guid: 2dfa7c2e15b3c8b4c8663e9cc763ef53, type: 3}
+  playerStep: {fileID: 8300000, guid: 11bb18985a753be449a45c87c5f57578, type: 3}
+  recordSound: {fileID: 0}
+  recordingFailedSound: {fileID: 0}
+  recordPlayingSound: {fileID: 0}
   deathSound: {fileID: 0}
-  swooshSounds:
-  - {fileID: 8300000, guid: 227d4302e428c1c478a50b80e8295d57, type: 3}
-  - {fileID: 8300000, guid: d384d874d3cd0b546aaa8e5025f971d5, type: 3}
-  stepSoundsWood:
-  - {fileID: 8300000, guid: 37b0810871d062649bc17eff15b6e4ee, type: 3}
-  - {fileID: 8300000, guid: 611d50233f6dedf45a7206a562f3a150, type: 3}
-  - {fileID: 8300000, guid: 6f8aceefae51137409463b204f086d88, type: 3}
-  - {fileID: 8300000, guid: aa14e1da73d262d4da61c99f36286f35, type: 3}
-  - {fileID: 8300000, guid: c3b19e7cb5d129942a65b2b2dba05b50, type: 3}
-  - {fileID: 8300000, guid: f291e6944666697498c737a69693af25, type: 3}
   audioSource: {fileID: 0}
   horizontalInput: 0
   verticalInput: 0
   moveDirection: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
 --- !u!82 &1975789591329547273
 AudioSource:
   m_ObjectHideFlags: 0
@@ -434,7 +434,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 5
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

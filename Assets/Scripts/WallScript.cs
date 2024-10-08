@@ -9,12 +9,24 @@ public class WallScript : MonoBehaviour
 {
     public float hInput;
     public float vInput;
+
+    bool xLocked = false;
+    bool zLocked = false;
+
+    private Vector3 lastKnownPos;
     private Vector3 spawnPos;
+    private Rigidbody invRb;
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = transform.parent.transform.position + GetComponentInParent<PlayerController>().moveDirection*4;
-        spawnPos = transform.position;
+        invRb = GetComponent<Rigidbody>();
+
+        invRb.position = transform.parent.transform.position + GetComponentInParent<PlayerController>().moveDirection*6;
+
+        spawnPos = invRb.position;
+
+        GetComponent<AudioSource>().enabled = true;
+
     }
 
     // Update is called once per frame
@@ -27,49 +39,111 @@ public class WallScript : MonoBehaviour
 
         if(vInput != 0)
         {
-            VerFollow();
-            //HorFollow();
+            VerLock();
         }
+        else if (hInput != 0)
+        {
+            HorLock();
+        }
+    }
 
-        if (hInput != 0)
+    private void VerLock()
+    {
+
+        invRb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,180,0)) && !xLocked)
+        {
+            VerFollow();
+
+            lastKnownPos = invRb.position;
+
+            zLocked = true;
+
+        }
+        else if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,90,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,270,0)) && !zLocked)
         {
             HorFollow();
-            //VerFollow();
+
+            lastKnownPos = invRb.position;
+
+            xLocked = true;
+            
         }
+        else if(!xLocked)
+        {   
+            invRb.position = lastKnownPos;
+
+            VerFollow();
+
+            zLocked = true;
+        }
+        else if(!zLocked)
+        {   
+            invRb.position = lastKnownPos;
+
+            HorFollow();
+
+            xLocked = true;
+        }
+    }
+
+    private void HorLock()
+    {
+        invRb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,180,0)) && !zLocked)
+        {
+            HorFollow();
+
+            lastKnownPos = invRb.position;
+
+            xLocked = true;
+
+        }
+        else if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,90,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,270,0)) && !xLocked)
+        {
+            VerFollow();
+
+            lastKnownPos = invRb.position;
+
+            zLocked = true;
+            
+        }
+        else if(!zLocked)
+        {   
+            invRb.position = lastKnownPos;
+
+            HorFollow();
+
+            xLocked = true;
+        }
+        else if(!xLocked)
+        {   
+            invRb.position = lastKnownPos;
+
+            VerFollow();
+
+            zLocked = true;
+        }
+    }
+
+    private void VerFollow()
+    {
+        invRb.position = new Vector3(transform.parent.GetComponent<PlayerController>().rb.position.x, spawnPos.y, spawnPos.z);
+
+        invRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 
     }
 
     private void HorFollow()
     {
-        if (transform.parent.transform.eulerAngles.y == 90 || transform.parent.transform.eulerAngles.y == -90 || transform.parent.transform.eulerAngles.y == 270)
-        {
+        invRb.position = new Vector3(spawnPos.x, spawnPos.y, transform.parent.GetComponent<PlayerController>().rb.position.z);
 
-            transform.position = new Vector3(transform.parent.transform.position.x, spawnPos.y, spawnPos.z);
-        }
-        else
-        {
-            transform.position = new Vector3(spawnPos.x, spawnPos.y, transform.parent.transform.position.z);
-            
-            
-        }
-
-        print(vInput + ", " + hInput + " rot: " + transform.parent.transform.eulerAngles);
+        invRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
     }
-
-    private void VerFollow()
-    {
-        if (transform.parent.transform.eulerAngles.y == 0 || transform.parent.transform.eulerAngles.y == 180)
-        {
-            transform.position = new Vector3(transform.parent.transform.position.x, spawnPos.y, spawnPos.z);
-        }
-        else
-        {
-            transform.position = new Vector3(spawnPos.x, spawnPos.y, transform.parent.transform.position.z);
-
-        }
-
-        print(vInput + ", " + hInput + " rot: " + transform.parent.transform.eulerAngles);
-    }
-
-
 }
