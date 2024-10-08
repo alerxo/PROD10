@@ -1441,46 +1441,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2504142212217242213, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: wallAmount
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: foleyZones.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: foleyZones.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: stepSoundsWood.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: stepSoundsWood.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: d7f8a5175c97fb3439e3543dd468491a, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: stepSoundsWood.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 495b2ba73a881ca44868a7e5d7f6903e, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: stepSoundsWood.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: ea21bff7ee507ca45afcac9f23107e2e, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: stepSoundsWood.Array.data[6]
-      value: 
-      objectReference: {fileID: 8300000, guid: aa14e1da73d262d4da61c99f36286f35, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: stepSoundsWood.Array.data[7]
-      value: 
-      objectReference: {fileID: 8300000, guid: c3b19e7cb5d129942a65b2b2dba05b50, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: stepSoundsWood.Array.data[8]
-      value: 
-      objectReference: {fileID: 8300000, guid: f291e6944666697498c737a69693af25, type: 3}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.03
