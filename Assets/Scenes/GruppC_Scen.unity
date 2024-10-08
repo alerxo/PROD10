@@ -1371,6 +1371,10 @@ PrefabInstance:
       propertyPath: wallAmount
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 2504142212217242213, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: m_BlockLayer.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 6563106301736313658, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_Enabled
       value: 1

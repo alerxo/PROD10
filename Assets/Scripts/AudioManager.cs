@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -10,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] LayerMask m_LayerMask;
     [SerializeField] LayerMask m_LayerSourceMask;
     [SerializeField] LayerMask m_ObsLayerMask;
+    [SerializeField] LayerMask m_BlockLayer;
     [SerializeField] AudioClip recorderEmptySound;
     [SerializeField] int wallAmount;
     public Collider[] hitColliders;
@@ -42,6 +44,10 @@ public class AudioManager : MonoBehaviour
                 objToSpawn.AddComponent<Rigidbody>();
 
                 objToSpawn.AddComponent<WallScript>();
+
+                objToSpawn.AddComponent<CapsuleCollider>();
+                //objToSpawn.GetComponent<CapsuleCollider>().isTrigger = true;
+                objToSpawn.GetComponent<WallScript>().m_BlockLayer = m_BlockLayer;
                 
                 wallSounds.Add(objToSpawn);
         }
@@ -65,7 +71,7 @@ void CollisionDetection()
 {
     RaycastHit hit;
 
-    if (Physics.Raycast(transform.parent.transform.position, transform.parent.transform.forward, out hit, 2f, m_LayerSourceMask | m_LayerMask))
+    if (Physics.Raycast(transform.parent.transform.position, transform.parent.transform.forward, out hit, 2f, m_LayerSourceMask))
     {
         hitColliders = new Collider[1];
         hitColliders[0] = hit.collider;
@@ -114,7 +120,7 @@ void CollisionDetection()
                     puzzleSource.Stop();
                     puzzleSource.clip = puzzleElement.responseClip;
                     GetComponentsInParent<PlayerController>()[0].audioSource.Stop();
-                    puzzleSource.Play();
+                    //puzzleSource.Play();
                     puzzleSource.loop = false;
                     audioClip = null;
                     isPlaying = false;
@@ -151,9 +157,11 @@ void WallSound()
             wallSounds[i].transform.position = transform.parent.transform.position;
 
             wallSounds[i].GetComponent<AudioSource>().clip = obstacleColliders[i].GetComponent<AudioSource>().clip;
+            wallSounds[i].GetComponent<AudioSource>().volume = obstacleColliders[i].GetComponent<AudioSource>().volume;
             wallSounds[i].SetActive(true);
             wallSounds[i].GetComponent<WallScript>().vInput = GetComponentInParent<PlayerController>().verticalInput;
             wallSounds[i].GetComponent<WallScript>().hInput = GetComponentInParent<PlayerController>().horizontalInput;
+            wallSounds[i].GetComponent<WallScript>().assignedObject = obstacleColliders[i].gameObject;
 
             wallSounds.RemoveAt(i); 
         }
