@@ -8,10 +8,8 @@ public class Goal : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        
         if (collision.gameObject.CompareTag("Player"))
         {
-           
             audioSource.Play();
         }
     }
