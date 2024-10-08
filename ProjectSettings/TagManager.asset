@@ -8,6 +8,8 @@ TagManager:
   - AudioManager
   - PuzzleElement
   - Ventilation
+  - ZoneWood
+  - ZoneStone
   layers:
   - Default
   - TransparentFX

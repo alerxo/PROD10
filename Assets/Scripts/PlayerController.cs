@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
@@ -16,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip recordingFailedSound;
     [SerializeField] AudioClip recordPlayingSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip[] swooshSounds;
+    [SerializeField] AudioClip[] stepSoundsWood;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
@@ -27,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     private Collider[] ventCollider;
     private bool isMoving = false;
+    private int foleyType = 0;
+    private int lastStep = -1; //Keep track of last step sound used
 
     // Start is called before the first frame update
     void Start()
@@ -76,8 +82,13 @@ public class PlayerController : MonoBehaviour
                 timer = MoveDelay + Time.deltaTime;
                 isMoving = true;
                 if(isMoving){
-                    audioSource.clip = playerStep; 
-                    audioSource.Play();
+                    //int index = UnityEngine.Random.Range(0, stepSoundsWood.Length);
+                    //audioSource.PlayOneShot(stepSoundsWood[index]);
+                    
+
+                    //audioSource.clip = playerStep; 
+                    //audioSource.Play();
+                    PlayFoleySound();
                 }
 
             }
@@ -96,9 +107,11 @@ public class PlayerController : MonoBehaviour
         switch(input){
             case "q": 
                 if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,-90,0);
+                audioSource.PlayOneShot(swooshSounds[0]);
                 break;
             case "e": 
                 if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,90,0);
+                audioSource.PlayOneShot(swooshSounds[1]);
                 break;
             case "r":
                 audioSource.Stop();
@@ -173,5 +186,68 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < ventCollider.Length; i++){
             ventCollider[i].GetComponent<AudioSource>().Play();
         }
+    }
+
+
+    //Play foley sounds based on current zone
+    private void OnTriggerEnter(Collider other) {
+        ChangeFoleyType(other.gameObject);
+    }
+
+    //Change foley type based on tag
+    //Consider adding gameobjects to array, and changing based on name at index
+    private void ChangeFoleyType(GameObject zone) {
+        string zoneTag = zone.tag;
+        switch (zoneTag)
+        {
+            case "ZoneWood":
+            foleyType = 1;
+            break;
+            
+            case "ZoneStone":
+            foleyType = 2;
+            break;
+
+            default:
+            foleyType = 0;
+            break;
+        }
+        print(foleyType); 
+    }
+
+    private void PlayFoleySound() {
+        if(stepSoundsWood.Length <= 0) {
+            return;
+        }
+
+        int min = 0;
+        int max = stepSoundsWood.Length;
+
+        switch (foleyType)
+        {
+            case 1: 
+            min = 6; 
+            max = 8;
+            break;
+
+            case 2:
+            min = 3;
+            max = 5;
+            break;
+
+            default:
+            min = 0; 
+            max = 2;
+            break;
+        }
+
+        int index = UnityEngine.Random.Range(min, max + 1);
+
+        while (lastStep == index) {
+            index = UnityEngine.Random.Range(min, max + 1);
+        }
+        lastStep = index;
+        audioSource.PlayOneShot(stepSoundsWood[index]);
+        UnityEngine.Debug.Log(index);
     }
 }
