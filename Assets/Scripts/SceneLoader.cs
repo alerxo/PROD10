@@ -19,4 +19,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("ControlsMenu");
     }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("AdinPrototype");
+    }
 }

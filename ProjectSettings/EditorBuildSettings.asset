@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartMenu.unity
+    path: Assets/Scenes/Grupp10B (Adin & Ermias)/StartMenu.unity
     guid: 0cf5f839b6a0901438118fbf99ded21c
   - enabled: 1
-    path: Assets/Scenes/AudioLibraryScene.unity
+    path: Assets/Scenes/Grupp10B (Adin & Ermias)/AudioLibraryScene.unity
     guid: d9368fa2ebdc7da4cbee05d0ecaf1620
   - enabled: 1
-    path: Assets/Scenes/ControlsMenu.unity
-    guid: 5c78a22dc3fec9648805b92d4b2fe068
+    path: Assets/Scenes/Grupp10B (Adin & Ermias)/AdinPrototype.unity
+    guid: 5c54eca43ee9dc04da6737c20cdebb18
+  - enabled: 1
+    path: Assets/Scenes/Grupp10B (Adin & Ermias)/ControlsMenu.unity
+    guid: b2bced25a3feeed4b9f83c6e41da2fe2
   m_configObjects: {}
