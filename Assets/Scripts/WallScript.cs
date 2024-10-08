@@ -74,8 +74,8 @@ public class WallScript : MonoBehaviour
     }
 
     private void VerLock()
-    {
-
+    {   
+        //print("V: " + vInput + " H: " + hInput);
         invRb.interpolation = RigidbodyInterpolation.Interpolate;
 
         if(!xLocked && (transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||
@@ -130,6 +130,7 @@ public class WallScript : MonoBehaviour
 
     private void HorLock()
     {
+        //print("V: " + vInput + " H: " + hInput);
         invRb.interpolation = RigidbodyInterpolation.Interpolate;
 
         if(!zLocked && (transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||

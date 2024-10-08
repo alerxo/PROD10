@@ -71,6 +71,9 @@ public class PlayerController : MonoBehaviour
                verticalInput = speed * -1;
             }
 
+            if(horizontalInput != 0.0f) verticalInput = 0.0f;
+            if(verticalInput != 0.0f) horizontalInput = 0.0f;
+
             Vector3 localMoveDirection = new Vector3(horizontalInput, 0f, verticalInput);
             
             moveDirection = transform.TransformDirection(localMoveDirection);
@@ -248,6 +251,6 @@ public class PlayerController : MonoBehaviour
         }
         lastStep = index;
         audioSource.PlayOneShot(stepSoundsWood[index]);
-        UnityEngine.Debug.Log(index);
+        //UnityEngine.Debug.Log(index);
     }
 }
