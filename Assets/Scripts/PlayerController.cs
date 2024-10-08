@@ -107,9 +107,11 @@ public class PlayerController : MonoBehaviour
         switch(input){
             case "q": 
                 if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,-90,0);
+                audioSource.PlayOneShot(swooshSounds[0]);
                 break;
             case "e": 
                 if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,90,0);
+                audioSource.PlayOneShot(swooshSounds[1]);
                 break;
             case "r":
                 audioSource.Stop();

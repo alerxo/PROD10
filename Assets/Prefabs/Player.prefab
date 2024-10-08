@@ -237,11 +237,8 @@ MonoBehaviour:
   m_ObsLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  m_BlockLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  recorderEmptySound: {fileID: 0}
-  wallAmount: 0
+  recorderEmptySound: {fileID: 8300000, guid: c8e5793d64f99604e8f7adbc39b6038e, type: 3}
+  wallAmount: 12
   hitColliders: []
   obstacleColliders: []
   isPlaying: 0
@@ -404,10 +401,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   playerStep: {fileID: 8300000, guid: 11bb18985a753be449a45c87c5f57578, type: 3}
-  recordSound: {fileID: 0}
-  recordingFailedSound: {fileID: 0}
-  recordPlayingSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  recordSound: {fileID: 8300000, guid: 10bd2b5abfecbdd4fb43a70d065c80a1, type: 3}
+  recordingFailedSound: {fileID: 8300000, guid: c8e5793d64f99604e8f7adbc39b6038e, type: 3}
+  recordPlayingSound: {fileID: 8300000, guid: 2dfa7c2e15b3c8b4c8663e9cc763ef53, type: 3}
+  deathSound: {fileID: 8300000, guid: 2f19dbb7443f9e14096a4074d5322ede, type: 3}
+  swooshSounds:
+  - {fileID: 8300000, guid: 227d4302e428c1c478a50b80e8295d57, type: 3}
+  - {fileID: 8300000, guid: d384d874d3cd0b546aaa8e5025f971d5, type: 3}
+  stepSoundsWood:
+  - {fileID: 8300000, guid: d7f8a5175c97fb3439e3543dd468491a, type: 3}
+  - {fileID: 8300000, guid: 495b2ba73a881ca44868a7e5d7f6903e, type: 3}
+  - {fileID: 8300000, guid: ea21bff7ee507ca45afcac9f23107e2e, type: 3}
+  - {fileID: 8300000, guid: 37b0810871d062649bc17eff15b6e4ee, type: 3}
+  - {fileID: 8300000, guid: 6f8aceefae51137409463b204f086d88, type: 3}
+  - {fileID: 8300000, guid: 6f8aceefae51137409463b204f086d88, type: 3}
+  - {fileID: 8300000, guid: aa14e1da73d262d4da61c99f36286f35, type: 3}
+  - {fileID: 8300000, guid: c3b19e7cb5d129942a65b2b2dba05b50, type: 3}
+  - {fileID: 8300000, guid: f291e6944666697498c737a69693af25, type: 3}
   audioSource: {fileID: 0}
   horizontalInput: 0
   verticalInput: 0
