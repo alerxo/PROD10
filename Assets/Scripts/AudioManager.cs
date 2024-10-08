@@ -81,7 +81,7 @@ void CollisionDetection()
         hitColliders = new Collider[0];
     }
 
-    float detectionDistance = 10f;
+    float detectionDistance = 5f;
     List<Collider> foundObstacles = new List<Collider>();
 
     Vector3[] directions = {
@@ -93,7 +93,7 @@ void CollisionDetection()
 
     foreach (Vector3 dir in directions)
     {
-        if (Physics.Raycast(transform.parent.transform.position, dir, out hit, detectionDistance, m_ObsLayerMask | m_LayerMask))
+        if (Physics.Raycast(transform.parent.transform.position, dir, out hit, detectionDistance, m_ObsLayerMask | m_LayerMask | m_BlockLayer))
         {
             foundObstacles.Add(hit.collider);
         }
@@ -142,7 +142,7 @@ void WallSound()
         
         for (int j = 0; j < foundObstacleColliders.Count; j++)
         {
-            if (obstacleColliders[i] == foundObstacleColliders[j])
+            if (obstacleColliders[i] == foundObstacleColliders[j] || obstacleColliders[i].CompareTag("Pillar"))
             {
                 alreadyExists = true;
                 break;
@@ -176,7 +176,7 @@ void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.parent.transform.position + transform.parent.transform.forward, 0.5f);
 
-        float detectionDistance = 10f; 
+        float detectionDistance = 5f; 
         Vector3[] directions = {
             transform.parent.transform.forward,   
             -transform.parent.transform.forward,  

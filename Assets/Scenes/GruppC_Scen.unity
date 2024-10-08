@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 63482847}
   m_Layer: 10
   m_Name: Pillar
-  m_TagString: Untagged
+  m_TagString: Pillar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -960,6 +960,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleElement
       objectReference: {fileID: 0}
+    - target: {fileID: 6093022258389597545, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
+      propertyPath: m_Size.x
+      value: 1.000247
+      objectReference: {fileID: 0}
+    - target: {fileID: 6093022258389597545, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
+      propertyPath: m_Center.x
+      value: 0.00012664772
+      objectReference: {fileID: 0}
+    - target: {fileID: 6093022258389597545, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
+      propertyPath: m_Center.z
+      value: -6.993117e-18
+      objectReference: {fileID: 0}
     - target: {fileID: 7555283848977325296, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
       propertyPath: m_LocalScale.x
       value: 34.728977
@@ -1044,7 +1056,7 @@ GameObject:
   - component: {fileID: 369813246}
   m_Layer: 10
   m_Name: Pillar (1)
-  m_TagString: Untagged
+  m_TagString: Pillar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1058,8 +1070,8 @@ Transform:
   m_GameObject: {fileID: 369813244}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.86, y: 2.97, z: -20.09}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalPosition: {x: -19.8656, y: 2.97, z: -20.0532}
+  m_LocalScale: {x: 5.9886, y: 5.9886, z: 5.9886}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1831938897}
@@ -1458,7 +1470,7 @@ GameObject:
   - component: {fileID: 625527790}
   m_Layer: 10
   m_Name: Pillar (3)
-  m_TagString: Untagged
+  m_TagString: Pillar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1472,8 +1484,8 @@ Transform:
   m_GameObject: {fileID: 625527788}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.56, y: 2.97, z: 19.36}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalPosition: {x: 19.4809, y: 2.97, z: 19.3232}
+  m_LocalScale: {x: 5.9886, y: 5.9886, z: 5.9886}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1831938897}
@@ -2948,7 +2960,7 @@ GameObject:
   - component: {fileID: 1103700962}
   m_Layer: 10
   m_Name: Pillar (2)
-  m_TagString: Untagged
+  m_TagString: Pillar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2962,8 +2974,8 @@ Transform:
   m_GameObject: {fileID: 1103700960}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.8, y: 2.97, z: 19}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalPosition: {x: -19.8057, y: 2.97, z: 18.9639}
+  m_LocalScale: {x: 5.9886, y: 5.9886, z: 5.9886}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1831938897}
