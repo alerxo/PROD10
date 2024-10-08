@@ -15,6 +15,7 @@ public class WallScript : MonoBehaviour
     bool xLocked = false;
     bool zLocked = false;
     bool isPlaying = false;
+    bool isBlocked = false;
 
     private Vector3 lastKnownPos;
     private Vector3 spawnPos;
@@ -59,6 +60,18 @@ public class WallScript : MonoBehaviour
             GetComponent<Collider>().enabled = false;
         }
 
+                
+        if((Mathf.Abs(transform.parent.transform.position.x - lastKnownPos.x) < .05f) && isBlocked){
+            xLocked = false;
+            invRb.position = lastKnownPos;
+            isBlocked = false;
+        }
+        else if((Mathf.Abs(transform.parent.transform.position.z - lastKnownPos.z) < .05f) && isBlocked){
+            zLocked = false;
+            invRb.position = lastKnownPos;
+            isBlocked = false;
+        }
+
 
     }
 
@@ -70,6 +83,7 @@ public class WallScript : MonoBehaviour
             invRb.constraints = RigidbodyConstraints.FreezeAll;
             xLocked = true;
             zLocked = true;
+            isBlocked = true;
             lastKnownPos = invRb.position;
         }
     }
@@ -118,11 +132,11 @@ public class WallScript : MonoBehaviour
         else{
             invRb.position = lastKnownPos;
 
-            if(transform.parent.transform.position.x == lastKnownPos.x){
+            if((Mathf.Abs(transform.parent.transform.position.x - lastKnownPos.x) < 1f) && !isBlocked){
                 xLocked = false;
                 invRb.position = lastKnownPos;
             }
-            else if(transform.parent.transform.position.z == lastKnownPos.z){
+            else if((Mathf.Abs(transform.parent.transform.position.z - lastKnownPos.z) < 1f) && !isBlocked){
                 zLocked = false;
                 invRb.position = lastKnownPos;
             }
@@ -173,11 +187,11 @@ public class WallScript : MonoBehaviour
         else{
             invRb.position = lastKnownPos;
 
-            if(transform.parent.transform.position.x == lastKnownPos.x){
+            if((Mathf.Abs(transform.parent.transform.position.x - lastKnownPos.x) < 1f) && !isBlocked){
                 xLocked = false;
                 invRb.position = lastKnownPos;
             }
-            else if(transform.parent.transform.position.z == lastKnownPos.z){
+            else if((Mathf.Abs(transform.parent.transform.position.z - lastKnownPos.z) < 1f) && !isBlocked){
                 zLocked = false;
                 invRb.position = lastKnownPos;
             }
