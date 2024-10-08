@@ -8,10 +8,13 @@ using Vector3 = UnityEngine.Vector3;
 public class WallScript : MonoBehaviour
 {
     public float hInput;
-    public float vInput;
+    public float vInput;   
+    public GameObject assignedObject;
+    public LayerMask m_BlockLayer;
 
     bool xLocked = false;
     bool zLocked = false;
+    bool isPlaying = false;
 
     private Vector3 lastKnownPos;
     private Vector3 spawnPos;
@@ -45,15 +48,38 @@ public class WallScript : MonoBehaviour
         {
             HorLock();
         }
+
+        if(assignedObject.GetComponent<Collider>().enabled == false && !isPlaying){
+
+            isPlaying = true;
+            GetComponent<AudioSource>().Stop();
+            GetComponent<AudioSource>().clip = assignedObject.GetComponent<PuzzleElement>().responseClip;
+            GetComponent<AudioSource>().loop = false;
+            GetComponent<AudioSource>().Play();
+        }
+
+
+    }
+
+        private void OnCollisionEnter(Collision collision)
+    {
+        if (((1 << collision.gameObject.layer) & m_BlockLayer) != 0)
+        {
+            Debug.Log("Collided with RayBlock");
+            invRb.constraints = RigidbodyConstraints.FreezeAll;
+            xLocked = true;
+            zLocked = true;
+            lastKnownPos = invRb.position;
+        }
     }
 
     private void VerLock()
-    {
-
+    {   
+        //print("V: " + vInput + " H: " + hInput);
         invRb.interpolation = RigidbodyInterpolation.Interpolate;
 
-        if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||
-        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,180,0)) && !xLocked)
+        if(!xLocked && (transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,180,0)))
         {
             VerFollow();
 
@@ -62,8 +88,8 @@ public class WallScript : MonoBehaviour
             zLocked = true;
 
         }
-        else if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,90,0) ||
-        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,270,0)) && !zLocked)
+        else if(!zLocked && (transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,90,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,270,0)))
         {
             HorFollow();
 
@@ -87,15 +113,28 @@ public class WallScript : MonoBehaviour
             HorFollow();
 
             xLocked = true;
+        }
+        else{
+            invRb.position = lastKnownPos;
+
+            if(transform.parent.transform.position.x == lastKnownPos.x){
+                xLocked = false;
+                invRb.position = lastKnownPos;
+            }
+            else if(transform.parent.transform.position.z == lastKnownPos.z){
+                zLocked = false;
+                invRb.position = lastKnownPos;
+            }
         }
     }
 
     private void HorLock()
     {
+        //print("V: " + vInput + " H: " + hInput);
         invRb.interpolation = RigidbodyInterpolation.Interpolate;
 
-        if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||
-        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,180,0)) && !zLocked)
+        if(!zLocked && (transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,0,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,180,0)))
         {
             HorFollow();
 
@@ -104,8 +143,8 @@ public class WallScript : MonoBehaviour
             xLocked = true;
 
         }
-        else if((transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,90,0) ||
-        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,270,0)) && !xLocked)
+        else if(!xLocked && (transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,90,0) ||
+        transform.parent.GetComponent<PlayerController>().rb.rotation.eulerAngles == new Vector3(0,270,0)))
         {
             VerFollow();
 
@@ -129,6 +168,18 @@ public class WallScript : MonoBehaviour
             VerFollow();
 
             zLocked = true;
+        }
+        else{
+            invRb.position = lastKnownPos;
+
+            if(transform.parent.transform.position.x == lastKnownPos.x){
+                xLocked = false;
+                invRb.position = lastKnownPos;
+            }
+            else if(transform.parent.transform.position.z == lastKnownPos.z){
+                zLocked = false;
+                invRb.position = lastKnownPos;
+            }
         }
     }
 
