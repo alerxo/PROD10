@@ -71,7 +71,7 @@ void CollisionDetection()
 {
     RaycastHit hit;
 
-    if (Physics.Raycast(transform.parent.transform.position, transform.parent.transform.forward, out hit, 2f, m_LayerSourceMask))
+    if (Physics.Raycast(transform.parent.transform.position, transform.parent.transform.forward, out hit, 2f, m_LayerSourceMask | m_LayerMask))
     {
         hitColliders = new Collider[1];
         hitColliders[0] = hit.collider;

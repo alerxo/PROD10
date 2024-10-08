@@ -56,6 +56,7 @@ public class WallScript : MonoBehaviour
             GetComponent<AudioSource>().clip = assignedObject.GetComponent<PuzzleElement>().responseClip;
             GetComponent<AudioSource>().loop = false;
             GetComponent<AudioSource>().Play();
+            GetComponent<Collider>().enabled = false;
         }
 
 
