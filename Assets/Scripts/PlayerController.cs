@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    public float speed;
     [SerializeField] private float MoveDelay;
     [SerializeField] LayerMask m_LayerMask;
     [SerializeField] AudioClip playerStep;

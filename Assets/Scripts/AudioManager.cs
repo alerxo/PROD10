@@ -30,7 +30,7 @@ public class AudioManager : MonoBehaviour
         wallSounds = new List<GameObject>();
         foundObstacleColliders = new List<Collider>();
 
-        for(int i = 0; i < wallAmount; i++){
+        /*for(int i = 0; i < wallAmount; i++){
                 GameObject objToSpawn = new GameObject("WallSound"+i);
 
                 objToSpawn.SetActive(false);
@@ -50,7 +50,7 @@ public class AudioManager : MonoBehaviour
                 objToSpawn.GetComponent<WallScript>().m_BlockLayer = m_BlockLayer;
                 
                 wallSounds.Add(objToSpawn);
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -62,9 +62,9 @@ public class AudioManager : MonoBehaviour
             AdversarySounds();
         } 
 
-        if(obstacleColliders.Length > 0){
+        /*if(obstacleColliders.Length > 0){
             WallSound();
-        }
+        }*/
     }
 
 void CollisionDetection()
@@ -134,7 +134,7 @@ void CollisionDetection()
         }
     }
 
-void WallSound()
+/*void WallSound()
 {
     for (int i = 0; i < obstacleColliders.Length; i++)
     {
@@ -155,10 +155,14 @@ void WallSound()
 
             wallSounds[i].transform.SetParent(transform.parent.transform);
             wallSounds[i].transform.position = transform.parent.transform.position;
-
+            
             wallSounds[i].GetComponent<AudioSource>().clip = obstacleColliders[i].GetComponent<AudioSource>().clip;
             wallSounds[i].GetComponent<AudioSource>().volume = obstacleColliders[i].GetComponent<AudioSource>().volume;
+            wallSounds[i].GetComponent<AudioSource>().rolloffMode =  obstacleColliders[i].GetComponent<AudioSource>().rolloffMode;
+            wallSounds[i].GetComponent<AudioSource>().maxDistance =  obstacleColliders[i].GetComponent<AudioSource>().maxDistance;
+            wallSounds[i].GetComponent<AudioSource>().SetCustomCurve(AudioSourceCurveType.CustomRolloff, obstacleColliders[i].GetComponent<AudioSource>().GetCustomCurve(AudioSourceCurveType.CustomRolloff));
             wallSounds[i].SetActive(true);
+            
             wallSounds[i].GetComponent<WallScript>().vInput = GetComponentInParent<PlayerController>().verticalInput;
             wallSounds[i].GetComponent<WallScript>().hInput = GetComponentInParent<PlayerController>().horizontalInput;
             wallSounds[i].GetComponent<WallScript>().assignedObject = obstacleColliders[i].gameObject;
@@ -166,7 +170,7 @@ void WallSound()
             wallSounds.RemoveAt(i); 
         }
     }
-}
+}*/
 
 void OnDrawGizmos()
 {

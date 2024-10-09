@@ -25,7 +25,7 @@ public class WallScript : MonoBehaviour
     {
         invRb = GetComponent<Rigidbody>();
 
-        invRb.position = transform.parent.transform.position + GetComponentInParent<PlayerController>().moveDirection*6;
+        invRb.position = transform.parent.transform.position + GetComponentInParent<PlayerController>().moveDirection*3; 
 
         spawnPos = invRb.position;
 
