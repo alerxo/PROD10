@@ -30,7 +30,7 @@ public class SoundCopier : MonoBehaviour
         rb.velocity = new Vector3(xVel, 0, zVel) * speed;
  
     }
-private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
 {
     if (collision.gameObject.GetComponent<AudioSource>().clip != null && ((1 << collision.gameObject.layer) & (m_LayerToInclude0 | m_LayerToInclude1)) != 0)
     {
@@ -49,6 +49,14 @@ private void OnCollisionEnter(Collision collision)
         print("It do be stopping");
         GetComponent<AudioSource>().Stop();
         GetComponent<AudioSource>().clip = null;
+        if(collision.gameObject.GetComponent<PuzzleElement>() && collision.gameObject.GetComponent<PuzzleElement>().solved){
+            
+            GetComponent<AudioSource>().PlayOneShot(collision.gameObject.GetComponent<PuzzleElement>().responseClip);
+        }
+    }
+
+    void OnCollisionStay(Collision collision){
+
     }
     
 }

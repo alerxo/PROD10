@@ -8,6 +8,9 @@ public class PuzzleElement : MonoBehaviour
     public AudioClip solutionClip;
     public AudioClip responseClip;
 
+    public bool solved = false;
+    public bool solutionPlayed = false;
+
     void Start(){
         audioClip = gameObject.GetComponent<AudioSource>().clip;
     }

@@ -124,7 +124,8 @@ void CollisionDetection()
                     puzzleSource.loop = false;
                     audioClip = null;
                     isPlaying = false;
-                    hitColliders[i].enabled = false;
+                    hitColliders[i].isTrigger = true;
+                    puzzleElement.solved = true;
 
                     //Indikator för ljudfilen som förstörs
                     RecorderEmptyIndicator();
