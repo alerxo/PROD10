@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] LayerMask m_ObsLayerMask;
     [SerializeField] LayerMask m_BlockLayer;
     [SerializeField] AudioClip recorderEmptySound;
+    [SerializeField] AudioClip interactionDistance;
     [SerializeField] int wallAmount;
     public Collider[] hitColliders;
     public Collider[] obstacleColliders;
@@ -20,6 +21,7 @@ public class AudioManager : MonoBehaviour
     private List<GameObject> wallSounds;
 
     public bool isPlaying = false;
+    public bool isInteracting = false;
     // Potential to include a default recording (Rufus)
     public AudioClip audioClip;
 
@@ -73,12 +75,19 @@ void CollisionDetection()
 
     if (Physics.Raycast(transform.parent.transform.position, transform.parent.transform.forward, out hit, 2f, m_LayerSourceMask | m_LayerMask))
     {
+        if(!GetComponent<AudioSource>().isPlaying && !isInteracting){
+            GetComponent<AudioSource>().Play();
+            isInteracting = true;
+        }
+ 
         hitColliders = new Collider[1];
         hitColliders[0] = hit.collider;
+
     }
     else
     {
         hitColliders = new Collider[0];
+        isInteracting = false;
     }
 
     float detectionDistance = 5f;
@@ -101,7 +110,6 @@ void CollisionDetection()
 
     obstacleColliders = foundObstacles.ToArray();
 }
-
     public bool RecordSound(){
         for (int i = 0; i < hitColliders.Length; i++){
             audioClip = hitColliders[i].gameObject.GetComponent<AudioSource>().clip;
@@ -124,7 +132,7 @@ void CollisionDetection()
                     puzzleSource.loop = false;
                     audioClip = null;
                     isPlaying = false;
-                    hitColliders[i].isTrigger = true;
+                    //hitColliders[i].isTrigger = true;
                     puzzleElement.solved = true;
 
                     //Indikator för ljudfilen som förstörs

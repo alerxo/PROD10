@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip[] swooshSounds;
     [SerializeField] AudioClip[] stepSoundsWood;
+    [SerializeField] AudioClip[] direction;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
@@ -101,62 +102,90 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Controls(Input.inputString);
+            if (Input.GetKeyDown(KeyCode.Q)) Controls(KeyCode.Q);
+            if (Input.GetKeyDown(KeyCode.E)) Controls(KeyCode.E);
+            if (Input.GetKeyDown(KeyCode.R)) Controls(KeyCode.R);
+            if (Input.GetKeyDown(KeyCode.P)) Controls(KeyCode.P);
+            if (Input.GetKeyDown(KeyCode.L)) Controls(KeyCode.L);
+            if (Input.GetKeyDown(KeyCode.H)) Controls(KeyCode.H);
+            if (Input.GetKeyDown(KeyCode.C)) Controls(KeyCode.C);
+            if (Input.GetKeyDown(KeyCode.Tab)) Controls(KeyCode.Tab);
 
     }
 
-    void Controls(string input){
-        switch(input){
-            case "q": 
-                if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,-90,0);
-                audioSource.PlayOneShot(swooshSounds[0]);
-                break;
-            case "e": 
-                if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0,90,0);
-                audioSource.PlayOneShot(swooshSounds[1]);
-                break;
-            case "r":
+void Controls(KeyCode input){
+    switch(input){
+        case KeyCode.Q: 
+            if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0, -90, 0);
+            audioSource.PlayOneShot(swooshSounds[0]);
+            break;
+        case KeyCode.E: 
+            if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0, 90, 0);
+            audioSource.PlayOneShot(swooshSounds[1]);
+            break;
+        case KeyCode.R:
+            audioSource.Stop();
+            audioManager.GetComponent<AudioManager>().isPlaying = false;
+
+            if (audioManager.GetComponent<AudioManager>().RecordSound())
+            {
+                audioSource.PlayOneShot(recordSound);
+            } 
+            else 
+            {
+                audioSource.PlayOneShot(recordingFailedSound);
+            }
+            break;
+        case KeyCode.P:
+            audioSource.PlayOneShot(recordPlayingSound);
+            audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
+            print(audioSource.clip);
+            audioSource.Play();
+            audioManager.GetComponent<AudioManager>().isPlaying = true;
+            break;
+        case KeyCode.L:
+            Respawn();
+            break;
+        case KeyCode.H:
+            DaugtherCall();
+            break;
+        case KeyCode.C: // Debug purpose, should not be available in shipping (Rufus)
+            if(mainCam.activeInHierarchy){
+                mainCam.SetActive(false);
+                blindCam.SetActive(true);
+            }
+            else {
+                mainCam.SetActive(true);
+                blindCam.SetActive(false);
+            }
+            break;
+        case KeyCode.Tab:
+            if(rb.rotation.eulerAngles == new Vector3(0,0,0)){
                 audioSource.Stop();
-                audioManager.GetComponent<AudioManager>().isPlaying = false;
-                //Indikatorer för när man lyckas eller failar att spela in ljud
-                if (audioManager.GetComponent<AudioManager>().RecordSound())
-                {
-                    audioSource.PlayOneShot(recordSound);
-                } else {
-                    audioSource.PlayOneShot(recordingFailedSound);
-                }
-                break;
-            case "p":
-                //Feedback för när man spelar upp
-                audioSource.PlayOneShot(recordPlayingSound);
-                
-                audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
-                print(audioSource.clip);
-
-                //Inspelat ljud spelas upp
+                audioSource.clip = direction[0];
                 audioSource.Play();
-                audioManager.GetComponent<AudioManager>().isPlaying = true;
-                break;
-            case "l":
-                Respawn();
-                break;
-            case "h":
-                DaugtherCall();
-                break;
-            case "c": //Debug purpose, should not be available in shipping (Rufus)
-                if(mainCam.activeInHierarchy){
-                    mainCam.SetActive(false);
-                    blindCam.SetActive(true);
-                }
-                else if(!mainCam.activeInHierarchy){
-                    mainCam.SetActive(true);
-                    blindCam.SetActive(false);
-                }
-                break;
-            default: 
-                break;
-        }
+            }
+            if(rb.rotation.eulerAngles == new Vector3(0,90,0)){
+                audioSource.Stop();
+                audioSource.clip = direction[1];
+                audioSource.Play();
+            }
+            else if(rb.rotation.eulerAngles == new Vector3(0,180,0)){
+                audioSource.Stop();
+                audioSource.clip = direction[2];
+                audioSource.Play();
+            }
+            else if(rb.rotation.eulerAngles == new Vector3(0,270,0)){
+                audioSource.Stop();
+                audioSource.clip = direction[3];
+                audioSource.Play();
+            }
+            break;
+            
+        default: 
+            break;
     }
+}
     public bool Death(){
         Respawn();
         return true;

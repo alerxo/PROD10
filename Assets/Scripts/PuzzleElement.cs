@@ -14,7 +14,6 @@ public class PuzzleElement : MonoBehaviour
     void Start(){
         audioClip = gameObject.GetComponent<AudioSource>().clip;
     }
-
     public void Reset(){
         gameObject.GetComponent<AudioSource>().clip = audioClip;
         gameObject.GetComponent<AudioSource>().loop = true;
