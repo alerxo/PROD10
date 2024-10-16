@@ -41,19 +41,15 @@ public class AudioLibraryController : MonoBehaviour
         if (!hasNavigated && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow) ||
                               Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W)))
         {
+            // Stop the narration first
             StopNarration();
-            hasNavigated = true;
-        }
 
-        // Handle first navigation
-        if (!hasNavigated)
-        {
-            // On first navigation, just set the first option as the active one
+            // Now activate the first option only after the narration has stopped
             ActivateFirstOption();
         }
-        else
+        else if (hasNavigated)
         {
-            // Normal menu navigation after first selection
+            // Normal menu navigation after the first selection
             HandleNavigation();
         }
 
@@ -71,6 +67,7 @@ public class AudioLibraryController : MonoBehaviour
             }
         }
     }
+
 
     // Method to handle navigation
     void HandleNavigation()
@@ -135,6 +132,13 @@ public class AudioLibraryController : MonoBehaviour
     // Play the voice clip for the selected button
     void PlayVoiceClip(int index)
     {
+        // Stop the current voice clip first, if it's playing
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
+        // Play the new voice clip associated with the selected option
         audioSource.PlayOneShot(voiceClips[index]);
     }
 
