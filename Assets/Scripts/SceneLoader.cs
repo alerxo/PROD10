@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour
     // Start is called before the first frame update
    public void LoadAudioLibrary() 
     {
-        SceneManager.LoadScene("AudioLibraryScene");
+        SceneManager.LoadScene("LearnGameAudioScene");
     }
 
    public void LoadStartMeny()

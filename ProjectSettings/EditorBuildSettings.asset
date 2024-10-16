@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Grupp10B (Adin & Ermias)/StartMenu.unity
     guid: 0cf5f839b6a0901438118fbf99ded21c
   - enabled: 1
-    path: Assets/Scenes/Grupp10B (Adin & Ermias)/AudioLibraryScene.unity
+    path: Assets/Scenes/Grupp10B (Adin & Ermias)/LearnGameAudioScene.unity
     guid: d9368fa2ebdc7da4cbee05d0ecaf1620
   - enabled: 1
     path: Assets/Scenes/Grupp10B (Adin & Ermias)/AdinPrototype.unity

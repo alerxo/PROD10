@@ -10,9 +10,11 @@ public class MenuController : MonoBehaviour
     [SerializeField] private AudioClip[] audioClips;  // Placeholder for menu option sounds
     [SerializeField] private AudioClip menuIntroClip; // Audio clip for blind player menu introduction
     [SerializeField] private Button[] menuButtons;    // Assign your buttons in the inspector
+    [SerializeField] private GameObject menuController; // GameObject for menu control
 
     private int selectedIndex = 0;   // To track which menu item is currently selected
     private bool hasNavigated = false;  // To track if player has navigated
+    private bool isPaused = false;  // To track if the game is paused
 
     void Start()
     {
@@ -25,6 +27,19 @@ public class MenuController : MonoBehaviour
 
     void Update()
     {
+        // Toggle pause state with Escape key
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+
         // Navigate down (next menu option)
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
@@ -63,10 +78,25 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    // Pause the game and show the menu
+    public void PauseGame()
+    {
+        menuController.SetActive(true);  // Enable the menu
+        Time.timeScale = 0f;  // Pause the game
+        isPaused = true;
+    }
+
+    // Resume the game and hide the menu
+    public void ResumeGame()
+    {
+        menuController.SetActive(false);  // Disable the menu
+        Time.timeScale = 1f;  // Resume the game
+        isPaused = false;
+    }
+
     // Activate the first option when navigation begins
     void ActivateFirstOption()
     {
-        // Unity UI handles selection and highlighting, just ensure the first option is available
         selectedIndex = 0;
         PlayOptionVoice(selectedIndex);
         hasNavigated = true;

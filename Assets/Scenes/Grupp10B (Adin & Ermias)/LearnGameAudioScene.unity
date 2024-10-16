@@ -468,7 +468,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 35089104}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99744904
+  m_Size: 0.9994061
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1681,7 +1681,6 @@ MonoBehaviour:
   clickSound: {fileID: 8300000, guid: 1868bb960a9679b439d14ce161def99d, type: 3}
   endSound: {fileID: 8300000, guid: 290b6cc570f51eb478ed4c9ec75c4210, type: 3}
   audioClipButtons:
-  - {fileID: 0}
   - {fileID: 723304189}
   - {fileID: 2126391297}
   - {fileID: 954290220}

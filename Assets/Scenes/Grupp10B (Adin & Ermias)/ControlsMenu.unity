@@ -467,8 +467,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 35089105}
   m_HandleRect: {fileID: 35089104}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999756
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1669,13 +1669,11 @@ MonoBehaviour:
   audioSource: {fileID: 739688113}
   introClip: {fileID: 8300000, guid: b1a6acdf28ff09c40bf2833d65f9f5fd, type: 3}
   audioClips:
-  - {fileID: 0}
   - {fileID: 8300000, guid: 7a470df312ed46743826b8c09c6c691e, type: 3}
   - {fileID: 8300000, guid: 297b20bf1c34b2a4bb804275740fe3d0, type: 3}
   - {fileID: 8300000, guid: 30e44dbd972e6b142ab02c5839e02d4c, type: 3}
   - {fileID: 0}
   voiceClips:
-  - {fileID: 0}
   - {fileID: 8300000, guid: 5003d10bb943d0441a2fa3d421bf108a, type: 3}
   - {fileID: 8300000, guid: aa188445e3deb354ca77e544669177e6, type: 3}
   - {fileID: 8300000, guid: a3f49b7b124ba4b43876b3a42ffba145, type: 3}
@@ -1683,7 +1681,6 @@ MonoBehaviour:
   clickSound: {fileID: 8300000, guid: 1868bb960a9679b439d14ce161def99d, type: 3}
   endSound: {fileID: 8300000, guid: 290b6cc570f51eb478ed4c9ec75c4210, type: 3}
   audioClipButtons:
-  - {fileID: 0}
   - {fileID: 723304189}
   - {fileID: 2126391297}
   - {fileID: 954290220}
@@ -1900,7 +1897,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 656.2971}
+  m_AnchoredPosition: {x: 0, y: 656.2972}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1758651310
