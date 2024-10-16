@@ -13,7 +13,9 @@ public class AudioLibraryController : MonoBehaviour
     public AudioClip endSound;        // Sound to play when trying to scroll beyond the list
     public Button[] audioClipButtons; // Buttons representing each audio clip
     public Button mainMenuButton;     // Button to return to the main menu
+
     private int selectedIndex = 0;    // Tracks which button is selected
+    private bool hasNavigated = false; // Tracks if the player has started navigating
 
     void Start()
     {
@@ -23,23 +25,60 @@ public class AudioLibraryController : MonoBehaviour
         // Assign buttons to play the corresponding audio clip
         for (int i = 0; i < audioClipButtons.Length; i++)
         {
-            int index = i;  // Local copy of index for the lambda function
-            audioClipButtons[i].onClick.AddListener(() => PlayAudioClip(index));
+            AssignButtonAudioClip(audioClipButtons[i], i);
         }
 
         // Assign the Main Menu button to take the player back to the main page
         mainMenuButton.onClick.AddListener(GoToMainMenu);
 
-        // Set the Main Menu button as the default selected button
-        EventSystem.current.SetSelectedGameObject(audioClipButtons[0].gameObject);  // Start with the first audio clip button selected
+        // Set the first audio clip button as the default selected button
+        EventSystem.current.SetSelectedGameObject(audioClipButtons[0].gameObject);
     }
 
     void Update()
     {
+        // Stop narration when player starts navigating
+        if (!hasNavigated && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow) ||
+                              Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W)))
+        {
+            StopNarration();
+            hasNavigated = true;
+        }
+
+        // Handle first navigation
+        if (!hasNavigated)
+        {
+            // On first navigation, just set the first option as the active one
+            ActivateFirstOption();
+        }
+        else
+        {
+            // Normal menu navigation after first selection
+            HandleNavigation();
+        }
+
+        // Handle pressing Enter/Return
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            // Check if the Back Button (Main Menu Button) is selected
+            if (EventSystem.current.currentSelectedGameObject == mainMenuButton.gameObject)
+            {
+                GoToMainMenu();  // Trigger the scene switch if Back Button is selected
+            }
+            else
+            {
+                PlayAudioClip(selectedIndex);  // Otherwise, play the selected audio clip
+            }
+        }
+    }
+
+    // Method to handle navigation
+    void HandleNavigation()
+    {
         // Handle scrolling up
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            if (selectedIndex >= 0)
+            if (selectedIndex > 0)
             {
                 selectedIndex--;
                 PlayClickSound();
@@ -67,20 +106,16 @@ public class AudioLibraryController : MonoBehaviour
                 PlayEndSound();  // Play end sound if trying to scroll down beyond the last button
             }
         }
+    }
 
-        // Handle pressing Enter/Return
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            // Check if the Back Button (Main Menu Button) is selected
-            if (EventSystem.current.currentSelectedGameObject == mainMenuButton.gameObject)
-            {
-                GoToMainMenu();  // Trigger the scene switch if Back Button is selected
-            }
-            else
-            {
-                PlayAudioClip(selectedIndex);  // Otherwise, play the selected audio clip
-            }
-        }
+    // Method to activate the first option
+    void ActivateFirstOption()
+    {
+        selectedIndex = 0;
+        PlayClickSound();
+        PlayVoiceClip(selectedIndex);
+        EventSystem.current.SetSelectedGameObject(audioClipButtons[selectedIndex].gameObject);
+        hasNavigated = true;  // Mark as navigated after setting the first option
     }
 
     // Play the introduction sound when entering the scene
@@ -119,5 +154,20 @@ public class AudioLibraryController : MonoBehaviour
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("MenuControllerScene");  // Replace with the actual main menu scene name
+    }
+
+    // Stops narration
+    void StopNarration()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+    }
+
+    // Helper function to assign button actions (without lambdas)
+    void AssignButtonAudioClip(Button button, int clipIndex)
+    {
+        button.onClick.AddListener(delegate { PlayAudioClip(clipIndex); });
     }
 }

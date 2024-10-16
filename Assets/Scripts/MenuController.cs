@@ -12,15 +12,15 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Button[] menuButtons;    // Assign your buttons in the inspector
 
     private int selectedIndex = 0;   // To track which menu item is currently selected
-    private bool hasNavigated = false;  // To prevent sound on initial selection
+    private bool hasNavigated = false;  // To track if player has navigated
 
     void Start()
     {
-        // Set the initial button selection (e.g., Start button)
-        SelectButton(menuButtons[selectedIndex]);
-
         // Play the menu introduction for the blind player when the menu is first opened
         PlayMenuIntro();
+
+        // Do not automatically select the first button yet, wait for navigation
+        hasNavigated = false;
     }
 
     void Update()
@@ -28,47 +28,58 @@ public class MenuController : MonoBehaviour
         // Navigate down (next menu option)
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            NavigateMenu(1);  // Move to the next option
+            if (!hasNavigated)
+            {
+                // On first navigation, just set the first option as the active one
+                ActivateFirstOption();
+            }
+            else
+            {
+                NavigateMenu(1);  // Move to the next option
+            }
         }
 
         // Navigate up (previous menu option)
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            NavigateMenu(-1);  // Move to the previous option
+            if (!hasNavigated)
+            {
+                // On first navigation, just set the first option as the active one
+                ActivateFirstOption();
+            }
+            else
+            {
+                NavigateMenu(-1);  // Move to the previous option
+            }
         }
 
         // Trigger the currently selected button's action with Enter or Space
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
-            menuButtons[selectedIndex].onClick.Invoke();  // Invoke the button's onClick event
+            if (hasNavigated)
+            {
+                menuButtons[selectedIndex].onClick.Invoke();  // Invoke the button's onClick event
+            }
         }
+    }
+
+    // Activate the first option when navigation begins
+    void ActivateFirstOption()
+    {
+        // Unity UI handles selection and highlighting, just ensure the first option is available
+        selectedIndex = 0;
+        PlayOptionVoice(selectedIndex);
+        hasNavigated = true;
     }
 
     // Method to handle menu navigation with keyboard input
     void NavigateMenu(int direction)
     {
-        // Deselect the currently selected button
-        menuButtons[selectedIndex].OnDeselect(null);
-
         // Calculate the new selected index (looping between options)
         selectedIndex = (selectedIndex + direction + menuButtons.Length) % menuButtons.Length;
 
-        // Select the new button
-        SelectButton(menuButtons[selectedIndex]);
-
-        // Play the corresponding voice clip if navigation has occurred
-        if (hasNavigated || selectedIndex != 0)
-        {
-            PlayOptionVoice(selectedIndex);
-        }
-
-        hasNavigated = true;  // Prevent sound on the initial selection
-    }
-
-    // Method to visually select a button and ensure it's highlighted
-    void SelectButton(Button button)
-    {
-        button.Select();
+        // Play the corresponding voice clip for the new selection
+        PlayOptionVoice(selectedIndex);
     }
 
     // Play a voice clip corresponding to the selected menu option
