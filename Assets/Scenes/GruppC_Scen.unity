@@ -249,7 +249,7 @@ PrefabInstance:
     - target: {fileID: 2494492942343088441, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 18be0c046795d5e40850fc829fa4d205, type: 3}
+      objectReference: {fileID: 8300000, guid: 112db8f5a736cdb42a6ab27c7d0034af, type: 3}
     - target: {fileID: 2494492942343088441, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
@@ -1108,7 +1108,7 @@ PrefabInstance:
     - target: {fileID: 2494492942343088441, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: bf4edb417335cff4885f74712ae4e703, type: 3}
+      objectReference: {fileID: 8300000, guid: 7ae9c8f8308eec24d9ae93569d0e69f9, type: 3}
     - target: {fileID: 2494492942343088441, guid: da5aa9726582e7e4cbbb4de3239ec9cd, type: 3}
       propertyPath: rolloffMode
       value: 2
