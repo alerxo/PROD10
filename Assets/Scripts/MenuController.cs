@@ -14,7 +14,7 @@ public class MenuController : MonoBehaviour
 
     private int selectedIndex = 0;   // To track which menu item is currently selected
     private bool hasNavigated = false;  // To track if player has navigated
-    private bool isPaused = false;  // To track if the game is paused
+    public static bool isPaused = false;  // To track if the game is paused
 
     void Start()
     {

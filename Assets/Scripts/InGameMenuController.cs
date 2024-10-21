@@ -15,6 +15,7 @@ public class InGameMenuController : MonoBehaviour
     private int selectedIndex = 0;   // To track which menu item is currently selected
     private bool hasNavigated = false;  // To track if player has navigated
     private bool isPaused = false;  // To track if the game is paused
+    private PlayerController playerController; // referens till Playercontroller
 
     void Start()
     {
@@ -85,9 +86,16 @@ public class InGameMenuController : MonoBehaviour
     // Pause the game and show the menu
     public void PauseGame()
     {
-        inGameMenuController.GetComponentInChildren<Canvas>().enabled = true;  // Enable the menu
-        Time.timeScale = 0f;  // Pause the game
+        inGameMenuController.GetComponentInChildren<Canvas>().enabled = true;  // ta fram menyn
+        Time.timeScale = 0f;  // Pausa spel
         isPaused = true;
+        PausAudio();
+        Debug.Log("Audio should be paused");
+
+        if (playerController != null)
+        {
+            playerController.SetPauseState(true); // pausa spelar kontroller
+        }
     }
 
     // Resume the game and hide the menu
@@ -96,6 +104,7 @@ public class InGameMenuController : MonoBehaviour
         inGameMenuController.GetComponentInChildren<Canvas>().enabled = false;  // Disable the menu
         Time.timeScale = 1f;  // Resume the game
         isPaused = false;
+        ResumeAllAudioSources();
     }
 
     // Activate the first option when navigation begins
@@ -145,5 +154,30 @@ public class InGameMenuController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();  // Exits the game
+    }
+
+    void PausAudio()
+    {
+        
+            AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+            foreach (var audio in allAudioSources)
+            {
+                audio.Pause(); 
+            }
+
+        if (inGameMenuController.GetComponentInParent<AudioSource>())
+        {
+            inGameMenuController.GetComponentInParent<AudioSource>().Play();
+        }
+
+    }
+
+    private void ResumeAllAudioSources()
+    {
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+        foreach (var audio in allAudioSources)
+        {
+            audio.UnPause(); 
+        }
     }
 }

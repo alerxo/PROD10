@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     private Collider[] ventCollider;
     private bool isMoving = false;
+    private bool isPaused = false; // tillägg för paus menyn (adin)
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //transform.Translate(moveDirection * speed * Time.deltaTime);
+
+        if (isPaused) return; // om spelat är pausat, hindra updates (adin)
+
 
         timer -= Time.deltaTime;
         isMoving = false;
@@ -162,6 +166,17 @@ public class PlayerController : MonoBehaviour
         ventCollider = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
         for (int i = 0; i < ventCollider.Length; i++){
             ventCollider[i].GetComponent<AudioSource>().Play();
+        }
+    }
+
+    // Metod för att sätta paus status (adin)
+    public void SetPauseState(bool pause)
+    {
+        isPaused = pause;
+        if (pause)
+        {
+            audioSource.Stop(); // Stoppa ljud från spelaren (adin)
+            rb.velocity = Vector3.zero; // Stoppa movement (adin)
         }
     }
 }
