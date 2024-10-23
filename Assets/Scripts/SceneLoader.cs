@@ -22,7 +22,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("ControlsMenu");
     }
 
-    public void StartGame()
+    public void LoadCutScene()
     {
         SceneManager.LoadScene("IntroScene");
     }

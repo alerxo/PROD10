@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4fc9a8eab5bef43bfad601589ab4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introOnboarding: {fileID: 0}
 --- !u!4 &406024991
 Transform:
   m_ObjectHideFlags: 0
@@ -473,6 +474,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 614091045994133217, guid: 074b891ae2bf2e544934857137546435, type: 3}
+      propertyPath: menuIntroClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ad02d7f5e26deb44a92a3df8e8cc7fdc, type: 3}
+    - target: {fileID: 614091045994133217, guid: 074b891ae2bf2e544934857137546435, type: 3}
       propertyPath: audioClips.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -483,19 +488,19 @@ PrefabInstance:
     - target: {fileID: 614091045994133217, guid: 074b891ae2bf2e544934857137546435, type: 3}
       propertyPath: audioClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: ec8b5ff71b8e3e747b701ab885162dc2, type: 3}
+      objectReference: {fileID: 8300000, guid: 6acccd75bdb790044a47e8a4a7040cc3, type: 3}
     - target: {fileID: 614091045994133217, guid: 074b891ae2bf2e544934857137546435, type: 3}
       propertyPath: audioClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: 13bb22225249108428a752e9c68f44e1, type: 3}
+      objectReference: {fileID: 8300000, guid: a45c0395c4cbda242bc977a2c49092fb, type: 3}
     - target: {fileID: 614091045994133217, guid: 074b891ae2bf2e544934857137546435, type: 3}
       propertyPath: audioClips.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: 8e58926e7fb55b44f8ca718f9a432f25, type: 3}
+      objectReference: {fileID: 8300000, guid: 3a08c4db005117a4db771a7ca05ce0ca, type: 3}
     - target: {fileID: 614091045994133217, guid: 074b891ae2bf2e544934857137546435, type: 3}
       propertyPath: audioClips.Array.data[3]
       value: 
-      objectReference: {fileID: 8300000, guid: 3cf42f83e42c3484ca30fe3ef145df99, type: 3}
+      objectReference: {fileID: 8300000, guid: 2cad79c5990092b43bd78f722c6045eb, type: 3}
     - target: {fileID: 614091045994133217, guid: 074b891ae2bf2e544934857137546435, type: 3}
       propertyPath: menuButtons.Array.data[0]
       value: 
@@ -528,6 +533,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 406024990}
+    - target: {fileID: 2984728292472653643, guid: 074b891ae2bf2e544934857137546435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadCutScene
+      objectReference: {fileID: 0}
     - target: {fileID: 4813929700908672510, guid: 074b891ae2bf2e544934857137546435, type: 3}
       propertyPath: m_LocalPosition.x
       value: -185
