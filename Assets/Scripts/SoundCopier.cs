@@ -58,8 +58,8 @@ public class SoundCopier : MonoBehaviour
                 InterpolateVolume(twoAway.GetComponent<AudioSource>(), highVolume);
                 twoAway.GetComponent<AudioSource>().PlayOneShot(collision.gameObject.GetComponent<PuzzleElement>().responseClip);
                 collision.gameObject.GetComponent<PuzzleElement>().solutionPlayed = true ;
-                collision.gameObject.GetComponent<Collider>().enabled = false;
-                print("its here");
+                collision.gameObject.SetActive(false);
+                
             }
         }
 
