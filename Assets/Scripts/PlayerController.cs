@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false;
     private int foleyType = 0;
     private int lastStep = -1; //Keep track of last step sound used
+    public bool isPaused;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPaused) return;
         //transform.Translate(moveDirection * speed * Time.deltaTime);
 
         timer -= Time.deltaTime;
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour
             
             if(localMoveDirection.magnitude > 0) // Calls clue event for alien investigate behaviour
             {
-                ClueSystem.TriggerClue(1, transform.position);
+                ClueSystem.TriggerClue(1, transform.position, gameObject);
             }
         }
 
