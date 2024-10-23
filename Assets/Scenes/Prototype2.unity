@@ -1274,6 +1274,10 @@ PrefabInstance:
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2504142212217242213, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: recorderEmptySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 46f68199acf18b545a7c66b50e5901d4, type: 3}
     - target: {fileID: 6563106301736313658, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1282,6 +1286,26 @@ PrefabInstance:
       propertyPath: playerStep
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: recordSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 10bd2b5abfecbdd4fb43a70d065c80a1, type: 3}
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: recorderEmpty
+      value: 
+      objectReference: {fileID: 8300000, guid: 7abea48954cba2b40a1d1588f089263e, type: 3}
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: playRecordingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 10bd2b5abfecbdd4fb43a70d065c80a1, type: 3}
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: recordPlayingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2dfa7c2e15b3c8b4c8663e9cc763ef53, type: 3}
+    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
+      propertyPath: recordingFailedSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c8e5793d64f99604e8f7adbc39b6038e, type: 3}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.73
