@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UIElements;
 
@@ -189,12 +190,14 @@ void Controls(KeyCode input){
     }
 }
     public bool Death(){
-        Respawn();
+        audioSource.PlayOneShot(deathSound);
+        StartCoroutine(waitForDeath());
+        //Respawn();
         return true;
     }
 
     void Respawn(){
-        timer = 0;
+        /*timer = 0;
 
         rb.position = new Vector3(0,0,0);
         rb.rotation = Quaternion.Euler(0,0,0);
@@ -211,7 +214,7 @@ void Controls(KeyCode input){
             puzzleElement[i].GetComponent<PuzzleElement>().Reset();
         }
 
-        audioSource.PlayOneShot(deathSound);
+        audioSource.PlayOneShot(deathSound);*/
     }
 
     void DaugtherCall(){
@@ -292,5 +295,15 @@ void Controls(KeyCode input){
             audioSource.Stop(); // Stoppa ljud från spelaren (adin)
             rb.velocity = Vector3.zero; // Stoppa movement (adin)
         }
+    }
+
+    private IEnumerator waitForDeath()
+    {
+        while (audioSource.isPlaying)
+        {
+            yield return null;
+        }
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
