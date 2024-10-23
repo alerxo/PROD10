@@ -168,7 +168,7 @@ public class Monster_Chasing : IMonsterState
 
 public class Monster_Attacking : IMonsterState
 {
-    private const float range = 1.5f;
+    private const float range = 2f;
     private const float windupTimeInSeconds = 0.346f;
     private float timer = 0f;
     private bool isBlocked = false;
