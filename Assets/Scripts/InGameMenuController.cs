@@ -45,42 +45,46 @@ public class InGameMenuController : MonoBehaviour
 
         }
 
-        // Navigate down (next menu option)
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        if (isPaused)
         {
-            if (!hasNavigated)
+            // Navigate down (next menu option)
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             {
-                // On first navigation, just set the first option as the active one
-                ActivateFirstOption();
+                if (!hasNavigated)
+                {
+                    // On first navigation, just set the first option as the active one
+                    ActivateFirstOption();
+                }
+                else
+                {
+                    NavigateMenu(1);  // Move to the next option
+                }
             }
-            else
+
+            // Navigate up (previous menu option)
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
-                NavigateMenu(1);  // Move to the next option
+                if (!hasNavigated)
+                {
+                    // On first navigation, just set the first option as the active one
+                    ActivateFirstOption();
+                }
+                else
+                {
+                    NavigateMenu(-1);  // Move to the previous option
+                }
+            }
+
+            // Trigger the currently selected button's action with Enter or Space
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            {
+                if (hasNavigated)
+                {
+                    menuButtons[selectedIndex].onClick.Invoke();  // Invoke the button's onClick event
+                }
             }
         }
 
-        // Navigate up (previous menu option)
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-        {
-            if (!hasNavigated)
-            {
-                // On first navigation, just set the first option as the active one
-                ActivateFirstOption();
-            }
-            else
-            {
-                NavigateMenu(-1);  // Move to the previous option
-            }
-        }
-
-        // Trigger the currently selected button's action with Enter or Space
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-        {
-            if (hasNavigated)
-            {
-                menuButtons[selectedIndex].onClick.Invoke();  // Invoke the button's onClick event
-            }
-        }
     }
 
     // Pause the game and show the menu
