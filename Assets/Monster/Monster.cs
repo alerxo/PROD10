@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,10 +20,15 @@ public class Monster : MonoBehaviour
     public readonly Monster_Attacking attackingState = new();
     public readonly Monster_Stunned stunnedState = new();
     public readonly Monster_Killing killingState = new();
+    public readonly Monster_Scared scaredState = new();
 
     public AudioSource AmbienceAudio;
     public AudioSource StateAudio;
     public AudioSource ActionAudio;
+    public AudioSource NormalMusic;
+    public AudioSource IntenseMusic;
+
+    public AudioClip[] AmbienceClips;
 
     public AudioClip WalkingClip;
     public AudioClip RunningClip;
@@ -33,11 +39,10 @@ public class Monster : MonoBehaviour
 
     public Clue CurrentClue { get; private set; }
     [field: SerializeField] public float PlayerNoiseValue { get; private set; }
-    public const float PlayerNoiseValueFalloff = 0.7f;
+    public const float PlayerNoiseFalloff = 0.7f;
+    public const float PlayerNoiseFastFalloff = 2f;
 
     [SerializeField] private string stateName;
-    [SerializeField] private float stateUpdateTimer = 0;
-    public const float stateUpdateCooldownInSeconds = 0.1f;
 
     private void Awake()
     {
@@ -71,6 +76,7 @@ public class Monster : MonoBehaviour
         if (Player == null) return;
 
         ManageAudio();
+        ManageMusic();
         UpdateNoise();
         UpdateState();
     }
@@ -80,46 +86,93 @@ public class Monster : MonoBehaviour
         switch (state)
         {
             case Monster_Patrolling:
-                SetAudioClip(WalkingClip, true);
+                SetStateAudio(WalkingClip);
+                ManageAmbience(true);
                 break;
 
             case Monster_Investigating:
-                SetAudioClip(WalkingClip, true);
+                SetStateAudio(WalkingClip);
+                ManageAmbience(true);
                 break;
 
             case Monster_Chasing:
-                SetAudioClip(RunningClip, true);
+                SetStateAudio(RunningClip);
+                ManageAmbience(false);
+                break;
+
+            case Monster_Attacking:
+                SetStateAudio(null);
+                ManageAmbience(false);
+                break;
+
+            case Monster_Stunned:
+                SetStateAudio(null);
+                ManageAmbience(false);
+                break;
+
+            case Monster_Killing:
+                SetStateAudio(null);
+                ManageAmbience(false);
+                break;
+
+            case Monster_Scared:
+                SetStateAudio(RunningClip);
+                ManageAmbience(false);
                 break;
 
             default:
-                SetAudioClip(null);
+                SetStateAudio(null);
+                ManageAmbience(true);
                 break;
         }
     }
 
-    private void SetAudioClip(AudioClip clip, bool shouldLoop = false)
+    private void ManageAmbience(bool shouldPlay)
     {
-        if (ActionAudio.clip == clip) return;
+        if (!shouldPlay)
+        {
+            AmbienceAudio.Stop();
+            return;
+        }
+
+        if (AmbienceAudio.isPlaying) return;
+
+        AmbienceAudio.Stop();
+        List<AudioClip> temp = AmbienceClips.ToList();
+        temp.Remove(AmbienceAudio.clip);
+        AmbienceAudio.clip = temp[Random.Range(0, temp.Count)];
+        AmbienceAudio.pitch = Random.Range(0.9f, 1.1f);
+        AmbienceAudio.Play();
+    }
+
+    private void SetStateAudio(AudioClip clip)
+    {
+        if (StateAudio.clip == clip) return;
 
         StateAudio.Stop();
-        ActionAudio.clip = clip;
+        StateAudio.clip = clip;
 
         if (clip == null) return;
 
-        ActionAudio.loop = shouldLoop;
-        ActionAudio.Play();
+        StateAudio.Play();
     }
 
-    public void PlayerActionSound(AudioClip clip)
+    public void SetActionAudio(AudioClip clip)
     {
-        if (ActionAudio.isPlaying)
-        {
-            ActionAudio.Stop();
-        }
-
-        if (ActionAudio.clip == clip) return;
-
+        ActionAudio.Stop();
         ActionAudio.PlayOneShot(clip);
+    }
+
+    private void ManageMusic()
+    {
+        float volume = PlayerNoiseValue - Monster_Chasing.PlayerNoiseValueExitValue;
+        float max = Monster_Chasing.PlayerNoiseValueEnterValue - Monster_Chasing.PlayerNoiseValueExitValue;
+        volume = Mathf.Min(volume, max) / max;
+        volume = Mathf.Pow(volume, 2);
+        volume = Mathf.Clamp01(volume);
+
+        IntenseMusic.volume = volume;
+        NormalMusic.volume = 1 - volume;
     }
 
     private void UpdateNoise()
@@ -131,18 +184,15 @@ public class Monster : MonoBehaviour
 
         if (PlayerNoiseValue > 0)
         {
-            PlayerNoiseValue -= PlayerNoiseValueFalloff * Time.deltaTime;
+            PlayerNoiseValue -= (state == scaredState || PlayerNoiseValue > Monster_Chasing.PlayerNoiseValueEnterValue + PlayerNoiseFalloff ?
+                PlayerNoiseFastFalloff : PlayerNoiseFalloff) * Time.deltaTime;
         }
     }
 
     private void UpdateState()
     {
-        if (state != null && (stateUpdateTimer += Time.deltaTime) >= stateUpdateCooldownInSeconds)
-        {
-            state = state.Execute(this);
-            stateName = state != null ? state.ToString() : "State Update Paused";
-            stateUpdateTimer = 0;
-        }
+        state = state.Execute(this);
+        stateName = state.ToString();
     }
 
     private void ClueTriggered(Clue second)
@@ -189,5 +239,12 @@ public class Monster : MonoBehaviour
     public bool HasDestination()
     {
         return NavMeshAgent.isStopped == false;
+    }
+
+    public void SetDefaultValues()
+    {
+        state = idleState;
+        PlayerNoiseValue = 0;
+        CurrentClue = null;
     }
 }
