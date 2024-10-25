@@ -290,12 +290,15 @@ void Controls(KeyCode input){
         }
 
         int index = UnityEngine.Random.Range(min, max + 1);
-
+        
         while (lastStep == index) {
+            print("refresh");
             index = UnityEngine.Random.Range(min, max + 1);
         }
+        
         lastStep = index;
         audioSource.PlayOneShot(stepSoundsWood[index]);
+        print("Index " + index);
         //UnityEngine.Debug.Log(index);
     }
 	// Metod för att sätta paus status (adin)
