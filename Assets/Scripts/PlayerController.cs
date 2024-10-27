@@ -203,7 +203,7 @@ void Controls(KeyCode input){
     public bool Death(){
         audioSource.PlayOneShot(deathSound);
         StartCoroutine(waitForDeath());
-        eventLogger.LogEvent("Player died");
+        eventLogger?.LogEvent("Player died");
         //Respawn();
         return true;
     }

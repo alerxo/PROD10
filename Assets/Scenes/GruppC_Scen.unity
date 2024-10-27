@@ -2080,14 +2080,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1975789591329547273, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: MaxDistance
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1975789591329547273, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2420467348406037989, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -2112,30 +2104,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: playerStep
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: direction.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: direction.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 9ae8b3eed444241438ef4618d227a1a5, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: direction.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 333dc7bf74d396a468efcc5a925dd2c2, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: direction.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: a257a09a6f1816e4b92c5779f4834407, type: 3}
-    - target: {fileID: 6743196947497658615, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: direction.Array.data[3]
-      value: 
-      objectReference: {fileID: 8300000, guid: c6f5090a51d1d8d44aa3a0c4ff8e6ce7, type: 3}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.12
@@ -2224,9 +2192,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1556154854}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7726994337976478351, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1362410341}
     - targetCorrespondingSourceObject: {fileID: 5291399395112766349, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1276286204}
@@ -3610,11 +3575,6 @@ Transform:
   - {fileID: 1341042229}
   m_Father: {fileID: 304345218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &871832569 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7726994337976478351, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-  m_PrefabInstance: {fileID: 588515879}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &901946502
 GameObject:
   m_ObjectHideFlags: 0
@@ -5749,22 +5709,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
   m_PrefabInstance: {fileID: 588515879}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1362410341
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 871832569}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1001 &1431467399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7230,6 +7174,14 @@ PrefabInstance:
     - target: {fileID: 4163273569504874883, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214328056344792854, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214328056344792854, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
+      propertyPath: m_Acceleration
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5952409511979880530, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
       propertyPath: m_Name
