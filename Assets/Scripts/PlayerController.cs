@@ -326,6 +326,7 @@ void Controls(KeyCode input){
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Wall") {
             audioSource.PlayOneShot(wallbumpSound);
+            eventLogger.LogEvent("Wall bumped");
         }
     }
 }
