@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip recordPlayingSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip wallbumpSound;
+    [SerializeField] AudioClip generalOuchSound;
     [SerializeField] AudioClip[] swooshSounds;
     [SerializeField] AudioClip[] stepSoundsWood;
     [SerializeField] AudioClip[] direction;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false;
     private int foleyType = 0;
     private int lastStep = -1; //Keep track of last step sound used
+    private Vector3 playerPos = Vector3.zero;
     public bool isPaused;
     public EventLogger eventLogger;
 
@@ -99,13 +101,11 @@ public class PlayerController : MonoBehaviour
             if(horizontalInput != 0.0f || verticalInput != 0.0f){
                 timer = MoveDelay + Time.deltaTime;
                 isMoving = true;
-                if(isMoving){
-                    //int index = UnityEngine.Random.Range(0, stepSoundsWood.Length);
-                    //audioSource.PlayOneShot(stepSoundsWood[index]);
-                    
-
-                    //audioSource.clip = playerStep; 
-                    //audioSource.Play();
+                
+                if(playerPos == transform.position) {
+                    return;
+                } else {
+                    playerPos = transform.position;
                     PlayFoleySound();
                 }
 
@@ -261,7 +261,6 @@ void Controls(KeyCode input){
             foleyType = 0;
             break;
         }
-        print(foleyType); 
     }
 
     private void PlayFoleySound() {
@@ -293,13 +292,12 @@ void Controls(KeyCode input){
         int index = UnityEngine.Random.Range(min, max + 1);
         
         while (lastStep == index) {
-            print("refresh");
             index = UnityEngine.Random.Range(min, max + 1);
         }
         
         lastStep = index;
         audioSource.PlayOneShot(stepSoundsWood[index]);
-        print("Index " + index);
+        //print("Index " + index);
         //UnityEngine.Debug.Log(index);
     }
 	// Metod för att sätta paus status (adin)
@@ -324,9 +322,13 @@ void Controls(KeyCode input){
     }
 
     private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Wall") {
-            audioSource.PlayOneShot(wallbumpSound);
+        if(other.gameObject.tag == "Wall" || other.gameObject.tag == "Pillar") {
+            audioSource.PlayOneShot(wallbumpSound);     
             eventLogger.LogEvent("Wall bumped");
+            return;
+        } 
+        if(other.gameObject.tag == "PuzzleElement") {
+            audioSource.PlayOneShot(generalOuchSound);
         }
     }
 }
