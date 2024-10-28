@@ -2080,14 +2080,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1975789591329547273, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: MaxDistance
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1975789591329547273, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2420467348406037989, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -2228,9 +2220,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1556154854}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7726994337976478351, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1362410341}
     - targetCorrespondingSourceObject: {fileID: 5291399395112766349, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1276286204}
@@ -3614,11 +3603,6 @@ Transform:
   - {fileID: 1341042229}
   m_Father: {fileID: 304345218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &871832569 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7726994337976478351, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
-  m_PrefabInstance: {fileID: 588515879}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &901946502
 GameObject:
   m_ObjectHideFlags: 0
