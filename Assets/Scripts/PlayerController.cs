@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip[] swooshSounds;
     [SerializeField] AudioClip[] stepSoundsWood;
     [SerializeField] AudioClip[] direction;
+    [SerializeField] AudioClip[] daughterCallout;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerPos = Vector3.zero;
     public bool isPaused;
     public EventLogger eventLogger;
+    private GameObject daughter;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+        daughter = GameObject.FindGameObjectWithTag("Goal");
 
         blindCam.SetActive(false);
 
@@ -238,6 +241,9 @@ void Controls(KeyCode input){
         for (int i = 0; i < ventCollider.Length; i++){
             ventCollider[i].GetComponent<AudioSource>().Play();
         }
+
+        audioSource.PlayOneShot(daughterCallout[UnityEngine.Random.Range(0,daughterCallout.Length)]);
+        daughter.GetComponent<Goal>().DaugherResponse();
     }
 
 

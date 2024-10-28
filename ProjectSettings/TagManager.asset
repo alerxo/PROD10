@@ -13,6 +13,7 @@ TagManager:
   - Pillar
   - EventLogger
   - Wall
+  - Goal
   layers:
   - Default
   - TransparentFX

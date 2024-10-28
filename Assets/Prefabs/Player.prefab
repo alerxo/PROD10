@@ -2118,6 +2118,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 333dc7bf74d396a468efcc5a925dd2c2, type: 3}
   - {fileID: 8300000, guid: a257a09a6f1816e4b92c5779f4834407, type: 3}
   - {fileID: 8300000, guid: c6f5090a51d1d8d44aa3a0c4ff8e6ce7, type: 3}
+  daughterCallout:
+  - {fileID: 8300000, guid: e0f956fbc357a8b42b31fd794661edfd, type: 3}
+  - {fileID: 8300000, guid: 5b932f441955d67499ee5ccc4e4a2dc5, type: 3}
   audioSource: {fileID: 0}
   horizontalInput: 0
   verticalInput: 0
