@@ -467,8 +467,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 35089105}
   m_HandleRect: {fileID: 35089104}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.14343007
+  m_Value: 0
+  m_Size: 0.7968952
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -814,12 +814,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739688112}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1014838632}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &794017834
 GameObject:
@@ -972,12 +972,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874919241}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1014838632}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &954290218
 GameObject:
@@ -1082,7 +1082,7 @@ GameObject:
   - component: {fileID: 1014838630}
   - component: {fileID: 1014838629}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: LearnGameAudioMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1165,6 +1165,10 @@ RectTransform:
   m_Children:
   - {fileID: 1977367954}
   - {fileID: 319190532}
+  - {fileID: 874919244}
+  - {fileID: 1488554826}
+  - {fileID: 739688114}
+  - {fileID: 1877976778}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1694,12 +1698,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488554824}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1014838632}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1719565810
 GameObject:
@@ -1897,7 +1901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 422.51566}
+  m_AnchoredPosition: {x: -0.000061035156, y: 656.2972}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1758651310
@@ -1978,12 +1982,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877976776}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 718.13025, y: 589.8684, z: -1117.3295}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -241.86975, y: 49.86841, z: -1117.3295}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1014838632}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1887011337
 GameObject:
@@ -2269,8 +2273,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1224853750}
   m_HandleRect: {fileID: 1224853749}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.49553338
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2320,7 +2324,3 @@ SceneRoots:
   - {fileID: 720492530}
   - {fileID: 1084020872}
   - {fileID: 1014838632}
-  - {fileID: 874919244}
-  - {fileID: 1488554826}
-  - {fileID: 739688114}
-  - {fileID: 1877976778}
