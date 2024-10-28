@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UIElements;
 
+
 public class PlayerController : MonoBehaviour
 {
     public float speed;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private int foleyType = 0;
     private int lastStep = -1; //Keep track of last step sound used
     public bool isPaused;
+    public EventLogger eventLogger;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,15 @@ public class PlayerController : MonoBehaviour
         blindCam.SetActive(false);
 
         timer = 0;
+
+        GameObject loggerObject = GameObject.FindGameObjectWithTag("EventLogger");
+
+        if (loggerObject != null)
+        {
+            eventLogger = loggerObject.GetComponent<EventLogger>();
+        }
+        
+
     }
 
     // Update is called once per frame
@@ -192,6 +203,7 @@ void Controls(KeyCode input){
     public bool Death(){
         audioSource.PlayOneShot(deathSound);
         StartCoroutine(waitForDeath());
+        eventLogger.LogEvent("Player died");
         //Respawn();
         return true;
     }
