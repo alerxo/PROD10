@@ -11,6 +11,8 @@ TagManager:
   - ZoneWood
   - ZoneStone
   - Pillar
+  - EventLogger
+  - Wall
   layers:
   - Default
   - TransparentFX
