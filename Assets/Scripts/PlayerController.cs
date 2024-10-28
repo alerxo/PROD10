@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip recordingFailedSound;
     [SerializeField] AudioClip recordPlayingSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip wallbumpSound;
     [SerializeField] AudioClip[] swooshSounds;
     [SerializeField] AudioClip[] stepSoundsWood;
     [SerializeField] AudioClip[] direction;
@@ -320,5 +321,11 @@ void Controls(KeyCode input){
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.tag == "Wall") {
+            audioSource.PlayOneShot(wallbumpSound);
+        }
     }
 }
