@@ -7175,14 +7175,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4214328056344792854, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
-      propertyPath: m_AutoBraking
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4214328056344792854, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
-      propertyPath: m_Acceleration
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 5952409511979880530, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
       propertyPath: m_Name
       value: Monster
