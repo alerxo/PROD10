@@ -2096,6 +2096,8 @@ MonoBehaviour:
   recordingFailedSound: {fileID: 8300000, guid: c8e5793d64f99604e8f7adbc39b6038e, type: 3}
   recordPlayingSound: {fileID: 8300000, guid: 2dfa7c2e15b3c8b4c8663e9cc763ef53, type: 3}
   deathSound: {fileID: 8300000, guid: 2f19dbb7443f9e14096a4074d5322ede, type: 3}
+  restartSound: {fileID: 8300000, guid: 12394c5ac8474b948ac182ccc6f40e0d, type: 3}
+  startSound: {fileID: 8300000, guid: 93ab7b76e5250ad4ba67118c982b719c, type: 3}
   wallbumpSound: {fileID: 8300000, guid: d1a3f05da1e9d0f4f9ce5b568a3a611a, type: 3}
   generalOuchSound: {fileID: 8300000, guid: f1a9e3903a3d31141b9ed0fd0e65b570, type: 3}
   swooshSounds:

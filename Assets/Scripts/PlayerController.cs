@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip recordingFailedSound;
     [SerializeField] AudioClip recordPlayingSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip restartSound;
+    [SerializeField] AudioClip startSound;
     [SerializeField] AudioClip wallbumpSound;
     [SerializeField] AudioClip generalOuchSound;
     [SerializeField] AudioClip[] swooshSounds;
@@ -60,8 +62,8 @@ public class PlayerController : MonoBehaviour
         {
             eventLogger = loggerObject.GetComponent<EventLogger>();
         }
-        
 
+        audioSource.PlayOneShot(startSound);
     }
 
     // Update is called once per frame
@@ -203,6 +205,7 @@ void Controls(KeyCode input){
 }
     public bool Death(){
         audioSource.PlayOneShot(deathSound);
+        audioSource.PlayOneShot(restartSound); //Restart sound
         StartCoroutine(waitForDeath());
         eventLogger?.LogEvent("Player died");
         //Respawn();
