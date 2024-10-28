@@ -435,8 +435,9 @@ GameObject:
   - component: {fileID: 4813929700908672510}
   - component: {fileID: 614091045994133217}
   - component: {fileID: 3953676256532362859}
+  - component: {fileID: 2019007600582420209}
   m_Layer: 0
-  m_Name: MenuController 1
+  m_Name: inGameMenuController 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -465,7 +466,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448771366226984988}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 850708fa48e7ced41884c81312176cdc, type: 3}
   m_Name: 
@@ -473,7 +474,7 @@ MonoBehaviour:
   audioSource: {fileID: 3953676256532362859}
   audioClips:
   - {fileID: 0}
-  - {fileID: 8300000, guid: ec8b5ff71b8e3e747b701ab885162dc2, type: 3}
+  - {fileID: 8300000, guid: 6acccd75bdb790044a47e8a4a7040cc3, type: 3}
   - {fileID: 8300000, guid: 13bb22225249108428a752e9c68f44e1, type: 3}
   - {fileID: 8300000, guid: 8e58926e7fb55b44f8ca718f9a432f25, type: 3}
   - {fileID: 8300000, guid: 3cf42f83e42c3484ca30fe3ef145df99, type: 3}
@@ -484,6 +485,7 @@ MonoBehaviour:
   - {fileID: 6791257422161800958}
   - {fileID: 8209983350061154683}
   - {fileID: 8138704938024451701}
+  menuController: {fileID: 0}
 --- !u!82 &3953676256532362859
 AudioSource:
   m_ObjectHideFlags: 0
@@ -580,6 +582,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2019007600582420209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448771366226984988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3874d32d4a66b45b06cdc31a270a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 3953676256532362859}
+  audioClips:
+  - {fileID: 8300000, guid: 6acccd75bdb790044a47e8a4a7040cc3, type: 3}
+  - {fileID: 8300000, guid: a45c0395c4cbda242bc977a2c49092fb, type: 3}
+  - {fileID: 8300000, guid: 3a08c4db005117a4db771a7ca05ce0ca, type: 3}
+  - {fileID: 8300000, guid: 2cad79c5990092b43bd78f722c6045eb, type: 3}
+  menuIntroClip: {fileID: 8300000, guid: ad02d7f5e26deb44a92a3df8e8cc7fdc, type: 3}
+  menuButtons:
+  - {fileID: 2984728292472653643}
+  - {fileID: 6791257422161800958}
+  - {fileID: 8209983350061154683}
+  - {fileID: 8138704938024451701}
+  inGameMenuController: {fileID: 1448771366226984988}
+  learnGameAudioMenu: {fileID: 0}
 --- !u!1 &1484920366169493673
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +844,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: START
+  m_Text: Resume
 --- !u!1 &4029921809315892499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,8 +1281,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: StartGame
+        m_TargetAssemblyTypeName: InGameMenuController, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

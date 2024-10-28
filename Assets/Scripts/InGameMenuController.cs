@@ -11,6 +11,7 @@ public class InGameMenuController : MonoBehaviour
     [SerializeField] private AudioClip menuIntroClip; // Audio clip for blind player menu introduction
     [SerializeField] private Button[] menuButtons;    // Assign your buttons in the inspector
     [SerializeField] private GameObject inGameMenuController; // GameObject for menu control
+    [SerializeField] private GameObject learnGameAudioMenu; // GameObject for menu control
 
     private int selectedIndex = 0;   // To track which menu item is currently selected
     private bool hasNavigated = false;  // To track if player has navigated
