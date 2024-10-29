@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InGameMenuController : MonoBehaviour
 {
+    public EventLogger eventLogger;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] audioClips;  // Placeholder for menu option sounds
     [SerializeField] private AudioClip menuIntroClip; // Audio clip for blind player menu introduction
@@ -26,6 +27,13 @@ public class InGameMenuController : MonoBehaviour
 
         // Do not automatically select the first button yet, wait for navigation
         hasNavigated = false;
+
+        GameObject loggerObject = GameObject.FindGameObjectWithTag("EventLogger");
+
+        if (loggerObject != null)
+        {
+            eventLogger = loggerObject.GetComponent<EventLogger>();
+        }
     }
 
     void Update()
@@ -95,7 +103,7 @@ public class InGameMenuController : MonoBehaviour
         Time.timeScale = 0f;  // Pausa spel
         isPaused = true;
         PausAudio();
-        Debug.Log("Audio should be paused");
+        eventLogger?.LogEvent("Game is paused");
 
         if (playerController != null)
         {

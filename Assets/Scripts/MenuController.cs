@@ -15,7 +15,7 @@ public class MenuController : MonoBehaviour
     private int selectedIndex = 0;   // To track which menu item is currently selected
     private bool hasNavigated = false;  // To track if player has navigated
     public static bool isPaused = false;  // To track if the game is paused
-    public EventLogger eventLogger;
+    
 
     void Start()
     {
@@ -25,12 +25,7 @@ public class MenuController : MonoBehaviour
         // Do not automatically select the first button yet, wait for navigation
         hasNavigated = false;
 
-        GameObject loggerObject = GameObject.FindGameObjectWithTag("EventLogger");
-
-        if (loggerObject != null)
-        {
-            eventLogger = loggerObject.GetComponent<EventLogger>();
-        }
+        
     }
 
     void Update()
@@ -92,7 +87,7 @@ public class MenuController : MonoBehaviour
         menuController.SetActive(true);  // Enable the menu
         Time.timeScale = 0f;  // Pause the game
         isPaused = true;
-        eventLogger?.LogEvent("Game is paused");
+        
     }
 
     // Resume the game and hide the menu
