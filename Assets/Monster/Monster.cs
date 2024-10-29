@@ -206,6 +206,8 @@ public class Monster : MonoBehaviour
 
     private void ClueTriggered(Clue second)
     {
+        if (!CanGetToDestination(second.Position)) return;
+
         if (second.Parent == Player)
         {
             PlayerNoiseValue += second.Strength;
