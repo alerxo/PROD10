@@ -19,9 +19,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip recordingFailedSound;
     [SerializeField] AudioClip recordPlayingSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip restartSound;
+    [SerializeField] AudioClip startSound;
+    [SerializeField] AudioClip wallbumpSound;
+    [SerializeField] AudioClip generalOuchSound;
     [SerializeField] AudioClip[] swooshSounds;
     [SerializeField] AudioClip[] stepSoundsWood;
     [SerializeField] AudioClip[] direction;
+    [SerializeField] AudioClip[] daughterCallout;
     GameObject mainCam;   
     GameObject blindCam;     
     GameObject audioManager;
@@ -35,8 +40,10 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false;
     private int foleyType = 0;
     private int lastStep = -1; //Keep track of last step sound used
+    private Vector3 playerPos = Vector3.zero;
     public bool isPaused;
     public EventLogger eventLogger;
+    private GameObject daughter;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +53,7 @@ public class PlayerController : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+        daughter = GameObject.FindGameObjectWithTag("Goal");
 
         blindCam.SetActive(false);
 
@@ -57,8 +65,8 @@ public class PlayerController : MonoBehaviour
         {
             eventLogger = loggerObject.GetComponent<EventLogger>();
         }
-        
 
+        audioSource.PlayOneShot(startSound);
     }
 
     // Update is called once per frame
@@ -98,13 +106,11 @@ public class PlayerController : MonoBehaviour
             if(horizontalInput != 0.0f || verticalInput != 0.0f){
                 timer = MoveDelay + Time.deltaTime;
                 isMoving = true;
-                if(isMoving){
-                    //int index = UnityEngine.Random.Range(0, stepSoundsWood.Length);
-                    //audioSource.PlayOneShot(stepSoundsWood[index]);
-                    
-
-                    //audioSource.clip = playerStep; 
-                    //audioSource.Play();
+                
+                if(playerPos == transform.position) {
+                    return;
+                } else {
+                    playerPos = transform.position;
                     PlayFoleySound();
                 }
 
@@ -202,8 +208,9 @@ void Controls(KeyCode input){
 }
     public bool Death(){
         audioSource.PlayOneShot(deathSound);
+        audioSource.PlayOneShot(restartSound); //Restart sound
         StartCoroutine(waitForDeath());
-        eventLogger.LogEvent("Player died");
+        eventLogger?.LogEvent("Player died");
         //Respawn();
         return true;
     }
@@ -234,6 +241,9 @@ void Controls(KeyCode input){
         for (int i = 0; i < ventCollider.Length; i++){
             ventCollider[i].GetComponent<AudioSource>().Play();
         }
+
+        audioSource.PlayOneShot(daughterCallout[UnityEngine.Random.Range(0,daughterCallout.Length)]);
+        daughter.GetComponent<Goal>().DaugherResponse();
     }
 
 
@@ -260,7 +270,6 @@ void Controls(KeyCode input){
             foleyType = 0;
             break;
         }
-        print(foleyType); 
     }
 
     private void PlayFoleySound() {
@@ -290,12 +299,14 @@ void Controls(KeyCode input){
         }
 
         int index = UnityEngine.Random.Range(min, max + 1);
-
+        
         while (lastStep == index) {
             index = UnityEngine.Random.Range(min, max + 1);
         }
+        
         lastStep = index;
         audioSource.PlayOneShot(stepSoundsWood[index]);
+        //print("Index " + index);
         //UnityEngine.Debug.Log(index);
     }
 	// Metod för att sätta paus status (adin)
@@ -317,5 +328,16 @@ void Controls(KeyCode input){
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.tag == "Wall" || other.gameObject.tag == "Pillar") {
+            audioSource.PlayOneShot(wallbumpSound);     
+            eventLogger.LogEvent("Wall bumped");
+            return;
+        } 
+        if(other.gameObject.tag == "PuzzleElement") {
+            audioSource.PlayOneShot(generalOuchSound);
+        }
     }
 }

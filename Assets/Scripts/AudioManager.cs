@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     public Collider[] obstacleColliders;
     private List<Collider> foundObstacleColliders;
     private List<GameObject> wallSounds;
+    PlayerController pc; 
 
     public bool isPlaying = false;
     public bool isInteracting = false;
@@ -31,6 +32,7 @@ public class AudioManager : MonoBehaviour
         m_Started = true;
         wallSounds = new List<GameObject>();
         foundObstacleColliders = new List<Collider>();
+        pc = GetComponentInParent<PlayerController>();
 
         /*for(int i = 0; i < wallAmount; i++){
                 GameObject objToSpawn = new GameObject("WallSound"+i);
@@ -138,6 +140,10 @@ void CollisionDetection()
                     //Indikator för ljudfilen som förstörs
                     RecorderEmptyIndicator();
                     audioClip = null;
+                    
+                    //Logging puzzle solved
+                    pc.eventLogger.LogEvent("Puzzle element solved: " + puzzleElement.gameObject.name);
+                    
                }  
             }
         }
