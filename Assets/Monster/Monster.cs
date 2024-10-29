@@ -10,10 +10,10 @@ public class Monster : MonoBehaviour
     public NavMeshObstacle PlayerObstacle { get; private set; }
     public PlayerInput PlayerInput;
     public NavMeshAgent NavMeshAgent { get; private set; }
-    public const float WalkSpeed = 3f;
-    public const float RunSpeed = 7f;
+    public float WalkSpeed = 3f;
+    public float RunSpeed = 7f;
 
-    public IMonsterState State {  get; private set; }
+    public IMonsterState State { get; private set; }
     public readonly Monster_Idle idleState = new();
     public readonly Monster_Patrolling patrollingState = new();
     public readonly Monster_Investigating investigatingState = new();
@@ -41,8 +41,8 @@ public class Monster : MonoBehaviour
 
     public Clue CurrentClue { get; private set; }
     [field: SerializeField] public float PlayerNoiseValue { get; private set; }
-    public const float PlayerNoiseFalloff = 0.7f;
-    public const float PlayerNoiseFastFalloff = 2f;
+    public float PlayerNoiseFalloff = 0.7f;
+    public float PlayerNoiseFastFalloff = 2f;
 
     private float distance = 0;
     private Vector3 last = Vector3.zero;
@@ -53,7 +53,7 @@ public class Monster : MonoBehaviour
 
     [SerializeField] private string stateName;
 
-    private void Awake()
+    private void Start()
     {
         PlayerInput = new();
         PlayerInput.Enable();
@@ -62,6 +62,14 @@ public class Monster : MonoBehaviour
         PlayerObstacle = Player.GetComponent<NavMeshObstacle>();
         ClueSystem.OnClueTriggered += ClueTriggered;
         PlayerInput.Player.Block.performed += Block_performed;
+
+        WalkSpeed = ParameterSystem.Get().MonsterWalkSpeed;
+        RunSpeed = ParameterSystem.Get().MonsterRunSpeed;
+        PlayerNoiseFalloff = ParameterSystem.Get().PlayerNoiseFalloff;
+        PlayerNoiseFastFalloff = ParameterSystem.Get().PlayerNoiseFastFalloff;
+
+        State = idleState;
+        StopPath();
     }
 
     private void OnDestroy()
@@ -84,12 +92,6 @@ public class Monster : MonoBehaviour
     {
         yield return new WaitForSeconds(blockCooldown);
         canBlock = true;
-    }
-
-    private void Start()
-    {
-        State = idleState;
-        StopPath();
     }
 
     private void Update()
@@ -206,6 +208,8 @@ public class Monster : MonoBehaviour
 
     private void ClueTriggered(Clue second)
     {
+        if (!CanGetToDestination(second.Position)) return;
+
         if (second.Parent == Player)
         {
             PlayerNoiseValue += second.Strength;

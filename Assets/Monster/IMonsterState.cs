@@ -65,7 +65,7 @@ public class Monster_Patrolling : IMonsterState
     private void GetDestination(Monster monster)
     {
         Vector3 position = monster.transform.position + new Vector3(GetRandomCoordinate(), 0, GetRandomCoordinate());
-        monster.TrySetPath(position, Monster.WalkSpeed);
+        monster.TrySetPath(position, monster.WalkSpeed);
     }
 
     private float GetRandomCoordinate()
@@ -123,7 +123,7 @@ public class Monster_Investigating : IMonsterState
             float margin = destinationMargin * (1 - ClueSystem.GetClueStrength(monster, monster.CurrentClue));
             Vector3 position = monster.CurrentClue.Position + new Vector3(Random.Range(-margin, margin), 0, Random.Range(-margin, margin));
 
-            if (monster.TrySetPath(position, Monster.WalkSpeed))
+            if (monster.TrySetPath(position, monster.WalkSpeed))
             {
                 break;
             }
@@ -165,7 +165,7 @@ public class Monster_Chasing : IMonsterState
             return monster.attackingState;
         }
 
-        monster.TrySetPath(monster.Player.transform.position, Monster.RunSpeed);
+        monster.TrySetPath(monster.Player.transform.position, monster.RunSpeed);
 
         return this;
     }
@@ -288,7 +288,7 @@ public class Monster_Scared : IMonsterState
     private void GetDestination(Monster monster)
     {
         Vector3 position = monster.Player.transform.position + new Vector3(GetRandomCoordinate(monster), 0, GetRandomCoordinate(monster));
-        monster.TrySetPath(position, Monster.RunSpeed);
+        monster.TrySetPath(position, monster.RunSpeed);
     }
 
     private float GetRandomCoordinate(Monster monster)

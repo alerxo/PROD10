@@ -32,7 +32,7 @@ public class SceneLoader : MonoBehaviour
         if (!introOnboarding.GetComponent<AudioSource>().isPlaying)
         {
             Debug.Log("Changing Scene");
-            SceneManager.LoadScene("AdinPrototype");
+            SceneManager.LoadScene("GruppC_Scen");
         }
     }
     
