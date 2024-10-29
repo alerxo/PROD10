@@ -1905,7 +1905,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: c6f5090a51d1d8d44aa3a0c4ff8e6ce7, type: 3}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.12
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1913,7 +1913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.3
+      value: -5.4
       objectReference: {fileID: 0}
     - target: {fileID: 6920007923964228565, guid: 9139283ac0050b84cb181e135938ce9c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2558,7 +2558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c030b9603e2cd094791be0770d50871d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  victorySound: {fileID: 0}
+  victorySound: {fileID: 8300000, guid: f704ef76e091abd49848c9e0551a53b4, type: 3}
   callSound: {fileID: 8300000, guid: 19df065e6a8d6e04d9e9897497116417, type: 3}
 --- !u!1 &714979208
 GameObject:
@@ -5999,7 +5999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4163273569504874883, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.0172668
+      value: -28.92
       objectReference: {fileID: 0}
     - target: {fileID: 4163273569504874883, guid: fe11f30a2c36a564293e4051596c9d5b, type: 3}
       propertyPath: m_LocalRotation.w
