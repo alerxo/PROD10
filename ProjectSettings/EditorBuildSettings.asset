@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Grupp10B (Adin & Ermias)/IntroScene.unity
     guid: 811e9f7594e0c1e4fb92376dee83d251
+  - enabled: 1
+    path: Assets/Scenes/GruppC_Scen.unity
+    guid: 493d8bfe61d5c40498c8e1d37fb96a98
   m_configObjects: {}
