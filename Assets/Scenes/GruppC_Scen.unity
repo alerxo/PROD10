@@ -898,6 +898,54 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: voiceClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1868bb960a9679b439d14ce161def99d, type: 3}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1868bb960a9679b439d14ce161def99d, type: 3}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1868bb960a9679b439d14ce161def99d, type: 3}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: voiceClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a91815d83e37955409cbeaaa7dc4c20b, type: 3}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: voiceClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a91815d83e37955409cbeaaa7dc4c20b, type: 3}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: voiceClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a91815d83e37955409cbeaaa7dc4c20b, type: 3}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClipButtons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClipButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1685234554}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClipButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 1685234554}
+    - target: {fileID: 6245520362766468767, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: audioClipButtons.Array.data[2]
+      value: 
+      objectReference: {fileID: 1685234554}
     - target: {fileID: 7378146090217116604, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -1001,6 +1049,14 @@ PrefabInstance:
     - target: {fileID: 7958474236829587382, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 656.2972
+      objectReference: {fileID: 0}
+    - target: {fileID: 8095653469160375642, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: m_Value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8095653469160375642, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+      propertyPath: m_MinValue
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 8514111600078206075, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -6084,6 +6140,17 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 871539f927b27a549b27baeba3f15328, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &1685234554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8514111600078206075, guid: 62ef41814c9fd7a4da1b90bb4e568e6d, type: 3}
+  m_PrefabInstance: {fileID: 156131972}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1805175861
 GameObject:
   m_ObjectHideFlags: 0
