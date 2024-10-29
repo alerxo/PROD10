@@ -8696,6 +8696,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: inGameMenuController
       objectReference: {fileID: 0}
+    - target: {fileID: 2019007600582420209, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: bb136f148de36c0429709b0cff8dc897, type: 3}
     - target: {fileID: 2984728292472653643, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -8711,6 +8715,10 @@ PrefabInstance:
     - target: {fileID: 2984728292472653643, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: InGameMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3953676256532362859, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
+      propertyPath: m_Volume
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4813929700908672510, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8751,6 +8759,10 @@ PrefabInstance:
     - target: {fileID: 4813929700908672510, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5094997563492371822, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
+      propertyPath: m_Name
+      value: Button_Resume
       objectReference: {fileID: 0}
     - target: {fileID: 6791257422161800958, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -8808,6 +8820,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8138704938024451701, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8209983350061154683, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -8856,7 +8872,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 614091045994133217, guid: 5b3aabc8125f9834b83618c59b59086e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
