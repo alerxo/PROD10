@@ -511,8 +511,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2233467361465611941}
   - component: {fileID: 8095653469160375642}
+  - component: {fileID: 7799093903731124045}
   m_Layer: 5
-  m_Name: Slider - Spelare
+  m_Name: Slider - Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +591,32 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7799093903731124045}
+        m_TargetAssemblyTypeName: PlayerVolumeScript, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7799093903731124045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601023301270442105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552befb5d1c3e82ae86b8728f24729fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMixer: {fileID: 24100000, guid: 03ece58e274c843b5bc1ef3af22fc53a, type: 2}
 --- !u!1 &1752478039567054122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,6 +1214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5295135957840727840}
   - component: {fileID: 6996397285741923781}
+  - component: {fileID: 1561238990329545068}
   m_Layer: 5
   m_Name: Slider - Element
   m_TagString: Untagged
@@ -1261,13 +1288,38 @@ MonoBehaviour:
   m_FillRect: {fileID: 626121522386413136}
   m_HandleRect: {fileID: 2448702000019493849}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1561238990329545068}
+        m_TargetAssemblyTypeName: ProximityVolume, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1561238990329545068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923593035851137284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c866676024b2e2eb8aab684774ee711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  proxMixer: {fileID: 24100000, guid: dcd5a015fcd9d05698d98f26b466ecb4, type: 2}
 --- !u!1 &4213051853539981328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,6 +1480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9114995391855664637}
   - component: {fileID: 2371493730529086685}
+  - component: {fileID: 3344140212413324379}
   m_Layer: 5
   m_Name: Slider - Monster
   m_TagString: Untagged
@@ -1501,13 +1554,38 @@ MonoBehaviour:
   m_FillRect: {fileID: 2450352699919169295}
   m_HandleRect: {fileID: 3058371571694092157}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3344140212413324379}
+        m_TargetAssemblyTypeName: MonsterVolumeScript, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3344140212413324379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4828961543226603045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911dd8e4b14fd1b589af47a9a118b79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterMixer: {fileID: 24100000, guid: cafbfd44b19c7f2cb94cac9ea3a6f0c5, type: 2}
 --- !u!1 &4899463925952637038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,7 +1660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 656.2972}
+  m_AnchoredPosition: {x: -0.000030517578, y: 656.29724}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1875955516119987137
@@ -2444,10 +2522,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8523858147671325954}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadStartMeny
-        m_Mode: 1
+      - m_Target: {fileID: 6111898539356021477}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2455,6 +2533,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &7860338640577013824
 GameObject:
@@ -2576,7 +2666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 8570777587678025825}
-  introClip: {fileID: 8300000, guid: 25b35c353bd941b45a27b86315642209, type: 3}
+  introClip: {fileID: 0}
   audioClips:
   - {fileID: 8300000, guid: b9a2a9bb25673984ab198e6328991006, type: 3}
   - {fileID: 8300000, guid: 5da2bcdd156bb21439aaccf183779edc, type: 3}
