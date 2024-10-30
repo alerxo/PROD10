@@ -9,6 +9,6 @@ public class PlayerVolumeScript : MonoBehaviour
     [SerializeField] private AudioMixer playerMixer;
 
     public void SetVolume(float sliderValue){
-        playerMixer.SetFloat("PlayerVolume", MathF.Log10(sliderValue) * 20);
+        playerMixer.SetFloat("PlayerVol", MathF.Log10(sliderValue) * 20);
     }
 }
