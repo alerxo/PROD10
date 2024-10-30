@@ -29,10 +29,15 @@ public static class ParameterSystem
 
 public class Parameters
 {
+    //Monster parameters
     public float MonsterWalkSpeed = 3f;
     public float MonsterRunSpeed = 7f;
     public float PlayerNoiseFalloff = 0.7f;
     public float PlayerNoiseFastFalloff = 2f;
 
+    //Onboarding parameters
     public int ActiveIntroClip = 0;
+
+    //Player parameters
+    public bool ActiveSound = false;
 }
