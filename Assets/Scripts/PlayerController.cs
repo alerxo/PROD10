@@ -252,6 +252,11 @@ void Controls(KeyCode input){
         ChangeFoleyType(other.gameObject);
     }
 
+    private void OnTriggerExit(Collider other) {
+        foleyType = 0;
+        ChangeFoleyType(other.gameObject);
+    }
+
     //Change foley type based on tag
     //Consider adding gameobjects to array, and changing based on name at index
     private void ChangeFoleyType(GameObject zone) {
@@ -305,7 +310,8 @@ void Controls(KeyCode input){
         }
         
         lastStep = index;
-        audioSource.PlayOneShot(stepSoundsWood[index]);
+        audioSource.clip = stepSoundsWood[index]; 
+        audioSource.Play();
         //print("Index " + index);
         //UnityEngine.Debug.Log(index);
     }
