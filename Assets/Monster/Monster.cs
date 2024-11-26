@@ -169,7 +169,6 @@ public class Monster : MonoBehaviour
         float max = Monster_Chasing.PlayerNoiseValueEnterValue - Monster_Chasing.PlayerNoiseValueExitValue;
         volume = Mathf.Min(volume, max) / max;
         volume = Mathf.Pow(volume, 2);
-        Debug.Log(volume);
         volume = Mathf.Clamp01(volume);
 
         IntenseMusic.volume = volume;
