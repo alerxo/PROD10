@@ -8,6 +8,12 @@ TagManager:
   - AudioManager
   - PuzzleElement
   - Ventilation
+  - ZoneWood
+  - ZoneStone
+  - Pillar
+  - EventLogger
+  - Wall
+  - Goal
   layers:
   - Default
   - TransparentFX
@@ -17,9 +23,9 @@ TagManager:
   - UI
   - Puzzle
   - Ventilation
-  - 
-  - 
-  - 
+  - Wall
+  - PuzzleSource
+  - RayBlock
   - 
   - 
   - 

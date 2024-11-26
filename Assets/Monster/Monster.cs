@@ -7,12 +7,13 @@ using UnityEngine.AI;
 public class Monster : MonoBehaviour
 {
     public GameObject Player { get; private set; }
+    public NavMeshObstacle PlayerObstacle { get; private set; }
     public PlayerInput PlayerInput;
     public NavMeshAgent NavMeshAgent { get; private set; }
-    public const float WalkSpeed = 3;
-    public const float RunSpeed = 6f;
+    public float WalkSpeed = 3f;
+    public float RunSpeed = 7f;
 
-    private IMonsterState state;
+    public IMonsterState State { get; private set; }
     public readonly Monster_Idle idleState = new();
     public readonly Monster_Patrolling patrollingState = new();
     public readonly Monster_Investigating investigatingState = new();
@@ -23,35 +24,52 @@ public class Monster : MonoBehaviour
     public readonly Monster_Scared scaredState = new();
 
     public AudioSource AmbienceAudio;
-    public AudioSource StateAudio;
+    public AudioSource FootStepsAudio;
     public AudioSource ActionAudio;
+    public AudioSource ActionAudio3D;
     public AudioSource NormalMusic;
     public AudioSource IntenseMusic;
 
     public AudioClip[] AmbienceClips;
 
-    public AudioClip WalkingClip;
-    public AudioClip RunningClip;
+    public AudioClip[] FootStepClips;
     public AudioClip ChaseTriggeredClip;
     public AudioClip AttackWindupClip;
     public AudioClip BlockClip;
+    public AudioClip BlockFailClip;
     public AudioClip KillClip;
 
     public Clue CurrentClue { get; private set; }
     [field: SerializeField] public float PlayerNoiseValue { get; private set; }
-    public const float PlayerNoiseFalloff = 0.7f;
-    public const float PlayerNoiseFastFalloff = 2f;
+    public float PlayerNoiseFalloff = 0.7f;
+    public float PlayerNoiseFastFalloff = 2f;
+
+    private float distance = 0;
+    private Vector3 last = Vector3.zero;
+    private const float step = 1.5f;
+
+    private bool canBlock = true;
+    private const float blockCooldown = 1.5f;
 
     [SerializeField] private string stateName;
 
-    private void Awake()
+    private void Start()
     {
         PlayerInput = new();
         PlayerInput.Enable();
         NavMeshAgent = GetComponent<NavMeshAgent>();
         Player = FindObjectOfType<PlayerController>().gameObject;
+        PlayerObstacle = Player.GetComponent<NavMeshObstacle>();
         ClueSystem.OnClueTriggered += ClueTriggered;
         PlayerInput.Player.Block.performed += Block_performed;
+
+        WalkSpeed = ParameterSystem.Get().MonsterWalkSpeed;
+        RunSpeed = ParameterSystem.Get().MonsterRunSpeed;
+        PlayerNoiseFalloff = ParameterSystem.Get().PlayerNoiseFalloff;
+        PlayerNoiseFastFalloff = ParameterSystem.Get().PlayerNoiseFastFalloff;
+
+        State = idleState;
+        StopPath();
     }
 
     private void OnDestroy()
@@ -62,67 +80,66 @@ public class Monster : MonoBehaviour
 
     private void Block_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        attackingState.Block();
+        if (canBlock)
+        {
+            attackingState.Block(this);
+            canBlock = false;
+            StartCoroutine(BlockTimer());
+        }
     }
 
-    private void Start()
+    private IEnumerator BlockTimer()
     {
-        state = idleState;
-        StopPath();
+        yield return new WaitForSeconds(blockCooldown);
+        canBlock = true;
     }
 
     private void Update()
     {
         if (Player == null) return;
 
+        PlayFootSteps();
         ManageAudio();
         ManageMusic();
         UpdateNoise();
         UpdateState();
     }
 
+    private void PlayFootSteps()
+    {
+        if (State is Monster_Idle) return;
+
+        distance += Vector3.Distance(transform.position, last);
+
+        if (distance >= step)
+        {
+            distance -= step;
+            FootStepsAudio.PlayOneShot(FootStepClips[Random.Range(0, FootStepClips.Length)]);
+        }
+
+        last = transform.position;
+    }
+
     private void ManageAudio()
     {
-        switch (state)
+        switch (State)
         {
+            case Monster_Idle:
             case Monster_Patrolling:
-                SetStateAudio(WalkingClip);
-                ManageAmbience(true);
-                break;
-
             case Monster_Investigating:
-                SetStateAudio(WalkingClip);
                 ManageAmbience(true);
                 break;
 
             case Monster_Chasing:
-                SetStateAudio(RunningClip);
-                ManageAmbience(false);
-                break;
-
             case Monster_Attacking:
-                SetStateAudio(null);
-                ManageAmbience(false);
-                break;
-
             case Monster_Stunned:
-                SetStateAudio(null);
-                ManageAmbience(false);
-                break;
-
             case Monster_Killing:
-                SetStateAudio(null);
-                ManageAmbience(false);
-                break;
-
             case Monster_Scared:
-                SetStateAudio(RunningClip);
                 ManageAmbience(false);
                 break;
 
             default:
-                SetStateAudio(null);
-                ManageAmbience(true);
+                Debug.LogError("Defaulted");
                 break;
         }
     }
@@ -145,22 +162,16 @@ public class Monster : MonoBehaviour
         AmbienceAudio.Play();
     }
 
-    private void SetStateAudio(AudioClip clip)
-    {
-        if (StateAudio.clip == clip) return;
-
-        StateAudio.Stop();
-        StateAudio.clip = clip;
-
-        if (clip == null) return;
-
-        StateAudio.Play();
-    }
-
     public void SetActionAudio(AudioClip clip)
     {
         ActionAudio.Stop();
         ActionAudio.PlayOneShot(clip);
+    }
+
+    public void SetActionAudio3D(AudioClip clip)
+    {
+        ActionAudio3D.Stop();
+        ActionAudio3D.PlayOneShot(clip);
     }
 
     private void ManageMusic()
@@ -184,19 +195,21 @@ public class Monster : MonoBehaviour
 
         if (PlayerNoiseValue > 0)
         {
-            PlayerNoiseValue -= (state == scaredState || PlayerNoiseValue > Monster_Chasing.PlayerNoiseValueEnterValue + PlayerNoiseFalloff ?
+            PlayerNoiseValue -= (State == scaredState || PlayerNoiseValue > Monster_Chasing.PlayerNoiseValueEnterValue + PlayerNoiseFalloff ?
                 PlayerNoiseFastFalloff : PlayerNoiseFalloff) * Time.deltaTime;
         }
     }
 
     private void UpdateState()
     {
-        state = state.Execute(this);
-        stateName = state.ToString();
+        State = State.Execute(this);
+        stateName = State.ToString();
     }
 
     private void ClueTriggered(Clue second)
     {
+        if (!CanGetToDestination(second.Position)) return;
+
         if (second.Parent == Player)
         {
             PlayerNoiseValue += second.Strength;
@@ -207,6 +220,11 @@ public class Monster : MonoBehaviour
 
     public bool TrySetPath(Vector3 position, float speed)
     {
+        if (!CanGetToDestination(position) && NavMesh.SamplePosition(position, out NavMeshHit hit, 6, -1))
+        {
+            position = hit.position;
+        }
+
         NavMeshPath path = new();
         NavMeshAgent.CalculatePath(position, path);
 
@@ -223,6 +241,16 @@ public class Monster : MonoBehaviour
     }
 
     public bool IsValidDestination(Vector3 position)
+    {
+        if (NavMesh.SamplePosition(position, out NavMeshHit hit, 6, -1))
+        {
+            position = hit.position;
+        }
+
+        return CanGetToDestination(position);
+    }
+
+    private bool CanGetToDestination(Vector3 position)
     {
         NavMeshPath path = new();
         NavMeshAgent.CalculatePath(position, path);
@@ -243,7 +271,6 @@ public class Monster : MonoBehaviour
 
     public void SetDefaultValues()
     {
-        state = idleState;
         PlayerNoiseValue = 0;
         CurrentClue = null;
     }
