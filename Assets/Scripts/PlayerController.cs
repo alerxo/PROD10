@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip[] stepSoundsWood;
     [SerializeField] AudioClip[] direction;
     [SerializeField] AudioClip[] daughterCallout;
-    GameObject mainCam;   
-    GameObject blindCam;     
+    GameObject mainCam;
+    GameObject blindCam;
     GameObject audioManager;
     public AudioSource audioSource;
     public float horizontalInput;
@@ -78,7 +78,8 @@ public class PlayerController : MonoBehaviour
         timer -= Time.deltaTime;
         isMoving = false;
 
-        if(timer <= 0){
+        if (timer <= 0)
+        {
 
             float rawHorizontalInput = Input.GetAxis("Horizontal");
             float rawVerticalInput = Input.GetAxis("Vertical");
@@ -86,127 +87,153 @@ public class PlayerController : MonoBehaviour
             horizontalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Horizontal"), 1)) * speed;
             verticalInput = (float)Math.Ceiling(Math.Round(Input.GetAxis("Vertical"), 1)) * speed;
 
-            if(rawHorizontalInput < 0.0f){
+            if (rawHorizontalInput < 0.0f)
+            {
                 horizontalInput = speed * -1;
             }
-            if(rawVerticalInput < 0.0f){
-               verticalInput = speed * -1;
+            if (rawVerticalInput < 0.0f)
+            {
+                verticalInput = speed * -1;
             }
 
-            if(horizontalInput != 0.0f) verticalInput = 0.0f;
-            if(verticalInput != 0.0f) horizontalInput = 0.0f;
+            if (horizontalInput != 0.0f) verticalInput = 0.0f;
+            if (verticalInput != 0.0f) horizontalInput = 0.0f;
 
             Vector3 localMoveDirection = new Vector3(horizontalInput, 0f, verticalInput);
-            
+
+            if (MonsterOnboarding.isPlaying)
+            {
+                localMoveDirection = Vector3.zero;
+            }
+
+
             moveDirection = transform.TransformDirection(localMoveDirection);
-            
+
             //transform.Translate(moveDirection * speed); 
             rb.velocity = moveDirection * speed; //Can also move diagonally but scuffed (Rufus)
 
-            if(horizontalInput != 0.0f || verticalInput != 0.0f){
+            if (horizontalInput != 0.0f || verticalInput != 0.0f)
+            {
                 timer = MoveDelay + Time.deltaTime;
                 isMoving = true;
-                
-                if(playerPos == transform.position) {
+
+                if (playerPos == transform.position)
+                {
                     return;
-                } else {
+                }
+                else
+                {
                     playerPos = transform.position;
                     PlayFoleySound();
                 }
 
             }
-            
-            if(localMoveDirection.magnitude > 0) // Calls clue event for alien investigate behaviour
+
+            if (localMoveDirection.magnitude > 0) // Calls clue event for alien investigate behaviour
             {
                 ClueSystem.TriggerClue(1, transform.position, gameObject);
             }
         }
 
-            if (Input.GetKeyDown(KeyCode.Q)) Controls(KeyCode.Q);
-            if (Input.GetKeyDown(KeyCode.E)) Controls(KeyCode.E);
-            if (Input.GetKeyDown(KeyCode.R)) Controls(KeyCode.R);
-            if (Input.GetKeyDown(KeyCode.P)) Controls(KeyCode.P);
-            if (Input.GetKeyDown(KeyCode.L)) Controls(KeyCode.L);
-            if (Input.GetKeyDown(KeyCode.H)) Controls(KeyCode.H);
-            if (Input.GetKeyDown(KeyCode.C)) Controls(KeyCode.C);
-            if (Input.GetKeyDown(KeyCode.Tab)) Controls(KeyCode.Tab);
+        if (Input.GetKeyDown(KeyCode.Q)) Controls(KeyCode.Q);
+        if (Input.GetKeyDown(KeyCode.E)) Controls(KeyCode.E);
+        if (Input.GetKeyDown(KeyCode.R)) Controls(KeyCode.R);
+        if (Input.GetKeyDown(KeyCode.P)) Controls(KeyCode.P);
+        if (Input.GetKeyDown(KeyCode.L)) Controls(KeyCode.L);
+        if (Input.GetKeyDown(KeyCode.H)) Controls(KeyCode.H);
+        if (Input.GetKeyDown(KeyCode.C)) Controls(KeyCode.C);
+        if (Input.GetKeyDown(KeyCode.Tab)) Controls(KeyCode.Tab);
 
     }
 
-void Controls(KeyCode input){
-    switch(input){
-        case KeyCode.Q: 
-            if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0, -90, 0);
-            audioSource.PlayOneShot(swooshSounds[0]);
-            break;
-        case KeyCode.E: 
-            if(rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0, 90, 0);
-            audioSource.PlayOneShot(swooshSounds[1]);
-            break;
-        case KeyCode.R:
-            audioSource.Stop();
-            audioManager.GetComponent<AudioManager>().isPlaying = false;
+    void Controls(KeyCode input)
+    {
+        if (MonsterOnboarding.isPlaying)
+        {
+            return;
+        }
 
-            if (audioManager.GetComponent<AudioManager>().RecordSound())
-            {
-                audioSource.PlayOneShot(recordSound);
-            } 
-            else 
-            {
-                audioSource.PlayOneShot(recordingFailedSound);
-            }
-            break;
-        case KeyCode.P:
-            audioSource.PlayOneShot(recordPlayingSound);
-            audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
-            print(audioSource.clip);
-            audioSource.Play();
-            audioManager.GetComponent<AudioManager>().isPlaying = true;
-            break;
-        case KeyCode.L:
-            Respawn();
-            break;
-        case KeyCode.H:
-            DaugtherCall();
-            break;
-        case KeyCode.C: // Debug purpose, should not be available in shipping (Rufus)
-            if(mainCam.activeInHierarchy){
-                mainCam.SetActive(false);
-                blindCam.SetActive(true);
-            }
-            else {
-                mainCam.SetActive(true);
-                blindCam.SetActive(false);
-            }
-            break;
-        case KeyCode.Tab:
-            if(rb.rotation.eulerAngles == new Vector3(0,0,0)){
+        switch (input)
+        {
+            case KeyCode.Q:
+                if (rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0, -90, 0);
+                audioSource.PlayOneShot(swooshSounds[0]);
+                break;
+            case KeyCode.E:
+                if (rb.velocity.magnitude == 0) rb.rotation *= Quaternion.Euler(0, 90, 0);
+                audioSource.PlayOneShot(swooshSounds[1]);
+                break;
+            case KeyCode.R:
                 audioSource.Stop();
-                audioSource.clip = direction[0];
+                audioManager.GetComponent<AudioManager>().isPlaying = false;
+
+                if (audioManager.GetComponent<AudioManager>().RecordSound())
+                {
+                    audioSource.PlayOneShot(recordSound);
+                }
+                else
+                {
+                    audioSource.PlayOneShot(recordingFailedSound);
+                }
+                break;
+            case KeyCode.P:
+                audioSource.PlayOneShot(recordPlayingSound);
+                audioSource.clip = audioManager.GetComponent<AudioManager>().audioClip;
+                print(audioSource.clip);
                 audioSource.Play();
-            }
-            if(rb.rotation.eulerAngles == new Vector3(0,90,0)){
-                audioSource.Stop();
-                audioSource.clip = direction[1];
-                audioSource.Play();
-            }
-            else if(rb.rotation.eulerAngles == new Vector3(0,180,0)){
-                audioSource.Stop();
-                audioSource.clip = direction[2];
-                audioSource.Play();
-            }
-            else if(rb.rotation.eulerAngles == new Vector3(0,270,0)){
-                audioSource.Stop();
-                audioSource.clip = direction[3];
-                audioSource.Play();
-            }
-            break;
-            
-        default: 
-            break;
+                audioManager.GetComponent<AudioManager>().isPlaying = true;
+                break;
+            case KeyCode.L:
+                Respawn();
+                break;
+            case KeyCode.H:
+                DaugtherCall();
+                break;
+            case KeyCode.C: // Debug purpose, should not be available in shipping (Rufus)
+                if (mainCam.activeInHierarchy)
+                {
+                    mainCam.SetActive(false);
+                    blindCam.SetActive(true);
+                }
+                else
+                {
+                    mainCam.SetActive(true);
+                    blindCam.SetActive(false);
+                }
+                break;
+            case KeyCode.Tab:
+                if (rb.rotation.eulerAngles == new Vector3(0, 0, 0))
+                {
+                    audioSource.Stop();
+                    audioSource.clip = direction[0];
+                    audioSource.Play();
+                }
+                if (rb.rotation.eulerAngles == new Vector3(0, 90, 0))
+                {
+                    audioSource.Stop();
+                    audioSource.clip = direction[1];
+                    audioSource.Play();
+                }
+                else if (rb.rotation.eulerAngles == new Vector3(0, 180, 0))
+                {
+                    audioSource.Stop();
+                    audioSource.clip = direction[2];
+                    audioSource.Play();
+                }
+                else if (rb.rotation.eulerAngles == new Vector3(0, 270, 0))
+                {
+                    audioSource.Stop();
+                    audioSource.clip = direction[3];
+                    audioSource.Play();
+                }
+                break;
+
+            default:
+                break;
+        }
     }
-}
-    public bool Death(){
+    public bool Death()
+    {
         audioSource.PlayOneShot(deathSound);
         audioSource.PlayOneShot(restartSound); //Restart sound
         StartCoroutine(waitForDeath());
@@ -215,7 +242,8 @@ void Controls(KeyCode input){
         return true;
     }
 
-    void Respawn(){
+    void Respawn()
+    {
         /*timer = 0;
 
         rb.position = new Vector3(0,0,0);
@@ -236,49 +264,56 @@ void Controls(KeyCode input){
         audioSource.PlayOneShot(deathSound);*/
     }
 
-    void DaugtherCall(){
+    void DaugtherCall()
+    {
         ventCollider = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, m_LayerMask);
-        for (int i = 0; i < ventCollider.Length; i++){
+        for (int i = 0; i < ventCollider.Length; i++)
+        {
             ventCollider[i].GetComponent<AudioSource>().Play();
         }
 
-        audioSource.PlayOneShot(daughterCallout[UnityEngine.Random.Range(0,daughterCallout.Length)]);
+        audioSource.PlayOneShot(daughterCallout[UnityEngine.Random.Range(0, daughterCallout.Length)]);
         daughter.GetComponent<Goal>().DaugherResponse();
     }
 
 
     //Play foley sounds based on current zone
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other)
+    {
         ChangeFoleyType(other.gameObject);
     }
 
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider other)
+    {
         foleyType = 0;
         ChangeFoleyType(other.gameObject);
     }
 
     //Change foley type based on tag
     //Consider adding gameobjects to array, and changing based on name at index
-    private void ChangeFoleyType(GameObject zone) {
+    private void ChangeFoleyType(GameObject zone)
+    {
         string zoneTag = zone.tag;
         switch (zoneTag)
         {
             case "ZoneWood":
-            foleyType = 1;
-            break;
-            
+                foleyType = 1;
+                break;
+
             case "ZoneStone":
-            foleyType = 2;
-            break;
+                foleyType = 2;
+                break;
 
             default:
-            foleyType = 0;
-            break;
+                foleyType = 0;
+                break;
         }
     }
 
-    private void PlayFoleySound() {
-        if(stepSoundsWood.Length <= 0) {
+    private void PlayFoleySound()
+    {
+        if (stepSoundsWood.Length <= 0)
+        {
             return;
         }
 
@@ -287,35 +322,36 @@ void Controls(KeyCode input){
 
         switch (foleyType)
         {
-            case 1: 
-            min = 6; 
-            max = 8;
-            break;
+            case 1:
+                min = 6;
+                max = 8;
+                break;
 
             case 2:
-            min = 3;
-            max = 5;
-            break;
+                min = 3;
+                max = 5;
+                break;
 
             default:
-            min = 0; 
-            max = 2;
-            break;
+                min = 0;
+                max = 2;
+                break;
         }
 
         int index = UnityEngine.Random.Range(min, max + 1);
-        
-        while (lastStep == index) {
+
+        while (lastStep == index)
+        {
             index = UnityEngine.Random.Range(min, max + 1);
         }
-        
+
         lastStep = index;
-        audioSource.clip = stepSoundsWood[index]; 
+        audioSource.clip = stepSoundsWood[index];
         audioSource.Play();
         //print("Index " + index);
         //UnityEngine.Debug.Log(index);
     }
-	// Metod för att sätta paus status (adin)
+    // Metod för att sätta paus status (adin)
     public void SetPauseState(bool pause)
     {
         isPaused = pause;
@@ -336,13 +372,16 @@ void Controls(KeyCode input){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Wall" || other.gameObject.tag == "Pillar") {
-            audioSource.PlayOneShot(wallbumpSound);     
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Pillar")
+        {
+            audioSource.PlayOneShot(wallbumpSound);
             eventLogger.LogEvent("Wall bumped");
             return;
-        } 
-        if(other.gameObject.tag == "PuzzleElement") {
+        }
+        if (other.gameObject.tag == "PuzzleElement")
+        {
             audioSource.PlayOneShot(generalOuchSound);
         }
     }
