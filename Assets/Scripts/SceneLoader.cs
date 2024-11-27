@@ -29,11 +29,11 @@ public class SceneLoader : MonoBehaviour
 
     private void Update()
     {
-        //if (!introOnboarding.GetComponent<AudioSource>().isPlaying)
-        //{
-        //    Debug.Log("Changing Scene");
-        //    SceneManager.LoadScene("GruppC_Scen");
-        //}
+        if (!introOnboarding.GetComponent<AudioSource>().isPlaying)
+        {
+            Debug.Log("Changing Scene");
+            SceneManager.LoadScene("GruppC_Scen");
+        }
     }
     
 }
