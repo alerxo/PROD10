@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     public bool isPaused;
     public EventLogger eventLogger;
     private GameObject daughter;
+    private static bool shouldPlayRestartSound = false;
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +67,10 @@ public class PlayerController : MonoBehaviour
             eventLogger = loggerObject.GetComponent<EventLogger>();
         }
 
-        audioSource.PlayOneShot(startSound);
+        if (shouldPlayRestartSound)
+        {
+            shouldPlayRestartSound = false; audioSource.PlayOneShot(restartSound);
+        }
     }
 
     // Update is called once per frame
@@ -232,15 +236,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    public bool Death()
-    {
-        audioSource.PlayOneShot(deathSound);
-        audioSource.PlayOneShot(restartSound); //Restart sound
-        StartCoroutine(waitForDeath());
-        eventLogger?.LogEvent("Player died");
-        //Respawn();
-        return true;
-    }
+    
 
     void Respawn()
     {
@@ -362,15 +358,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator waitForDeath()
-    {
-        while (audioSource.isPlaying)
-        {
-            yield return null;
-        }
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    
 
     private void OnCollisionEnter(Collision other)
     {
@@ -385,4 +373,41 @@ public class PlayerController : MonoBehaviour
             audioSource.PlayOneShot(generalOuchSound);
         }
     }
+
+    
+
+        public bool Death()
+        {
+        audioSource.PlayOneShot(deathSound);
+        eventLogger?.LogEvent("Player died");
+        StartCoroutine(waitForDeath());
+        return true;
+         }
+
+    private IEnumerator waitForDeath()
+    {
+        
+        while (audioSource.isPlaying)
+        {
+            yield return null;
+        }
+
+        shouldPlayRestartSound = true;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+    { 
+        PlayRestartSound(); 
+    
+    }
+
+    public void PlayRestartSound()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(restartSound);
+    }
+
 }

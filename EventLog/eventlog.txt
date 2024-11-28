@@ -53,3 +53,13 @@ Event log
 2024-10-30 11:50:32 - Game is paused
 2024-10-30 11:51:29 - Game is paused
 2024-10-30 11:53:07 - Game is paused
+2024-11-28 12:23:41 - Puzzle element solved: PuzzleElement
+2024-11-28 12:25:03 - Player died
+2024-11-28 12:33:25 - Puzzle element solved: PuzzleElement
+2024-11-28 12:34:44 - Player died
+2024-11-28 12:39:38 - Puzzle element solved: PuzzleElement
+2024-11-28 12:41:08 - Player died
+2024-11-28 12:44:27 - Puzzle element solved: PuzzleElement
+2024-11-28 12:45:54 - Player died
+2024-11-28 12:46:32 - Puzzle element solved: PuzzleElement
+2024-11-28 12:47:53 - Player died
